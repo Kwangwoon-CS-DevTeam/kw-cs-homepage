@@ -15,10 +15,12 @@ EX) 안녕하세요, 대학생들의 불법 pdf 구독을 근절하고 출판사
    1. 의존성을 설치합니다:
       ```bash
       npm install
+      ./gradlew build
       ```
    2. 애플리케이션을 시작합니다:
       ```bash
       npm start
+      ./gradlew bootRun
       ```
 
 
