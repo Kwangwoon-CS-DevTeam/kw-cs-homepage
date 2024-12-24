@@ -11,7 +11,7 @@ function Home() {
                 }}
             >
                 {/* 어두운 오버레이 */}
-                <div className="absolute inset-0 bg-black opacity-50"></div>
+                <div className="absolute inset-0 bg-blue-900 bg-opacity-30"></div>
             </div>
 
             {/* 네비게이션 바 */}
@@ -19,7 +19,7 @@ function Home() {
 
             {/* 추가 콘텐츠 */}
             <div className="relative flex items-center justify-center h-screen text-white">
-                <h1 className="text-4xl font-bold">Lunit × Volpara</h1>
+                <h1 className="text-4xl font-bold">KWU x Computer Science</h1>
             </div>
         </div>
     );
