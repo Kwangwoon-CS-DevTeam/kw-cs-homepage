@@ -19,7 +19,7 @@ function Home() {
 
             {/* 추가 콘텐츠 */}
             <div className="relative flex items-center justify-center h-screen text-white">
-                <h1 className="text-4xl font-bold flex items-center">
+                <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold flex items-center">
                     KWU x Computer Science
                     <span className="ml-2 animate-blink pb-2">|</span>
                 </h1>
