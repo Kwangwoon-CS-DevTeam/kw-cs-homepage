@@ -4,7 +4,7 @@ import navbar from '../messages/navbar.js'
 import { useState, useEffect } from 'react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
-export default function Navbar() {
+export default function NavbarWhite() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [menuClosing, setMenuClosing] = useState(false)
 
