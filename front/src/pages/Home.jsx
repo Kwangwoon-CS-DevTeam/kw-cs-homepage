@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar.jsx";
+import NavbarWhite from "../components/NavbarWhite.jsx";
 import Footer from "../components/Footer.jsx"; // Footer 컴포넌트 임포트
 
 function Home() {
@@ -19,7 +19,7 @@ function Home() {
             {/* 콘텐츠 영역 */}
             <div className="relative z-10">
                 {/* 네비게이션 바 */}
-                <Navbar />
+                <NavbarWhite />
 
                 {/* 메인 콘텐츠 */}
                 <div className="flex items-center justify-center h-screen text-white">
