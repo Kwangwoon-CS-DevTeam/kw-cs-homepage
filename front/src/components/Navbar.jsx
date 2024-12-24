@@ -1,7 +1,7 @@
 import navbar from '../messages/navbar.js'
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 export default function Navbar() {
@@ -15,11 +15,27 @@ export default function Navbar() {
             setTimeout(() => {
                 setMobileMenuOpen(false)
                 setMenuClosing(false)
-            })
+            }, 450) // 메뉴 애니메이션 지속 시간과 동일
         } else {
             setMobileMenuOpen(true)
         }
     }
+
+    // 화면 크기 변경 시 메뉴 닫기
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1024 && mobileMenuOpen) {
+                // 데스크탑 크기 이상에서 메뉴가 열려 있다면 닫기
+                setMobileMenuOpen(false)
+                setMenuClosing(false)
+            }
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [mobileMenuOpen])
 
     return (
         <header className="absolute top-0 left-0 w-full z-10">
