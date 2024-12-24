@@ -2,29 +2,21 @@ import navbar from '../messages/navbar.js'
 'use client'
 
 import { useState } from 'react'
-import {
-    Dialog,
-    DialogPanel
-} from '@headlessui/react'
-import {
-    Bars3Icon,
-    XMarkIcon,
-} from '@heroicons/react/24/outline'
+import { Dialog, DialogPanel } from '@headlessui/react'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
     return (
         <header className="absolute top-0 left-0 w-full z-10">
-            <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 bg-transparent">
+            <nav
+                aria-label="Global"
+                className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 bg-transparent"
+            >
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">
-                        <span className="sr-only">Your Company</span>
-                        <img
-                            alt=""
-                            src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                            className="h-8 w-auto"
-                        />
+                        <img alt="Custom Logo" src="/images/logo.png" className="h-14 w-auto" />
                     </a>
                 </div>
                 <div className="flex lg:hidden">
@@ -37,15 +29,37 @@ export default function Navbar() {
                         <Bars3Icon aria-hidden="true" className="h-6 w-6 text-white" />
                     </button>
                 </div>
-                <div className="hidden lg:flex lg:gap-x-12">
-                    {/* Product 메뉴를 단순 링크로 변경 */}
-                    <a href="#" className="text-sm font-semibold text-white">{navbar.first}</a>
-                    <a href="#" className="text-sm font-semibold text-white">{navbar.second}</a>
-                    <a href="#" className="text-sm font-semibold text-white">{navbar.third}</a>
-                    <a href="#" className="text-sm font-semibold text-white">{navbar.forth}</a>
+                <div className="hidden lg:flex lg:gap-x-1">
+                    <a
+                        href="#"
+                        className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
+                    >
+                        {navbar.first}
+                    </a>
+                    <a
+                        href="#"
+                        className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
+                    >
+                        {navbar.second}
+                    </a>
+                    <a
+                        href="#"
+                        className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
+                    >
+                        {navbar.third}
+                    </a>
+                    <a
+                        href="#"
+                        className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
+                    >
+                        {navbar.forth}
+                    </a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="#" className="text-sm font-semibold text-white">
+                    <a
+                        href="#"
+                        className="relative text-base text-white font-semibold px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-50"
+                    >
                         {navbar.fifth} <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
@@ -55,7 +69,7 @@ export default function Navbar() {
                 <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm">
                     <div className="flex items-center justify-between">
                         <a href="#" className="-m-1.5 p-1.5">
-                            <span className="sr-only">Your Company</span>
+                            <span className="sr-only">Custom Logo</span>
                             <img
                                 alt=""
                                 src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
@@ -78,25 +92,25 @@ export default function Navbar() {
                                     href="#"
                                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
                                 >
-                                    Product
+                                    {navbar.first}
                                 </a>
                                 <a
                                     href="#"
                                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
                                 >
-                                    Features
+                                    {navbar.second}
                                 </a>
                                 <a
                                     href="#"
                                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
                                 >
-                                    Marketplace
+                                    {navbar.third}
                                 </a>
                                 <a
                                     href="#"
                                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
                                 >
-                                    Company
+                                    {navbar.forth}
                                 </a>
                             </div>
                             <div className="py-6">
@@ -104,7 +118,7 @@ export default function Navbar() {
                                     href="#"
                                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50"
                                 >
-                                    Log in
+                                    {navbar.fifth}
                                 </a>
                             </div>
                         </div>
