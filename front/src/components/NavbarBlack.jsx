@@ -1,47 +1,47 @@
-import navbar from '../messages/navbar.js'
-'use client'
+import navbar from '../messages/navbar.js';
+'use client';
 
-import { useState, useEffect } from 'react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect } from 'react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function NavbarBlack() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [menuClosing, setMenuClosing] = useState(false)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [menuClosing, setMenuClosing] = useState(false);
 
     const toggleMenu = () => {
         if (mobileMenuOpen) {
-            setMenuClosing(true)
+            setMenuClosing(true);
             setTimeout(() => {
-                setMobileMenuOpen(false)
-                setMenuClosing(false)
-            }, 450)
+                setMobileMenuOpen(false);
+                setMenuClosing(false);
+            }, 450);
         } else {
-            setMobileMenuOpen(true)
+            setMobileMenuOpen(true);
         }
-    }
+    };
 
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 1024 && mobileMenuOpen) {
-                setMobileMenuOpen(false)
-                setMenuClosing(false)
+                setMobileMenuOpen(false);
+                setMenuClosing(false);
             }
-        }
+        };
 
-        window.addEventListener('resize', handleResize)
+        window.addEventListener('resize', handleResize);
         return () => {
-            window.removeEventListener('resize', handleResize)
-        }
-    }, [mobileMenuOpen])
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [mobileMenuOpen]);
 
     return (
-        <header className="absolute top-0 left-0 w-full z-10">
+        <header className="absolute top-0 left-0 w-full z-10 bg-white">
             <nav
                 aria-label="Global"
-                className="mx-auto flex max-w-7xl items-center justify-between px-6 pt-2 lg:py-6 lg:px-8 bg-transparent"
+                className="mx-auto flex max-w-7xl items-center justify-between px-6 pt-2 lg:py-6 lg:px-8"
             >
                 <div className="flex lg:flex-1 transition-all duration-300 ease-in-out">
-                    <a href="#" className="-m-1.5 p-1.5">
+                    <a href="/" className="-m-1.5 p-1.5">
                         <img
                             alt="Custom Logo"
                             src="/images/logo_black.png"
@@ -76,10 +76,10 @@ export default function NavbarBlack() {
                 </div>
                 <div className="hidden lg:flex lg:gap-x-1">
                     <a
-                        href="#"
+                        href={navbar.first.url}
                         className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-gray-200 hover:bg-opacity-15"
                     >
-                        {navbar.first}
+                        {navbar.first.title}
                     </a>
                     <a
                         href="#"
@@ -119,10 +119,10 @@ export default function NavbarBlack() {
                 <ul className="flex flex-col space-y-2 p-2">
                     <li>
                         <a
-                            href="#"
+                            href={navbar.first.url}
                             className="block text-sm font-base text-black hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            {navbar.first}
+                            {navbar.first.title}
                         </a>
                     </li>
                     <li>
@@ -152,5 +152,5 @@ export default function NavbarBlack() {
                 </ul>
             </div>
         </header>
-    )
+    );
 }

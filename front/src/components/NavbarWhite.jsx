@@ -79,10 +79,10 @@ export default function NavbarWhite() {
                 </div>
                 <div className="hidden lg:flex lg:gap-x-1">
                     <a
-                        href="#"
+                        href={navbar.first.url}
                         className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
                     >
-                        {navbar.first}
+                        {navbar.first.title}
                     </a>
                     <a
                         href="#"
@@ -123,10 +123,10 @@ export default function NavbarWhite() {
                 <ul className="flex flex-col space-y-2 p-2">
                     <li>
                         <a
-                            href="#"
+                            href={navbar.first.url}
                             className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            {navbar.first}
+                            {navbar.first.title}
                         </a>
                     </li>
                     <li>
