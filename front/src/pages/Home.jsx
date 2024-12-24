@@ -5,7 +5,7 @@ function Home() {
         <div className="relative min-h-screen bg-black">
             {/* 배경 이미지 컨테이너 */}
             <div
-                className="absolute inset-0 bg-cover bg-center animate-bg-zoom-in pointer-events-none"
+                className="absolute inset-0 bg-cover bg-center animate-bg-zoom-in pointer-events-none object-cover"
                 style={{
                     backgroundImage: "url('/images/pub1.jpg')", // 원하는 배경 이미지 경로
                 }}
