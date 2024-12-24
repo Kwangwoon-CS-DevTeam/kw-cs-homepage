@@ -1,14 +1,15 @@
 export const footer = {
-    card1: {
-        title: "Powerful Performance",
-        description: "Experience unmatched speed and reliability with our platform.",
+    left: {
+        title: "컴퓨터정보공학과",
+        president: "회장 최우진",
+        vicePresident: "부회장 서영민",
     },
-    card2: {
-        title: "Seamless Integration",
-        description: "Connect your tools and workflows effortlessly.",
+    center: {
+        message: "우리의 이야기는 여기서 시작됩니다",
     },
-    card3: {
-        title: "Developer Friendly",
-        description: "Built for developers with flexibility and ease of use in mind.",
+    right: {
+        contact: "mobile : 010 1234 5678",
+        logoSrc: "/images/logo.png",
+        logoAlt: "logo"
     },
 };

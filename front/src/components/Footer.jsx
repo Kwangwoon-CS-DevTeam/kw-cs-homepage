@@ -1,3 +1,5 @@
+import { footer } from "../messages/footer.js"; // 데이터 참조
+
 export default function Footer() {
     return (
         <footer
@@ -6,29 +8,25 @@ export default function Footer() {
             <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
                 {/* 왼쪽 영역 */}
                 <div className="text-center md:text-left">
-                    <h2 className="text-xl font-bold text-white mb-2">컴퓨터정보공학과</h2>
-                    <p className="text-sm">
-                        회장 최우진
-                    </p>
-                    <p className="text-sm">
-                        부회장 서영민
-                    </p>
+                    <h2 className="text-xl font-bold text-white mb-2">
+                        {footer.left.title}
+                    </h2>
+                    <p className="text-sm">{footer.left.president}</p>
+                    <p className="text-sm">{footer.left.vicePresident}</p>
                 </div>
 
                 {/* 중앙 영역 */}
                 <div className="text-center mt-4 md:mt-0">
-                    <p className="text-sm">
-                        우리의 이야기는 여기서 시작됩니다
-                    </p>
+                    <p className="text-sm">{footer.center.message}</p>
                 </div>
 
                 {/* 오른쪽 영역 */}
                 <div className="text-center md:text-right mt-4 md:mt-0">
-                    <p className="text-sm font-semibold">mobile : 010 1234 5678 </p>
+                    <p className="text-sm font-semibold">{footer.right.contact}</p>
                     <div className="flex justify-center md:justify-end mt-2">
                         <img
-                            src="/images/logo.png" // 로고 이미지 경로
-                            alt="Logo"
+                            src={footer.right.logoSrc}
+                            alt={footer.right.logoAlt}
                             className="h-10"
                         />
                     </div>
