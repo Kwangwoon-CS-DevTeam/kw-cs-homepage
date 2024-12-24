@@ -2,31 +2,63 @@ import navbar from '../messages/navbar.js'
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [menuClosing, setMenuClosing] = useState(false)
+
+    const toggleMenu = () => {
+        if (mobileMenuOpen) {
+            // 메뉴 닫기 애니메이션 동기화
+            setMenuClosing(true)
+            setTimeout(() => {
+                setMobileMenuOpen(false)
+                setMenuClosing(false)
+            })
+        } else {
+            setMobileMenuOpen(true)
+        }
+    }
 
     return (
         <header className="absolute top-0 left-0 w-full z-10">
             <nav
                 aria-label="Global"
-                className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 bg-transparent"
+                className="mx-auto flex max-w-7xl items-center justify-between px-6 pt-2 lg:py-6 lg:px-8 bg-transparent"
             >
-                <div className="flex lg:flex-1">
+                <div className="flex lg:flex-1 transition-all duration-300 ease-in-out">
                     <a href="#" className="-m-1.5 p-1.5">
-                        <img alt="Custom Logo" src="/images/logo.png" className="h-14 w-auto" />
+                        <img
+                            alt="Custom Logo"
+                            src="/images/logo.png"
+                            className="h-14 w-auto transition-all duration-300 ease-in-out"
+                        />
                     </a>
                 </div>
                 <div className="flex lg:hidden">
                     <button
                         type="button"
-                        onClick={() => setMobileMenuOpen(true)}
+                        onClick={toggleMenu}
                         className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
                     >
-                        <span className="sr-only">Open main menu</span>
-                        <Bars3Icon aria-hidden="true" className="h-6 w-6 text-white" />
+                        <span className="sr-only">
+                            {mobileMenuOpen ? 'Close main menu' : 'Open main menu'}
+                        </span>
+                        <div className="relative h-6 w-6">
+                            <Bars3Icon
+                                aria-hidden="true"
+                                className={`absolute h-6 w-6 text-white transition-transform duration-300 ${
+                                    mobileMenuOpen ? 'rotate-45 opacity-0' : 'rotate-0 opacity-100'
+                                }`}
+                            />
+                            <XMarkIcon
+                                aria-hidden="true"
+                                className={`absolute h-6 w-6 text-white transition-transform duration-300 ${
+                                    mobileMenuOpen ? 'rotate-0 opacity-100' : 'rotate-45 opacity-0'
+                                }`}
+                            />
+                        </div>
                     </button>
                 </div>
                 <div className="hidden lg:flex lg:gap-x-1">
@@ -64,67 +96,49 @@ export default function Navbar() {
                     </a>
                 </div>
             </nav>
-            <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-                <div className="fixed inset-0 z-10" />
-                <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm">
-                    <div className="flex items-center justify-between">
-                        <a href="#" className="-m-1.5 p-1.5">
-                            <span className="sr-only">Custom Logo</span>
-                            <img
-                                alt=""
-                                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                                className="h-8 w-auto"
-                            />
-                        </a>
-                        <button
-                            type="button"
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="-m-2.5 rounded-md p-2.5 text-gray-700"
+            {/* 모바일 메뉴 */}
+            <div
+                className={`absolute top-full left-0 w-full bg-white shadow-lg overflow-hidden transition-[max-height] duration-[450ms] ${
+                    mobileMenuOpen && !menuClosing
+                        ? 'max-h-[500px] ease-[cubic-bezier(0.55, 0.055, 0.675, 0.19)]'
+                        : 'max-h-0 ease-[cubic-bezier(0.215, 0.61, 0.355, 1)]'
+                }`}
+            >
+                <ul className="flex flex-col space-y-2 p-2">
+                    <li>
+                        <a
+                            href="#"
+                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            <span className="sr-only">Close menu</span>
-                            <XMarkIcon aria-hidden="true" className="h-6 w-6" />
-                        </button>
-                    </div>
-                    <div className="mt-6 flow-root">
-                        <div className="-my-6 divide-y divide-gray-500/10">
-                            <div className="space-y-2 py-6">
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    {navbar.first}
-                                </a>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    {navbar.second}
-                                </a>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    {navbar.third}
-                                </a>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    {navbar.forth}
-                                </a>
-                            </div>
-                            <div className="py-6">
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    {navbar.fifth}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </DialogPanel>
-            </Dialog>
+                            {navbar.first}
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
+                        >
+                            {navbar.second}
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
+                        >
+                            {navbar.third}
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
+                        >
+                            {navbar.forth}
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </header>
     )
 }
