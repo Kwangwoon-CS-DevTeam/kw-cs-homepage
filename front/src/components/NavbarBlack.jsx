@@ -44,7 +44,7 @@ export default function NavbarBlack() {
                     <a href="/" className="-m-1.5 p-1.5">
                         <img
                             alt="Custom Logo"
-                            src="/images/logo_black.png"
+                            src="/images/logo_lightblue.png"
                             className="h-14 w-auto transition-all duration-300 ease-in-out"
                         />
                     </a>
