@@ -12,8 +12,8 @@ export default {
       },
       keyframes: {
         'background-zoom-in': {
-          '0%': { transform: 'scale(1)' },
-          '100%': { transform: 'scale(1.2)' },
+          '0%': { 'background-size': '100%', 'background-position': 'center' },
+          '100%': { 'background-size': '120%', 'background-position': 'center' },
         },
         blink: {
           '0%, 100%': { opacity: '1' },
