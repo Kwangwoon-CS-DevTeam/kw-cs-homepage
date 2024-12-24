@@ -4,20 +4,25 @@ function NoticeBoard() {
     return (
         <div className="relative bg-white min-h-screen">
             {/* 네비게이션 바 */}
-            <NavbarBlack />
+            <NavbarBlack/>
 
             {/* 공지사항 헤더 */}
-            <div className="bg-white py-16">
-                <div className="container mx-auto px-4 text-center">
+            <div
+                className="bg-white pt-24 sm:pt-32 lg:pt-48 pb-16 sm:pb-24 lg:pb-28 px-4 sm:px-8 lg:px-16"> {/* 반응형 여백 */}
+                <div className="container mx-auto">
                     {/* 제목 */}
-                    <h1 className="text-4xl font-bold text-gray-900">
+                    <h1 className="text-4xl font-extrabold text-neutral-800 text-left"> {/* 왼쪽 정렬 */}
                         공지사항
                     </h1>
                     {/* 서브텍스트 */}
-                    <p className="text-lg text-gray-600 mt-4">
+                    <p className="text-lg text-blue-950 mt-4 text-left"> {/* 왼쪽 정렬 */}
                         학과의 중요한 소식과 공지사항을 확인하세요.
                     </p>
                 </div>
+            </div>
+
+            <div className="container mx-auto px-4">
+                <hr className="border-t border-gray-300"/>
             </div>
 
             {/* 공지사항 리스트 영역 (추후 추가 가능) */}
