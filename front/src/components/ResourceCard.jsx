@@ -1,24 +1,16 @@
 import PropTypes from "prop-types"; // PropTypes 임포트
 
-// components/NoticeCard.jsx
-export default function NoticeCard({ category, title, excerpt, author, date, link }) {
-    // 카테고리 색상 설정
+// components/ResourceCard.jsx
+export default function ResourceCard({ category, title, excerpt, provider, subject, date, link }) {
     const categoryBgColor =
-        category === "important"
-            ? "bg-pink-400 text-white" // 중요한 경우 핑크 배경
-            : "bg-blue-200 text-blue-800"; // 기본 블루 배경
+        category === "전공"
+            ? "bg-pink-400 text-white" // 전공의 경우 핑크 배경
+            : "bg-blue-200 text-blue-800"; // 교양의 경우 하늘색 배경
 
     return (
-        <div className="relative bg-white p-6 py-6 rounded-lg shadow-md hover:drop-shadow-lg transition-shadow">
-            {/* 카드 전체를 감싸는 링크 */}
-            <a
-                href={link} // 상세 페이지 링크
-                className="absolute inset-0 z-0"
-                style={{ textDecoration: "none" }}
-            ></a>
-
+        <div className="bg-white p-6 rounded-lg shadow-md hover:drop-shadow-lg transition-shadow">
             {/* 카드 내용 */}
-            <div className="relative z-10 pointer-events-none">
+            <div>
                 {/* 카테고리 */}
                 <div className="flex items-center mb-4">
                     <span
@@ -34,10 +26,13 @@ export default function NoticeCard({ category, title, excerpt, author, date, lin
                 {/* 내용 요약 */}
                 <p className="text-gray-600 text-sm mb-4">{excerpt}</p>
 
-                {/* 작성자 및 날짜 */}
+                {/* 제공자 및 과목, 날짜 */}
                 <div className="text-gray-600 text-sm">
                     <div className="mb-1">
-                        <span className="font-semibold">AUTHOR:</span> {author}
+                        <span className="font-semibold">제공자:</span> {provider}
+                    </div>
+                    <div className="mb-1">
+                        <span className="font-semibold">과목:</span> {subject}
                     </div>
                     <div>
                         <span className="font-semibold">DATE:</span> {date}
@@ -45,25 +40,31 @@ export default function NoticeCard({ category, title, excerpt, author, date, lin
                 </div>
             </div>
 
-            {/* 신청하기 버튼 */}
+            {/* 다운받기 버튼 */}
             <a
-                href="https://google.com" // 구글 폼 링크
+                href={link} // 다운로드 링크
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative z-20 mt-4 inline-block text-blue-700 font-semibold hover:underline pointer-events-auto"
+                className="mt-4 inline-flex items-center bg-blue-900 text-white font-medium px-3 py-1.5 text-sm rounded shadow hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-                신청하기 →
+                다운받기
+                <img
+                    src="/images/downloadIconWhite.png"
+                    alt="다운로드 아이콘"
+                    className="w-4 h-4 ml-2"
+                />
             </a>
         </div>
     );
 }
 
 // PropTypes 정의
-NoticeCard.propTypes = {
-    category: PropTypes.string.isRequired, // 반드시 문자열이어야 함
+ResourceCard.propTypes = {
+    category: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     excerpt: PropTypes.string.isRequired, // 새로 추가된 요약 필드
-    author: PropTypes.string.isRequired,
+    provider: PropTypes.string.isRequired, // 제공자
+    subject: PropTypes.string.isRequired, // 과목
     date: PropTypes.string.isRequired, // 날짜 추가
-    link: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired, // 링크 추가
 };
