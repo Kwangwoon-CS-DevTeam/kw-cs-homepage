@@ -82,10 +82,10 @@ export default function NavbarBlack() {
                         {NAVBAR.first.title}
                     </a>
                     <a
-                        href="#"
+                        href={NAVBAR.second.url}
                         className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
                     >
-                        {NAVBAR.second}
+                        {NAVBAR.second.title}
                     </a>
                     <a
                         href="#"
@@ -127,10 +127,10 @@ export default function NavbarBlack() {
                     </li>
                     <li>
                         <a
-                            href="#"
+                            href={NAVBAR.second.url}
                             className="block text-sm font-base text-black hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            {NAVBAR.second}
+                            {NAVBAR.second.title}
                         </a>
                     </li>
                     <li>

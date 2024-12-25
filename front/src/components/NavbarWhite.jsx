@@ -85,10 +85,10 @@ export default function NavbarWhite() {
                         {NAVBAR.first.title}
                     </a>
                     <a
-                        href="#"
+                        href={NAVBAR.second.url}
                         className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
                     >
-                        {NAVBAR.second}
+                        {NAVBAR.second.title}
                     </a>
                     <a
                         href="#"
@@ -131,10 +131,10 @@ export default function NavbarWhite() {
                     </li>
                     <li>
                         <a
-                            href="#"
+                            href={NAVBAR.second.url}
                             className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            {NAVBAR.second}
+                            {NAVBAR.second.title}
                         </a>
                     </li>
                     <li>

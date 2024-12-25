@@ -3,7 +3,10 @@ const menus = {
         title: "공지사항",
         url: "/notices"
     },
-    second: "자료실",
+    second: {
+        title: "자료실",
+        url: "/resources"
+    },
     third: "세부전공",
     forth: "QnA",
     fifth: "Log in",
