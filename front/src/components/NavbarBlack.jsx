@@ -77,25 +77,25 @@ export default function NavbarBlack() {
                 <div className="hidden lg:flex lg:gap-x-1">
                     <a
                         href={navbar.first.url}
-                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-gray-200 hover:bg-opacity-15"
+                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
                     >
                         {navbar.first.title}
                     </a>
                     <a
                         href="#"
-                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-gray-200 hover:bg-opacity-15"
+                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
                     >
                         {navbar.second}
                     </a>
                     <a
                         href="#"
-                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-gray-200 hover:bg-opacity-15"
+                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
                     >
                         {navbar.third}
                     </a>
                     <a
                         href="#"
-                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-gray-200 hover:bg-opacity-15"
+                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
                     >
                         {navbar.forth}
                     </a>
@@ -103,7 +103,7 @@ export default function NavbarBlack() {
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     <a
                         href="#"
-                        className="relative text-base text-black font-semibold px-3 py-2 rounded-lg hover:bg-gray-200 hover:bg-opacity-50"
+                        className="relative text-base text-black font-semibold px-3 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-50"
                     >
                         {navbar.fifth} <span aria-hidden="true">&rarr;</span>
                     </a>
