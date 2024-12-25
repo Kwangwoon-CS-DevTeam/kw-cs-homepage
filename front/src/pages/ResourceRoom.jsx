@@ -28,7 +28,7 @@ export default function ResourceBoard() {
     const [currentPage, setCurrentPage] = useState(1);
     const categoryRef = useRef(null);
 
-    const itemsPerPage = 7;
+    const itemsPerPage = 5;
 
     const filteredResources = resources.filter((resource) =>
         selectedCategory === "latest" ? true : resource.category === selectedCategory
