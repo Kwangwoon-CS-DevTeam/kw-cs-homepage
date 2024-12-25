@@ -105,7 +105,7 @@ export default function NoticeBoard() {
             </div>
 
             {/* 페이지네이션 */}
-            <div className="container mx-auto px-4 py-4 flex justify-center">
+            <div className="container mx-auto px-4 py-4 pb-16 flex justify-center">
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button
                         key={index + 1}
