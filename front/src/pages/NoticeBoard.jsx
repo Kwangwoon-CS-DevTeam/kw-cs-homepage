@@ -77,8 +77,8 @@ export default function NoticeBoard() {
                     <button
                         className={`px-6 py-2 rounded-lg font-semibold ${
                             selectedCategory === "important"
-                                ? "bg-blue-900 text-white"
-                                : "text-gray-500 hover:bg-blue-100"
+                                ? "bg-pink-400 text-white"
+                                : "text-gray-500 hover:bg-pink-200"
                         }`}
                         onClick={() => setSelectedCategory("important")}
                     >
@@ -87,7 +87,7 @@ export default function NoticeBoard() {
                     <button
                         className={`px-6 py-2 rounded-lg font-semibold ${
                             selectedCategory === "events"
-                                ? "bg-blue-900 text-white"
+                                ? "bg-blue-200 text-blue-800"
                                 : "text-gray-500 hover:bg-blue-100"
                         }`}
                         onClick={() => setSelectedCategory("events")}
