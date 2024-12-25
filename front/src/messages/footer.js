@@ -9,7 +9,8 @@ export const footer = {
     },
     right: {
         contact: "mobile : 010 1234 5678",
-        logoSrc: "/images/logo.png",
+        logoSrcWhite: "/images/logo.png",
+        logoSrcBlack: "/images/logo_lightblue.png",
         logoAlt: "logo"
     },
 };

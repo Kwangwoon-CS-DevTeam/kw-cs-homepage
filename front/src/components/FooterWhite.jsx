@@ -1,6 +1,6 @@
 import { footer } from "../messages/footer.js"; // 데이터 참조
 
-export default function Footer() {
+export default function FooterWhite() {
     return (
         <footer
             className="relative backdrop-blur bg-opacity-60 text-gray-300 py-8"
@@ -25,7 +25,7 @@ export default function Footer() {
                     <p className="text-sm font-semibold">{footer.right.contact}</p>
                     <div className="flex justify-center md:justify-end mt-2">
                         <img
-                            src={footer.right.logoSrc}
+                            src={footer.right.logoSrcWhite}
                             alt={footer.right.logoAlt}
                             className="h-10"
                         />
