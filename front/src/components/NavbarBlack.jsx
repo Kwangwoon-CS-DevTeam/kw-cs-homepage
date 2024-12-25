@@ -1,4 +1,4 @@
-import navbar from '../messages/navbar.js';
+import NAVBAR from '../messages/Navbar.js';
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -76,28 +76,28 @@ export default function NavbarBlack() {
                 </div>
                 <div className="hidden lg:flex lg:gap-x-1">
                     <a
-                        href={navbar.first.url}
+                        href={NAVBAR.first.url}
                         className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
                     >
-                        {navbar.first.title}
+                        {NAVBAR.first.title}
                     </a>
                     <a
                         href="#"
                         className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
                     >
-                        {navbar.second}
+                        {NAVBAR.second}
                     </a>
                     <a
                         href="#"
                         className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
                     >
-                        {navbar.third}
+                        {NAVBAR.third}
                     </a>
                     <a
                         href="#"
                         className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
                     >
-                        {navbar.forth}
+                        {NAVBAR.forth}
                     </a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -105,7 +105,7 @@ export default function NavbarBlack() {
                         href="#"
                         className="relative text-base text-black font-semibold px-3 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-50"
                     >
-                        {navbar.fifth} <span aria-hidden="true">&rarr;</span>
+                        {NAVBAR.fifth} <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
             </nav>
@@ -119,10 +119,10 @@ export default function NavbarBlack() {
                 <ul className="flex flex-col space-y-2 p-2">
                     <li>
                         <a
-                            href={navbar.first.url}
+                            href={NAVBAR.first.url}
                             className="block text-sm font-base text-black hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            {navbar.first.title}
+                            {NAVBAR.first.title}
                         </a>
                     </li>
                     <li>
@@ -130,7 +130,7 @@ export default function NavbarBlack() {
                             href="#"
                             className="block text-sm font-base text-black hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            {navbar.second}
+                            {NAVBAR.second}
                         </a>
                     </li>
                     <li>
@@ -138,7 +138,7 @@ export default function NavbarBlack() {
                             href="#"
                             className="block text-sm font-base text-black hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            {navbar.third}
+                            {NAVBAR.third}
                         </a>
                     </li>
                     <li>
@@ -146,7 +146,7 @@ export default function NavbarBlack() {
                             href="#"
                             className="block text-sm font-base text-black hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            {navbar.forth}
+                            {NAVBAR.forth}
                         </a>
                     </li>
                 </ul>

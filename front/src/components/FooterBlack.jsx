@@ -1,4 +1,4 @@
-import { footer } from "../messages/footer.js"; // 데이터 참조
+import { footer } from "../messages/Footer.js"; // 데이터 참조
 
 export default function Footer() {
     return (
