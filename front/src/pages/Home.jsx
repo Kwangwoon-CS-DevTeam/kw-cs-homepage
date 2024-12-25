@@ -1,5 +1,5 @@
 import NavbarWhite from "../components/NavbarWhite.jsx";
-import Footer from "../components/Footer.jsx"; // Footer 컴포넌트 임포트
+import FooterWhite from "../components/FooterWhite.jsx"; // FooterWhite 컴포넌트 임포트
 
 function Home() {
     return (
@@ -30,9 +30,9 @@ function Home() {
                 </div>
             </div>
 
-            {/* Footer */}
+            {/* FooterWhite */}
             <div className="relative z-20">
-                <Footer />
+                <FooterWhite />
             </div>
         </div>
     );
