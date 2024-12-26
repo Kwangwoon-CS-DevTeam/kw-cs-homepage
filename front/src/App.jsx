@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Login from './pages/Login';
 import NoticeBoard from './pages/NoticeBoard';
 import ResourceRoom from './pages/ResourceRoom';
 import NotFoundPage from './pages/404';
@@ -24,7 +25,7 @@ function App() {
                 <Route path="/qna" element={<NotFoundPage />} />
 
                 {/* 로그인 페이지 */}
-                <Route path="/login" element={<NotFoundPage />} />
+                <Route path="/login" element={<Login />} />
 
                 {/* 404 페이지 */}
                 <Route path="*" element={<NotFoundPage />} />
