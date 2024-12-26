@@ -43,10 +43,10 @@ function Home() {
                             </label>
                             <div className="relative">
                                 <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    placeholder="you@example.com"
+                                    type="id"
+                                    name="id"
+                                    id="id"
+                                    placeholder="kwcs_dev"
                                     className="block w-full px-4 py-2 text-gray-800 rounded-lg border border-gray-300 placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:outline-none"
                                     required
                                 />
@@ -63,7 +63,7 @@ function Home() {
                                     type="password"
                                     name="password"
                                     id="password"
-                                    placeholder="Enter your password"
+                                    placeholder="Password"
                                     className="block w-full px-4 py-2 text-gray-800 rounded-lg border border-gray-300 placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:outline-none"
                                     required
                                 />
