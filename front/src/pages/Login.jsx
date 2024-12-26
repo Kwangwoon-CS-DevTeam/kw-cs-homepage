@@ -39,7 +39,7 @@ function Home() {
                         {/* Email 입력 */}
                         <div className="mb-4">
                             <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
-                                Email
+                                아이디
                             </label>
                             <div className="relative">
                                 <input
@@ -56,7 +56,7 @@ function Home() {
                         {/* 비밀번호 입력 */}
                         <div className="mb-4">
                             <label htmlFor="password" className="block text-sm font-medium text-white mb-1">
-                                Password
+                                비밀번호
                             </label>
                             <div className="relative">
                                 <input
