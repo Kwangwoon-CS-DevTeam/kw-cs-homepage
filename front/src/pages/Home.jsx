@@ -22,7 +22,8 @@ function Home() {
                 <NavbarWhite />
 
                 {/* 메인 콘텐츠 */}
-                <div className="flex items-center justify-center h-screen text-white">
+                <div className="flex items-center justify-center min-h-screen -mt-24 text-white">
+                    {/* -mt-24로 네비게이션 높이 보정 */}
                     <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold flex items-center">
                         KWU x Computer Science
                         <span className="ml-2 animate-blink pb-2">|</span>
