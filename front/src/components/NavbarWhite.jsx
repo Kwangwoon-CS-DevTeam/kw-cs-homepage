@@ -91,24 +91,24 @@ export default function NavbarWhite() {
                         {NAVBAR.second.title}
                     </a>
                     <a
-                        href="#"
+                        href={NAVBAR.third.url}
                         className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
                     >
-                        {NAVBAR.third}
+                        {NAVBAR.third.title}
                     </a>
                     <a
-                        href="#"
+                        href={NAVBAR.forth.url}
                         className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
                     >
-                        {NAVBAR.forth}
+                        {NAVBAR.forth.title}
                     </a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     <a
-                        href="#"
+                        href={NAVBAR.fifth.url}
                         className="relative text-base text-white font-semibold px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-50"
                     >
-                        {NAVBAR.fifth} <span aria-hidden="true">&rarr;</span>
+                        {NAVBAR.fifth.title} <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
             </nav>
@@ -139,18 +139,18 @@ export default function NavbarWhite() {
                     </li>
                     <li>
                         <a
-                            href="#"
+                            href={NAVBAR.third.url}
                             className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            {NAVBAR.third}
+                            {NAVBAR.third.title}
                         </a>
                     </li>
                     <li>
                         <a
-                            href="#"
+                            href={NAVBAR.forth.url}
                             className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
-                            {NAVBAR.forth}
+                            {NAVBAR.forth.title}
                         </a>
                     </li>
                 </ul>
