@@ -44,7 +44,7 @@ export default function NavbarWhite() {
                 className="mx-auto flex max-w-7xl items-center justify-between px-6 pt-2 lg:py-6 lg:px-8 bg-transparent"
             >
                 <div className="flex lg:flex-1 transition-all duration-300 ease-in-out">
-                    <a href="#" className="-m-1.5 p-1.5">
+                    <a href="/" className="-m-1.5 p-1.5">
                         <img
                             alt="Custom Logo"
                             src="/images/logo.png"
