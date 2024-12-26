@@ -30,7 +30,7 @@ export default function NavbarBlack() {
     }, []);
 
     return (
-        <header className="absolute top-0 left-0 w-full z-10 bg-white">
+        <header className="relative top-0 left-0 w-full z-10 bg-white">
             <nav
                 aria-label="Global"
                 className="mx-auto flex max-w-7xl items-center justify-between px-6 pt-2 lg:py-6 lg:px-8"

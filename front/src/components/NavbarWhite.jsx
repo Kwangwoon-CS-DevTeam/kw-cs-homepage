@@ -28,7 +28,7 @@ export default function NavbarWhite() {
     };
 
     return (
-        <header className="absolute top-0 left-0 w-full z-10">
+        <header className="relative top-0 left-0 w-full z-10">
             <nav
                 aria-label="Global"
                 className="mx-auto flex max-w-7xl items-center justify-between px-6 pt-2 lg:py-6 lg:px-8 bg-transparent"
