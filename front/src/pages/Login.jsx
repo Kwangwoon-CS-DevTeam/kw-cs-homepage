@@ -25,9 +25,9 @@ function Home() {
 
             {/* 콘텐츠 영역 */}
             <div className="relative z-10">
-                <NavbarWhite />
+                <NavbarWhite/>
 
-                <div className="flex items-center justify-center h-screen">
+                <div className="flex items-center justify-center h-screen" style={{marginTop: "-4rem"}}>
                     {/* 로그인 컨테이너 */}
                     <form
                         onSubmit={handleSubmit}
@@ -94,9 +94,9 @@ function Home() {
 
                         {/* Footer */}
                         <div className="mt-4 text-center">
-                            <span className="text-sm text-white">
-                                관리자 인증을 위해 로그인해주세요
-                            </span>
+                        <span className="text-sm text-white">
+                            관리자 인증을 위해 로그인해주세요
+                        </span>
                         </div>
                     </form>
                 </div>
