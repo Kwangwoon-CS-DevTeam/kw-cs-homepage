@@ -10,7 +10,7 @@ export default function Specialization() {
                 style={{
                     backgroundImage: "url('/images/pub1.jpg')", // 배경 이미지 복구
                     backgroundSize: "cover",
-                    filter: "blur(2px)", // 블러 효과 추가
+                    filter: "blur(0px)", // 블러 효과 추가
                 }}
             ></div>
 
@@ -33,7 +33,7 @@ export default function Specialization() {
                     <div className="text-center lg:text-left flex flex-col justify-center h-full">
                         <div>
                             <h2 className="text-2xl font-bold text-white mb-4">지능컴퓨팅시스템</h2>
-                            <p className="text text-neutral-300">
+                            <p className="text text-neutral-100">
                                 지능형 시스템 설계를 위한 하드웨어와 소프트웨어 통합 역량을 배양하며,
                                 임베디드 시스템 설계와 제어 능력을 함양하는 전문가를 양성합니다.
                             </p>
@@ -81,7 +81,7 @@ export default function Specialization() {
                         className="text-center lg:text-left flex flex-col justify-center h-full order-1 lg:pl-6 lg:order-2">
                         <div>
                             <h2 className="text-2xl font-bold text-white mb-4">지능정보</h2>
-                            <p className="text text-neutral-300">
+                            <p className="text text-neutral-100">
                                 대량의 데이터를 효과적으로 다루고, 정보 시스템 설계 및 유지 관리 역량을 갖춘 전문가를 양성합니다.
                                 데이터 기반 의사결정 지원과 지능형 시스템 개발을 목표로 합니다.
                             </p>
