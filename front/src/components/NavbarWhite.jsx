@@ -1,41 +1,31 @@
-import NAVBAR from '../messages/Navbar.js'
-'use client'
-
-import { useState, useEffect } from 'react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect } from 'react';
+import NAVBAR from '../messages/Navbar.js';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function NavbarWhite() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [menuClosing, setMenuClosing] = useState(false)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [menuClosing, setMenuClosing] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        // 브라우저 세션에 토큰이 있는지 확인
+        const token = sessionStorage.getItem('authToken');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
 
     const toggleMenu = () => {
         if (mobileMenuOpen) {
-            // 메뉴 닫기 애니메이션 동기화
-            setMenuClosing(true)
+            setMenuClosing(true);
             setTimeout(() => {
-                setMobileMenuOpen(false)
-                setMenuClosing(false)
-            }, 450) // 메뉴 애니메이션 지속 시간과 동일
+                setMobileMenuOpen(false);
+                setMenuClosing(false);
+            }, 450);
         } else {
-            setMobileMenuOpen(true)
+            setMobileMenuOpen(true);
         }
-    }
-
-    // 화면 크기 변경 시 메뉴 닫기
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth >= 1024 && mobileMenuOpen) {
-                // 데스크탑 크기 이상에서 메뉴가 열려 있다면 닫기
-                setMobileMenuOpen(false)
-                setMenuClosing(false)
-            }
-        }
-
-        window.addEventListener('resize', handleResize)
-        return () => {
-            window.removeEventListener('resize', handleResize)
-        }
-    }, [mobileMenuOpen])
+    };
 
     return (
         <header className="absolute top-0 left-0 w-full z-10">
@@ -104,12 +94,14 @@ export default function NavbarWhite() {
                     </a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a
-                        href={NAVBAR.fifth.url}
-                        className="relative text-base text-white font-semibold px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-50"
-                    >
-                        {NAVBAR.fifth.title} <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    {!isLoggedIn && ( // 로그인 상태가 아닌 경우에만 렌더링
+                        <a
+                            href={NAVBAR.fifth.url}
+                            className="relative text-base text-white font-semibold px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-50"
+                        >
+                            {NAVBAR.fifth.title} <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    )}
                 </div>
             </nav>
             {/* 모바일 메뉴 */}
@@ -156,5 +148,5 @@ export default function NavbarWhite() {
                 </ul>
             </div>
         </header>
-    )
+    );
 }

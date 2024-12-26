@@ -7,6 +7,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 export default function NavbarBlack() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [menuClosing, setMenuClosing] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const toggleMenu = () => {
         if (mobileMenuOpen) {
@@ -21,18 +22,12 @@ export default function NavbarBlack() {
     };
 
     useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth >= 1024 && mobileMenuOpen) {
-                setMobileMenuOpen(false);
-                setMenuClosing(false);
-            }
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [mobileMenuOpen]);
+        // 브라우저 세션에서 토큰 확인
+        const token = sessionStorage.getItem('authToken');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
 
     return (
         <header className="absolute top-0 left-0 w-full z-10 bg-white">
@@ -101,12 +96,14 @@ export default function NavbarBlack() {
                     </a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a
-                        href={NAVBAR.fifth.url}
-                        className="relative text-base text-black font-semibold px-3 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-50"
-                    >
-                        {NAVBAR.fifth.title} <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    {!isLoggedIn && ( // 로그인 상태가 아닌 경우에만 렌더링
+                        <a
+                            href={NAVBAR.fifth.url}
+                            className="relative text-base text-black font-semibold px-3 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-50"
+                        >
+                            {NAVBAR.fifth.title} <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    )}
                 </div>
             </nav>
             <div
@@ -120,7 +117,7 @@ export default function NavbarBlack() {
                     <li>
                         <a
                             href={NAVBAR.first.url}
-                            className="block text-sm font-base text-black hover:bg-gray-100 rounded-lg px-4 py-2"
+                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
                             {NAVBAR.first.title}
                         </a>
@@ -128,7 +125,7 @@ export default function NavbarBlack() {
                     <li>
                         <a
                             href={NAVBAR.second.url}
-                            className="block text-sm font-base text-black hover:bg-gray-100 rounded-lg px-4 py-2"
+                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
                             {NAVBAR.second.title}
                         </a>
@@ -136,7 +133,7 @@ export default function NavbarBlack() {
                     <li>
                         <a
                             href={NAVBAR.third.url}
-                            className="block text-sm font-base text-black hover:bg-gray-100 rounded-lg px-4 py-2"
+                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
                             {NAVBAR.third.title}
                         </a>
@@ -144,7 +141,7 @@ export default function NavbarBlack() {
                     <li>
                         <a
                             href={NAVBAR.forth.url}
-                            className="block text-sm font-base text-black hover:bg-gray-100 rounded-lg px-4 py-2"
+                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
                         >
                             {NAVBAR.forth.title}
                         </a>
