@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Specialization from "./pages/Specialization.jsx";
 import NoticeBoard from './pages/NoticeBoard';
 import ResourceRoom from './pages/ResourceRoom';
 import NotFoundPage from './pages/404';
@@ -19,7 +20,7 @@ function App() {
                 <Route path="/resources" element={<ResourceRoom />} />
 
                 {/* 세부전공 페이지 */}
-                <Route path="/specializations" element={<NotFoundPage />} />
+                <Route path="/specializations" element={<Specialization />} />
 
                 {/* QnA 페이지 */}
                 <Route path="/qna" element={<NotFoundPage />} />
