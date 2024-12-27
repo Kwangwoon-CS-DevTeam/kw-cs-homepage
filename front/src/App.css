@@ -10,3 +10,10 @@
         transform: scale(1.1);
     }
 }
+
+.typing {
+    overflow: hidden; /* 타이핑 효과에서 글자가 넘치지 않도록 */
+    white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+    border-right: 2px solid white; /* 깜박이는 커서 */
+    animation: typing 3.5s steps(30, end), blink 1s step-end infinite;
+}

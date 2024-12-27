@@ -7,12 +7,17 @@ export default {
   theme: {
     extend: {
       animation: {
+        typing: 'typing 3.5s steps(30, end), blink 1s step-end infinite',
         "card-appear": "blur-scale 1s ease-out forwards",
         'slide-up': 'slideUp 1s ease-out forwards',
         "fade-up": "fade-up 1s ease-out",
         blink: 'blink 1s ease-in-out infinite',
       },
       keyframes: {
+        typing: {
+          '0%': { width: '0' },
+          '100%': { width: '100%' },
+        },
         "blur-scale": {
           "0%": {
             transform: "scale(1.05)",
@@ -52,6 +57,7 @@ export default {
         '0': '0ms',
         '100': '100ms',
         '200': '200ms',
+        '2000': '2000ms', // 2초 딜레이 추가
       },
     },
   },

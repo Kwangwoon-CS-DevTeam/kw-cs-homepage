@@ -1,7 +1,29 @@
 import NavbarWhite from "../components/NavbarWhite.jsx";
 import FooterWhite from "../components/FooterWhite.jsx"; // FooterWhite 컴포넌트 임포트
+import { useState, useEffect, useRef } from "react";
 
 function Home() {
+    const [text, setText] = useState(""); // 출력할 텍스트
+    const fullText = "KWU x Computer Science"; // 전체 텍스트
+    const typingSpeed = 100; // 타이핑 속도(ms)
+    const textRef = useRef(""); // 현재 텍스트 상태를 저장
+
+    useEffect(() => {
+        let index = 0; // 문자열 인덱스 초기화
+        const typingInterval = setInterval(() => {
+            if (index < fullText.length) {
+                textRef.current = textRef.current + fullText.charAt(index); // 직접 업데이트
+                setText(textRef.current); // 최신 값을 React 상태로 반영
+                index++;
+            } else {
+                clearInterval(typingInterval); // 타이핑 완료 시 정리
+            }
+        }, typingSpeed);
+
+        return () => clearInterval(typingInterval); // 언마운트 시 정리
+    }, []);
+
+
     return (
         <div className="relative bg-black">
             {/* 배경 이미지 (고정) */}
@@ -22,12 +44,16 @@ function Home() {
                 <NavbarWhite />
 
                 {/* 메인 콘텐츠 */}
-                <div className="flex items-center justify-center min-h-screen -mt-24 text-white">
+                <div className="flex flex-col items-center justify-center min-h-screen -mt-24 text-white">
                     {/* -mt-24로 네비게이션 높이 보정 */}
                     <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold flex items-center">
-                        KWU x Computer Science
-                        <span className="ml-2 animate-blink pb-2">|</span>
+                        {text}
+                        <h1
+                            className= "animate-blink delay-[2000ms] ml-1"
+                            style={{ animationDelay: "2.5s" }}
+                        >|</h1> {/* 커서 애니메이션 */}
                     </h1>
+
                 </div>
             </div>
 
