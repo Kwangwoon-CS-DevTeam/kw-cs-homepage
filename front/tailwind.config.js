@@ -7,18 +7,51 @@ export default {
   theme: {
     extend: {
       animation: {
-        'bg-zoom-in': 'background-zoom-in 8s ease-in-out forwards',
+        "card-appear": "blur-scale 1s ease-out forwards",
+        'slide-up': 'slideUp 1s ease-out forwards',
+        "fade-up": "fade-up 1s ease-out",
         blink: 'blink 1s ease-in-out infinite',
       },
       keyframes: {
-        'background-zoom-in': {
-          '0%': { 'background-size': '100%', 'background-position': 'center' },
-          '100%': { 'background-size': '120%', 'background-position': 'center' },
+        "blur-scale": {
+          "0%": {
+            transform: "scale(1.05)",
+            filter: "blur(10px)",
+          },
+          "100%": {
+            transform: "scale(1)",
+            filter: "blur(0px)",
+          },
+        },
+        slideUp: {
+          '0%': {
+            transform: 'translateY(30px)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'translateY(0)',
+            opacity: '1',
+          },
+        },
+        "fade-up": {
+          "0%": {
+            transform: "translateY(20px)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateY(0)",
+            opacity: "1",
+          },
         },
         blink: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' },
         },
+      },
+      animationDelay: {
+        '0': '0ms',
+        '100': '100ms',
+        '200': '200ms',
       },
     },
   },

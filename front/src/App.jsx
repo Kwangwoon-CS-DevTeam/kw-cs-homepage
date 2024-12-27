@@ -5,6 +5,7 @@ import Specialization from "./pages/Specialization.jsx";
 import NoticeBoard from './pages/NoticeBoard';
 import ResourceRoom from './pages/ResourceRoom';
 import IntelligentComputingSystems from "./pages/IntelligentComputingSystems.jsx";
+import IntelligentInfo from "./pages/IntelligentInfo.jsx";
 import NotFoundPage from './pages/404';
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
 
                 {/* 세부전공 지능컴퓨팅시스템 상세 페이지 */}
                 <Route path="/specializations/ics" element={<IntelligentComputingSystems />} />
+
+                {/* 세부전공 지능정보 상세 페이지 */}
+                <Route path="/specializations/ii" element={<IntelligentInfo />} />
 
                 {/* QnA 페이지 */}
                 <Route path="/qna" element={<NotFoundPage />} />

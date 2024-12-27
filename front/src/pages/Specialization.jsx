@@ -89,7 +89,7 @@ export default function Specialization() {
                         {/* 버튼을 아래로 이동 */}
                         <div className="mt-6">
                             <a
-                                href="#" // 세부 전공의 상세 페이지 링크
+                                href="/specializations/ii" // 세부 전공의 상세 페이지 링크
                                 className="inline-block backdrop-blur bg-opacity-10 bg-blue-950 text-white px-6 py-2 rounded-lg transition-all duration-300 transform group border-[1px] border-neutral-300 hover:border-2 hover:border-white" // 테두리 추가
                             >
                                 <span className="text-base font-medium transition-transform duration-300">
