@@ -1,34 +1,32 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import NavbarBlack from "../components/NavbarBlack.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
 import NoticeHeader from "../components/NoticeHeader.jsx";
-import { ChevronUpIcon, ChevronDownIcon } from '../components/icons/Chevron';
+import { ChevronUpIcon, ChevronDownIcon } from "../components/icons/Chevron";
 
 export default function QnaBoard() {
-    const questions = [
-        {
-            id: 2261,
-            content: "오발송 문자건",
-            date: "2024.12.26",
-            answer: "문자 관련하여 문제를 확인 중입니다.",
-        },
-        {
-            id: 2260,
-            content: "갑자기 입학취소 문자",
-            date: "2024.12.26",
-            answer: "",
-        },
-        {
-            id: 2259,
-            content: "문자",
-            date: "2024.12.26",
-            answer: "해당 내용은 담당 부서에 전달되었습니다.",
-        },
-    ];
+    const questions = Array.from({ length: 16 }, (_, index) => ({
+        id: 2250 + index,
+        content: `질문 내용 ${index + 1}`,
+        date: `2024.12.${(index + 1).toString().padStart(2, "0")}`,
+        answer: index % 2 === 0 ? "답변 내용입니다." : "", // 짝수 ID는 답변이 있음
+    }));
 
     const [openIndex, setOpenIndex] = useState(null);
     const [isWriting, setIsWriting] = useState(false); // 질문 작성 중인지 여부
     const [newQuestion, setNewQuestion] = useState(""); // 새 질문 내용
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const itemsPerPage = 7;
+    const listRef = useRef(null); // 질문 리스트 참조
+
+    // 현재 페이지 데이터 계산
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentQuestions = questions.slice(indexOfFirstItem, indexOfLastItem);
+
+    // 전체 페이지 수 계산
+    const totalPages = Math.ceil(questions.length / itemsPerPage);
 
     const toggleAnswer = (index) => {
         setOpenIndex(openIndex === index ? null : index);
@@ -49,14 +47,22 @@ export default function QnaBoard() {
         setIsWriting(false); // 작성 상태 종료
     };
 
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        if (listRef.current) {
+            listRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     return (
         <div className="relative bg-white min-h-screen">
             <NavbarBlack />
 
             <NoticeHeader title={"Q&A"} sub={"궁금한 것들을 자유롭게 물어보세요:)"} />
 
-            <div className="container mx-auto px-4 py-8 relative">
-                {questions.map((q, index) => (
+            {/* 질문 리스트 */}
+            <div ref={listRef} className="container mx-auto px-4 py-8 relative">
+                {currentQuestions.map((q, index) => (
                     <div
                         key={q.id}
                         className="border border-neutral-200 rounded-lg p-4 mb-4"
@@ -92,13 +98,26 @@ export default function QnaBoard() {
                     </div>
                 ))}
 
+                {/* 페이지네이션 */}
+                <div className="container mx-auto px-4 py-4 pb-16 flex justify-center">
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index + 1}
+                            className={`mx-1 px-3 py-1 rounded-lg ${
+                                currentPage === index + 1
+                                    ? "bg-blue-900 text-white"
+                                    : "text-gray-500 bg-gray-200 hover:bg-gray-300"
+                            }`}
+                            onClick={() => handlePageChange(index + 1)}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                </div>
+
                 {/* 질문하기 버튼과 작성 영역 */}
                 {isWriting ? (
-                    <div
-                        className={` rounded-lg p-4 ${
-                            isWriting ? "animate-borderGradient" : ""
-                        }`}
-                    >
+                    <div className="border border-blue-500 rounded-lg p-4 mt-8">
                         <textarea
                             className="w-full p-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             rows="4"
@@ -125,7 +144,7 @@ export default function QnaBoard() {
                 )}
             </div>
 
-            <FooterBlack/>
+            <FooterBlack />
         </div>
     );
 }
