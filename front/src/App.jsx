@@ -7,6 +7,7 @@ import ResourceRoom from './pages/ResourceRoom';
 import IntelligentComputingSystems from "./pages/IntelligentComputingSystems.jsx";
 import IntelligentInfo from "./pages/IntelligentInfo.jsx";
 import NotFoundPage from './pages/404';
+import QnaBoard from "./pages/QnaBoard.jsx";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
                 <Route path="/specializations/ii" element={<IntelligentInfo />} />
 
                 {/* QnA 페이지 */}
-                <Route path="/qna" element={<NotFoundPage />} />
+                <Route path="/qna" element={<QnaBoard />} />
 
                 {/* 로그인 페이지 */}
                 <Route path="/login" element={<Login />} />
