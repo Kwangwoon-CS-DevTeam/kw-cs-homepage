@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "서버",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kwangwoon-CS-DevTeam/kw-cs-homepage.git"
+  },
+  "author": "holychan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kwangwoon-CS-DevTeam/kw-cs-homepage/issues"
+  },
+  "homepage": "https://github.com/Kwangwoon-CS-DevTeam/kw-cs-homepage#readme"
+}
