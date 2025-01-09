@@ -13,18 +13,28 @@
 
 ## 💻 설치 방법
    1. 의존성을 설치합니다:
-      ```bash
+      ```js
+      // front
+      cd ./frontend
+      npm install
+
+      // backend
+      cd ./backend
       npm install
       ```
    2. 애플리케이션을 시작합니다:
-      ```bash
-      npm start
+      ```js
+      // front
+      npm dev run
+
+      // backend
+      - npm dev run  // nodemon
+      - npm start  // app.js 실행
       ```
 
 
 ## 👥 팀원
 - 조성찬: BE Developer
 - 이용진: BE Developer
+- 권관호: BE Developer
 - 오지빈: FE Developer
-- 권관호: FE Developer
-- 고은채: Web Design
