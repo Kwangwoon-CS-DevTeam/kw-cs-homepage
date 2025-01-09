@@ -2,11 +2,11 @@ name: kw-cs-homepage CI/CD
 
 on:
   push:
-    branches:
-      - main       # main 브랜치에서 동작
-      - develop    # develop 브랜치에서 동작
-#    branches-ignore:
-#      - main  # main 브랜치는 제외 (직접 테스트 후 main으로 머지)
+#    branches:
+#      - main       # main 브랜치에서 동작
+#      - develop    # develop 브랜치에서 동작
+    branches-ignore:
+      - main  # main 브랜치는 제외 (직접 테스트 후 main으로 머지)
 
 jobs:
   deploy-backend:
