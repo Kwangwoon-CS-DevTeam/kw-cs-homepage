@@ -27,7 +27,7 @@ jobs:
       - name: Install Dependencies and Build
         working-directory: ./backend # backend 디렉토리로 이동
         run: |
-          npm install
+          npm ci
           npm run start
 
       # 4. Fly.io로 배포
