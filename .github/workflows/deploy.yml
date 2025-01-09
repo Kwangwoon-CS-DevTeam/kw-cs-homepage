@@ -4,9 +4,6 @@ on:
   push:
     branches-ignore:
       - main  # main 브랜치는 제외 (직접 테스트 후 main으로 머지)
-#    branches:
-#      - main # main 브랜치에 push 또는 병합이 발생할 때 실행
-#      - develop # 테스트용
 
 jobs:
   deploy-backend:
@@ -27,16 +24,20 @@ jobs:
       - name: Install Flyctl
         run: |
           curl -L https://fly.io/install.sh | sh
-          export PATH="$HOME/.fly/bin:$PATH"
+        shell: bash
 
-      # 4. 의존성 설치 및 빌드
+      # 4. PATH 업데이트
+      - name: Update PATH for Flyctl
+        run: echo "$HOME/.fly/bin" >> $GITHUB_PATH
+
+      # 5. 의존성 설치 및 빌드
       - name: Install Dependencies and Build
         working-directory: ./backend
         run: |
           npm install
           npm run build
 
-      # 5. Fly.io로 배포
+      # 6. Fly.io로 배포
       - name: Deploy to Fly.io
         working-directory: ./backend
         run: fly deploy --remote-only
