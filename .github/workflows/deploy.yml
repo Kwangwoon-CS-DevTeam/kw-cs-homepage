@@ -3,12 +3,14 @@ name: kw-cs-homepage CI/CD
 on:
   push:
     branches:
-      - main # main 브랜치에 push 또는 병합이 발생할 때 실행
-      - develop # 테스트용
+      - main       # main 브랜치에서 동작
+      - develop    # develop 브랜치에서 동작
+#    branches-ignore:
+#      - main  # main 브랜치는 제외 (직접 테스트 후 main으로 머지)
 
 jobs:
   deploy-backend:
-    runs-on: ubuntu-latest # CI/CD 파이프라인이 실행될 환경 (Ubuntu)
+    runs-on: ubuntu-latest
 
     steps:
       # 1. 코드 체크아웃
@@ -19,18 +21,28 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 21.7.3 # Node.js 버전 설정
+          node-version: 21
 
-      # 3. 의존성 설치 및 빌드
+      # 3. Fly.io CLI 설치
+      - name: Install Flyctl
+        run: |
+          curl -L https://fly.io/install.sh | sh
+        shell: bash
+
+      # 4. PATH 업데이트
+      - name: Update PATH for Flyctl
+        run: echo "$HOME/.fly/bin" >> $GITHUB_PATH
+
+      # 5. 의존성 설치 및 빌드
       - name: Install Dependencies and Build
-        working-directory: ./backend # backend 디렉토리로 이동
+        working-directory: ./backend
         run: |
           npm install
-          npm run start
+          npm run build
 
-      # 4. Fly.io로 배포
+      # 6. Fly.io로 배포
       - name: Deploy to Fly.io
         working-directory: ./backend
         run: fly deploy --remote-only
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }} # Fly.io API 토큰
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
