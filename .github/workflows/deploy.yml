@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main # main 브랜치에 push 또는 병합이 발생할 때 실행
+      - develop # 테스트용
 
 jobs:
   deploy-backend:
