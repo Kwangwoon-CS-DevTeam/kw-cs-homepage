@@ -19,8 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 21 # Node.js 버전 설정
-          cache: 'npm'
+          node-version: 21.7.3 # Node.js 버전 설정
 
       # 3. 의존성 설치 및 빌드
       - name: Install Dependencies and Build
