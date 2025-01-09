@@ -10,11 +10,11 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: '/'
+                url: 'http://localhost:3000', // 서버 URL
             },
         ],
     },
-    apis: ['./routes/*.js'], // API 경로 (Swagger 주석이 포함된 파일)
+    apis: ['./src/*.js'], // 여러 경로 추가
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
