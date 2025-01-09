@@ -10,8 +10,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://www.kwangwoon-cie.com', // 로컬 서버 URL
-                description: 'Local server',
+                url: '/'
             },
         ],
     },
