@@ -5,11 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \\\"Error: no test specified\\\" && exit 1",
-    "backend": "nodemon app.js",
-    "start": "node app.js",
+    "backend": "nodemon src/app.js",
+    "start": "node src/app.js",
     "build": "echo \\\"No build step required for backend\\\"",
     "deploy": "fly deploy --remote-only",
-    "dev": "nodemon app.js"
+    "dev": "nodemon src/app.js"
   },
   "repository": {
     "type": "git",
