@@ -28,7 +28,7 @@ jobs:
         working-directory: ./backend # backend 디렉토리로 이동
         run: |
           npm ci
-          npm run start
+          npm run build
 
       # 4. Fly.io로 배포
       - name: Deploy to Fly.io
