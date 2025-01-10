@@ -9,7 +9,7 @@ if (!process.env.DB_URL) {
 // Sequelize 초기화
 const sequelize = new Sequelize(process.env.DB_URL, {
     dialect: 'postgres',
-    logging: true, // 로깅 비활성화
+    logging: false, // 로깅 비활성화
 });
 
 module.exports = sequelize;
