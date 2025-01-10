@@ -1,8 +1,8 @@
-const Notices = require('./models/Notices');
-const Category = require('./models/Category');
-const Admin = require('./models/Admin');
-const Resources = require('./models/Resources');
-const Questions = require('./models/Questions');
+const Notices = require('./Notices');
+const Category = require('./Category');
+const Admin = require('./Admin');
+const Resources = require('./Resources');
+const Questions = require('./Questions');
 
 // Notices <-> Category
 Notices.belongsTo(Category, { foreignKey: 'category_id' });
