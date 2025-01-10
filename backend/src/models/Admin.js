@@ -1,3 +1,6 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../db'); // 동일한 sequelize 인스턴스 가져오기
+
 const Admin = sequelize.define('Admin', {
     id: {
         type: DataTypes.STRING(20),
