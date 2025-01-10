@@ -1,3 +1,6 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../db'); // 동일한 sequelize 인스턴스 가져오기
+
 const Questions = sequelize.define('Questions', {
     id: {
         type: DataTypes.INTEGER,

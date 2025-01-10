@@ -15,3 +15,11 @@ Questions.belongsTo(Admin, { foreignKey: 'admin_id' });
 Admin.hasMany(Notices, { foreignKey: 'admin_id' });
 Admin.hasMany(Resources, { foreignKey: 'admin_id' });
 Admin.hasMany(Questions, { foreignKey: 'admin_id' });
+
+module.exports = {
+    Notices,
+    Admin,
+    Category,
+    Resources,
+    Questions,
+};
