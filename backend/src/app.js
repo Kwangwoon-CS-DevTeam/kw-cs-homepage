@@ -31,3 +31,24 @@ app.use("/api/resources", ResourcesRoutes);
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
+
+const Admin = require("./models/Admin"); // Admin 모델 가져오기
+
+/*
+테스트를 위한 관리자 ID생성
+*/
+async function createAdmin() {
+    try {
+        const admin = await Admin.create({
+            id: "admin123", // 관리자 ID (고유 값)
+            password: "securepassword", // 비밀번호
+            department: "Computer Science", // 부서
+        });
+        console.log("Admin created:", admin);
+    } catch (error) {
+        console.error("Error creating admin:", error);
+    }
+}
+
+// 실행
+createAdmin();
