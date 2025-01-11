@@ -84,7 +84,7 @@ exports.updateNotice = async (id, updateData) => {
 
 exports.deleteNotice = async (id) => {
     try {
-        const notice = await Notices.findByPk(id);
+        const notice = await NoticeModel.findByPk(id);
 
         if (!notice) {
             return {
