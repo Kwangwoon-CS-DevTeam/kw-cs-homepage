@@ -72,6 +72,82 @@ exports.getPaginatedNotices = async (req, res) => {
 /**
  * 특정 카테고리의 공지사항 목록 조회
  */
+/**
+ * @swagger
+ * /notices:
+ *   get:
+ *     summary: 공지사항 목록 조회 (카테고리 및 페이징 포함)
+ *     description: 카테고리 이름이 주어지면 해당 카테고리의 공지사항을, 없으면 전체 공지사항 중 최신 데이터를 반환합니다.
+ *     tags:
+ *       - Notices
+ *     parameters:
+ *       - name: category
+ *         in: query
+ *         required: false
+ *         description: 카테고리 이름 ("Important" 또는 "event"). 값이 없으면 전체 공지사항을 조회합니다.
+ *         schema:
+ *           type: string
+ *           example: Important
+ *       - name: page
+ *         in: query
+ *         required: false
+ *         description: "현재 페이지 번호 (기본값: 1)"
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *       - name: size
+ *         in: query
+ *         required: false
+ *         description: "페이지당 항목 수 (기본값: 10)"
+ *         schema:
+ *           type: integer
+ *           example: 10
+ *     responses:
+ *       200:
+ *         description: 공지사항 목록이 성공적으로 반환됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 total:
+ *                   type: integer
+ *                   description: 총 공지사항 개수
+ *                   example: 50
+ *                 page:
+ *                   type: integer
+ *                   description: 현재 페이지 번호
+ *                   example: 1
+ *                 size:
+ *                   type: integer
+ *                   description: 페이지당 항목 수
+ *                   example: 5
+ *                 notices:
+ *                   type: array
+ *                   description: 공지사항 데이터 배열
+ *                   items:
+ *                     $ref: '#/components/schemas/Notice'
+ *       400:
+ *         description: 잘못된 요청 (유효하지 않은 카테고리 이름)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Invalid category format
+ *       500:
+ *         description: 서버 내부 에러
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal Server Error
+ */
 exports.getFilteredNotices = async (req, res) => {
     const { category, page = 1, size = 10 } = req.query;
 
