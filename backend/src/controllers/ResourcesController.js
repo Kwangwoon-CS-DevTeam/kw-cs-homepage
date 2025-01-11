@@ -1,17 +1,19 @@
+const express = require("express");
+const router = express.Router();
 const Resources = require("../models/Resources"); // Sequelize 모델
 
 // 자료 등록
-exports.createResource = async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const resource = await Resources.create(req.body);
         res.status(201).json(resource);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
-};
+});
 
 // 자료 목록 조회 (페이징 포함)
-exports.getResources = async (req, res) => {
+router.get("/", async (req, res) => {
     const { category, page = 1, limit = 10 } = req.query;
     try {
         const whereClause = { isDeleted: 0 };
@@ -26,10 +28,10 @@ exports.getResources = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-};
+});
 
 // 자료 다운로드
-exports.downloadResource = async (req, res) => {
+router.get("/:id/download", async (req, res) => {
     try {
         const resource = await Resources.findByPk(req.params.id);
         if (!resource || resource.isDeleted) {
@@ -39,10 +41,10 @@ exports.downloadResource = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-};
+});
 
 // 자료 수정
-exports.updateResource = async (req, res) => {
+router.put("/:id", async (req, res) => {
     try {
         const resource = await Resources.findByPk(req.params.id);
         if (!resource || resource.isDeleted) {
@@ -53,10 +55,10 @@ exports.updateResource = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
-};
+});
 
 // 자료 삭제 (소프트 삭제)
-exports.deleteResource = async (req, res) => {
+router.delete("/:id", async (req, res) => {
     try {
         const resource = await Resources.findByPk(req.params.id);
         if (!resource || resource.isDeleted) {
@@ -67,4 +69,6 @@ exports.deleteResource = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-};
+});
+
+module.exports = router;

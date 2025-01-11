@@ -3,6 +3,7 @@ const express = require("express");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const sequelize = require("./db"); // Sequelize 인스턴스 가져오기
+const ResourcesRoutes = require("./controllers/ResourcesController");
 require("./models"); // 관계가 정의된 모델 불러오기 (객체로 묶을 필요 없음)
 
 const app = express();
@@ -11,7 +12,7 @@ const app = express();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Resources 관련 라우트
-app.use("/api/resources", resourcesRoutes);
+app.use("/api/resources", ResourcesRoutes);
 
 // 테이블 동기화
 (async () => {
