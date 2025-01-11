@@ -3,13 +3,19 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
 const sequelize = require('./db'); // Sequelize 인스턴스 가져오기
+const noticeRoutes = require('./routes/noticeRoutes');
 require('./models'); // 관계가 정의된 모델 불러오기 (객체로 묶을 필요 없음)
 
 
 const app = express();
 
+app.use(express.json());
+
 // Swagger UI 세팅
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Notice 라우터
+app.use('/notices', noticeRoutes);
 
 // 테이블 동기화
 (async () => {
