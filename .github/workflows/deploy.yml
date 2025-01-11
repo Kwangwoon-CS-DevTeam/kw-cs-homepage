@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy-backend:
-    if: github.repository == 'original-repo-name'
+    if: github.repository == 'Kwangwoon-CS-DevTeam/kw-cs-homepage'
     runs-on: ubuntu-latest
 
     steps:
