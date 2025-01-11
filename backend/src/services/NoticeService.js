@@ -51,7 +51,7 @@ exports.saveNotice = async (noticeData) => {
  * @param {object} updateData - 업데이트할 데이터 객체
  * @returns {object} 업데이트 결과
  */
-const updateNotice = async (id, updateData) => {
+exports.updateNotice = async (id, updateData) => {
     try {
         // 1. 업데이트할 데이터가 존재하는지 확인
         const notice = await NoticeModel.findByPk(id);
@@ -80,8 +80,4 @@ const updateNotice = async (id, updateData) => {
             error,
         };
     }
-};
-
-module.exports = {
-    updateNotice,
 };
