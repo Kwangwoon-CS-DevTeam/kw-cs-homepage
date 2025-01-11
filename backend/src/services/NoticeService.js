@@ -81,3 +81,35 @@ exports.updateNotice = async (id, updateData) => {
         };
     }
 };
+
+exports.deleteNotice = async (id) => {
+    try {
+        const notice = await Notices.findByPk(id);
+
+        if (!notice) {
+            return {
+                code: 404,
+                success: false,
+                message: 'Notice not found',
+            };
+        }
+
+        // isDeleted 필드를 1로 업데이트
+        notice.isDeleted = 1;
+        await notice.save();
+
+        return {
+            code: 200,
+            success: true,
+            message: 'Notice deleted successfully',
+        };
+    } catch (error) {
+        console.error('Error deleting notice:', error);
+        return {
+            code: 500,
+            success: false,
+            message: 'Failed to delete notice',
+            error,
+        };
+    }
+};
