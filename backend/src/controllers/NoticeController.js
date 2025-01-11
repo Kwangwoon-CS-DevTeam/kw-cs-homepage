@@ -2,7 +2,7 @@ const noticeService = require('../services/NoticeService');
 
 /**
  * @swagger
- * /notices:
+ * /api/notices:
  *   get:
  *     summary: 공지사항 목록 조회 (페이징 포함)
  *     description: 페이지와 크기를 기준으로 공지사항 목록을 조회합니다.
@@ -74,7 +74,7 @@ exports.getPaginatedNotices = async (req, res) => {
  */
 /**
  * @swagger
- * /notices:
+ * /api/notices:
  *   get:
  *     summary: 공지사항 목록 조회 (카테고리 및 페이징 포함)
  *     description: 카테고리 이름이 주어지면 해당 카테고리의 공지사항을, 없으면 전체 공지사항 중 최신 데이터를 반환합니다.
@@ -166,7 +166,7 @@ exports.getFilteredNotices = async (req, res) => {
 
 /**
  * @swagger
- * /notices/new-notice:
+ * /api/notices/new-notice:
  *   post:
  *     summary: 공지사항 생성
  *     description: 새로운 공지사항을 생성합니다.
@@ -237,7 +237,7 @@ exports.createNotice = async (req, res) => {
 
 /**
  * @swagger
- * /notices/new-notice/{id}:
+ * /api/notices/new-notice/{id}:
  *   put:
  *     summary: 공지사항 수정
  *     description: 특정 공지사항을 수정합니다.
@@ -326,7 +326,7 @@ exports.updateNotice = async (req, res) => {
 
 /**
  * @swagger
- * /notices/{id}/delete:
+ * /api/notices/{id}/delete:
  *   delete:
  *     summary: 공지사항 삭제
  *     description: 특정 ID의 공지사항을 삭제합니다.
