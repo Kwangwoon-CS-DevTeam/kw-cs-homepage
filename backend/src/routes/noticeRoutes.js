@@ -11,4 +11,7 @@ router.post('/new-notice', noticeController.createNotice);
 // 공지사항 수정 API
 router.put('/new-notice/:id', noticeController.updateNotice);
 
+// 공지사항 논리적 삭제 API
+router.delete('/:id/delete', noticeController.deleteNotice);
+
 module.exports = router;
