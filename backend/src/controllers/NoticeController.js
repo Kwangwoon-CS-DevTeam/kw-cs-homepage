@@ -228,3 +228,24 @@ exports.updateNotice = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
+exports.deleteNotice = async (req, res) => {
+    const { id } = req.params; // URL에서 ID 가져오기
+
+    try {
+        const result = await noticeService.deleteNotice(id);
+
+        if (result.success) {
+            res.status(result.code).json({
+                message: result.message,
+            });
+        } else {
+            res.status(result.code).json({
+                message: result.message,
+            });
+        }
+    } catch (error) {
+        console.error('Error in deleteNotice Controller:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
