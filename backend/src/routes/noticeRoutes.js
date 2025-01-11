@@ -8,4 +8,7 @@ router.get('/', noticeController.getPaginatedNotices);
 // 공지사항 저장 API
 router.post('/new-notice', noticeController.createNotice);
 
+// 공지사항 수정 API
+router.put('/new-notice/:id', noticeController.updateNotice);
+
 module.exports = router;
