@@ -44,3 +44,44 @@ exports.saveNotice = async (noticeData) => {
         };
     }
 };
+
+/**
+ * 공지사항 업데이트 로직
+ * @param {number} id - 업데이트할 공지사항의 ID
+ * @param {object} updateData - 업데이트할 데이터 객체
+ * @returns {object} 업데이트 결과
+ */
+const updateNotice = async (id, updateData) => {
+    try {
+        // 1. 업데이트할 데이터가 존재하는지 확인
+        const notice = await NoticeModel.findByPk(id);
+        if (!notice) {
+            return {
+                code: 404,
+                success: false,
+                message: 'Notice not found',
+            };
+        }
+
+        // 2. 데이터 업데이트
+        const updatedNotice = await notice.update(updateData);
+
+        return {
+            code: 200,
+            success: true,
+            data: updatedNotice,
+        };
+    } catch (error) {
+        console.error('Error updating notice:', error);
+        return {
+            code: 500,
+            success: false,
+            message: 'Failed to update notice',
+            error,
+        };
+    }
+};
+
+module.exports = {
+    updateNotice,
+};
