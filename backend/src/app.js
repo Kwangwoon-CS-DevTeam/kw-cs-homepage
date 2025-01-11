@@ -8,6 +8,9 @@ require("./models"); // 관계가 정의된 모델 불러오기 (객체로 묶�
 
 const app = express();
 
+// JSON 파싱 미들웨어 추가
+app.use(express.json());
+
 // Swagger UI 세팅
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
