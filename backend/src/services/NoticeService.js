@@ -1,4 +1,4 @@
-const NoticeModel = require("../models/NoticeModel");
+const NoticeModel = require("../models/Notices");
 
 exports.getNotices = async (page, size) => {
     const offset = (page - 1) * size; // 몇 개의 데이터를 건너뛸지 계산
