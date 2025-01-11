@@ -2,8 +2,11 @@ const express = require('express');
 const router = express.Router();
 const noticeController = require('../controllers/NoticeController');
 
-// 페이징 기능이 포함된 사용자 목록 API
+// 페이징 기능이 포함된 공지사항 목록 API
 router.get('/', noticeController.getPaginatedNotices);
+
+// 페이징 기능이 포함되고 카테고리 별로 필터링 된 공지사항 목록 API
+router.get('/', noticeController.getFilteredNotices);
 
 // 공지사항 저장 API
 router.post('/new-notice', noticeController.createNotice);
