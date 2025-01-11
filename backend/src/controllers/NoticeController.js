@@ -70,6 +70,25 @@ exports.getPaginatedNotices = async (req, res) => {
 };
 
 /**
+ * 특정 카테고리의 공지사항 목록 조회
+ */
+exports.getFilteredNotices = async (req, res) => {
+    const { category, page = 1, size = 10 } = req.query;
+
+    try {
+        if (category && typeof category !== 'string') {
+            return res.status(400).json({ message: 'Invalid category format' });
+        }
+
+        const notices = await noticeService.getFilteredNoticesByCategory(category, page, size);
+        res.status(200).json(notices);
+    } catch (error) {
+        console.error('Error in getFilteredNotices Controller:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+/**
  * @swagger
  * /notices/new-notice:
  *   post:
