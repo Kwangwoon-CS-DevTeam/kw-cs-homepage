@@ -17,3 +17,30 @@ exports.getNotices = async (page, size) => {
         notices, // 사용자 데이터
     };
 }
+
+exports.saveNotice = async (noticeData) => {
+    try {
+        // 데이터 저장
+        const newNotice = await NoticeModel.create({
+            admin_id: noticeData.admin_id,
+            category_id: noticeData.category_id,
+            title: noticeData.title,
+            content: noticeData.content,
+            url: noticeData.url || null,
+            max_participants: noticeData.max_participants || null,
+            current_participants: noticeData.current_participants || null,
+        });
+
+        return {
+            success: true,
+            data: newNotice,
+        };
+    } catch (error) {
+        console.error('공지사항 저장을 실패하였습니다. 에러내용:', error);
+        return {
+            success: false,
+            message: 'Failed to save notice',
+            error,
+        };
+    }
+};
