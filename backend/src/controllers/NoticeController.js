@@ -229,6 +229,54 @@ exports.updateNotice = async (req, res) => {
     }
 };
 
+/**
+ * @swagger
+ * /notices/{id}/delete:
+ *   delete:
+ *     summary: 공지사항 삭제
+ *     description: 특정 ID의 공지사항을 삭제합니다.
+ *     tags:
+ *       - Notices
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: 삭제할 공지사항의 ID
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     responses:
+ *       200:
+ *         description: 공지사항이 성공적으로 삭제됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Notice deleted successfully
+ *       404:
+ *         description: 공지사항을 찾을 수 없음
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Notice not found
+ *       500:
+ *         description: 서버 내부 에러
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal Server Error
+ */
 exports.deleteNotice = async (req, res) => {
     const { id } = req.params; // URL에서 ID 가져오기
 
