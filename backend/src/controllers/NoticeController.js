@@ -93,3 +93,27 @@ exports.createNotice = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 }
+
+
+exports.updateNotice = async (req, res) => {
+    const { id } = req.params; // 공지사항 ID (예: /notices/:id)
+    const updateData = req.body; // 업데이트할 데이터
+
+    try {
+        const result = await noticeService.updateNotice(id, updateData);
+
+        if (result.success) {
+            res.status(result.code).json({
+                message: 'Notice updated successfully',
+                data: result.data,
+            });
+        } else {
+            res.status(result.code).json({
+                message: result.message,
+            });
+        }
+    } catch (error) {
+        console.error('Error in updateNotice Controller:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
