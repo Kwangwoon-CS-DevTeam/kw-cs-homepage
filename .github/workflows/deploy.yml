@@ -10,6 +10,7 @@ on:
 
 jobs:
   deploy-backend:
+    if: github.repository == 'original-repo-name'
     runs-on: ubuntu-latest
 
     steps:
