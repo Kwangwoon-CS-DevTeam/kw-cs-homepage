@@ -15,7 +15,7 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Notice 라우터
-app.use('/notices', noticeRoutes);
+app.use('/api/notices', noticeRoutes);
 
 // 테이블 동기화
 (async () => {
