@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const noticeController = require('../controllers/NoticeController');
 const noticeController = require('../controllers/noticeController');
 const validators = require('../validators/noticeValidator');
 const middlewares = require('../middlewares/validationMiddleware');
@@ -10,6 +11,8 @@ router.get('/',
     middlewares.handleValidationErrors,    // 에러 처리 미들웨어
     noticeController.getNotices);
 
+// 페이징 기능이 포함된 사용자 목록 API
+router.get('/', noticeController.getPaginatedNotices);
 // 공지사항 저장 API
 router.post('/new-notice',
     validators.validateCreateNotice,
