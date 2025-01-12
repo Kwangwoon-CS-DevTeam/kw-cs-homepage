@@ -1,58 +1,46 @@
 const NoticeModel = require("../models/Notices");
 const CategoryModel = require("../models/Category");
 
-exports.getNotices = async (page, size) => {
-    const offset = (page - 1) * size; // 몇 개의 데이터를 건너뛸지 계산
-    const total = await NoticeModel.count(); // 전체 데이터 수
-
-    const notices = await NoticeModel.findAll({
-        offset: offset,
-        limit: parseInt(size), // 한 번에 반환할 데이터 수
-        order: [['createdAt', 'DESC']], // 정렬 기준
-    });
-
-    return {
-        total, // 전체 데이터 개수
-        page: parseInt(page), // 현재 페이지
-        limit: parseInt(size), // 페이지 크기
-        notices, // 사용자 데이터
-    };
-}
-
 /**
- * 특정 카테고리 이름과 페이징을 적용한 공지사항 조회
- * @param {string} categoryName - 카테고리 이름 ("Important" 또는 "event")
+ * 공지사항 목록 조회 (카테고리 포함 가능)
+ * @param {string} [categoryName] - 카테고리 이름 (선택적)
  * @param {number} page - 현재 페이지 번호
  * @param {number} size - 페이지당 항목 수
  * @returns {object} 공지사항 목록 및 페이징 정보
  */
-exports.getFilteredNoticesByCategory = async (categoryName, page, size) => {
-    const offset = (page - 1) * size;
-    const limit = parseInt(size, 10);
+exports.getNotices = async (categoryName, page, size) => {
+    const offset = (page - 1) * size; // 데이터 시작 지점
+    const limit = size; // 페이지당 항목 수
 
     try {
-        // 1. 카테고리 ID 조회
-        const category = await CategoryModel.findOne({ where: { category_name: categoryName } });
-        if (!category) {
-            throw new Error(`Category '${categoryName}' not found`);
+        let whereCondition = {};
+
+        // 카테고리가 제공된 경우 카테고리 ID 조회 및 필터 설정
+        if (categoryName) {
+            console.log(categoryName);
+            const category = await CategoryModel.findOne({ where: { category_name: categoryName } });
+            if (!category) {
+                throw new Error(`Category '${categoryName}' not found`);
+            }
+            whereCondition.category_id = category.id;
         }
 
-        // 2. 해당 카테고리 ID를 기반으로 공지사항 조회
-        const { count, rows } = await Notices.findAndCountAll({
-            where: { category_id: category.id },
+        // 공지사항 조회
+        const { count, rows } = await NoticeModel.findAndCountAll({
+            where: whereCondition,
             offset,
             limit,
             order: [['created_at', 'DESC']],
         });
 
         return {
-            total: count,
-            page: parseInt(page, 10),
-            size: limit,
-            notices: rows,
+            total: count,        // 전체 공지사항 수
+            page,                // 현재 페이지
+            size,                // 페이지당 항목 수
+            notices: rows,       // 공지사항 데이터 배열
         };
     } catch (error) {
-        console.error('Error fetching filtered notices:', error);
+        console.error('Error fetching notices:', error);
         throw new Error('Failed to fetch notices');
     }
 };
