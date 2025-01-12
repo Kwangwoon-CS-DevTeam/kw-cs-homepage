@@ -14,7 +14,9 @@ exports.getNotices = async (categoryName, page, size) => {
     const limit = size; // 페이지당 항목 수
 
     try {
-        let whereCondition = {};
+        let whereCondition = {
+            isDeleted: 0
+        };
 
         // 카테고리가 제공된 경우 카테고리 ID 조회 및 필터 설정
         if (categoryName) {
