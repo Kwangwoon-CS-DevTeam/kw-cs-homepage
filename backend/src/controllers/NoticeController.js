@@ -251,6 +251,15 @@ exports.updateNotice = async (req, res) => {
     const updateData = req.body; // 업데이트할 데이터
 
     try {
+
+        const categoryMapping = {
+            important: 1,
+            event: 2,
+        };
+
+        updateData.category_id = categoryMapping[updateData.category];
+        delete updateData.category;
+
         const result = await noticeService.updateNotice(id, updateData);
 
         if (result.success) {
