@@ -148,6 +148,15 @@ exports.getNotices = async (req, res) => {
 exports.createNotice = async (req, res) => {
     const noticeData = req.body; // 클라이언트에서 보낸 데이터
 
+    // 카테고리 변환
+    const categoryMapping = {
+        important: 1,
+        event: 2,
+    };
+
+    noticeData.category_id = categoryMapping[noticeData.category];
+    delete noticeData.category;
+
     try {
         const result = await noticeService.saveNotice(noticeData);
 
