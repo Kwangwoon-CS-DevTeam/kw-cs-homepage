@@ -54,7 +54,7 @@ const Notices = sequelize.define('Notices', {
     },
 }, {
     tableName: 'Notices',
-    timestamps: false,
+    timestamps: true,
 });
 
 module.exports = Notices;
