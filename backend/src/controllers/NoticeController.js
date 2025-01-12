@@ -1,6 +1,9 @@
 const noticeService = require('../services/NoticeService');
 
 /**
+ * 페이징 기능이 추가됨 공지사항 불러오기(전체)
+ */
+/**
  * @swagger
  * /api/notices:
  *   get:
@@ -70,7 +73,7 @@ exports.getPaginatedNotices = async (req, res) => {
 };
 
 /**
- * 특정 카테고리의 공지사항 목록 조회
+ * 카테고리로 필터된 공지사항 불러오기
  */
 /**
  * @swagger
@@ -165,6 +168,9 @@ exports.getFilteredNotices = async (req, res) => {
 };
 
 /**
+ * 공지사항 추가
+ */
+/**
  * @swagger
  * /api/notices/new-notice:
  *   post:
@@ -235,6 +241,9 @@ exports.createNotice = async (req, res) => {
     }
 }
 
+/**
+ * 공지사항 업데이트
+ */
 /**
  * @swagger
  * /api/notices/new-notice/{id}:
@@ -324,6 +333,9 @@ exports.updateNotice = async (req, res) => {
     }
 };
 
+/**
+ * 공지사항 삭제
+ */
 /**
  * @swagger
  * /api/notices/{id}/delete:
