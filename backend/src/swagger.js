@@ -18,17 +18,13 @@ const swaggerOptions = {
                 Notice: {
                     type: 'object',
                     properties: {
-                        id: {
-                            type: 'integer',
-                            example: 1,
-                        },
                         admin_id: {
                             type: 'string',
                             example: 'admin123',
                         },
-                        category_id: {
-                            type: 'integer',
-                            example: 1,
+                        category: {
+                            type: 'string',
+                            example: 'important',
                         },
                         title: {
                             type: 'string',

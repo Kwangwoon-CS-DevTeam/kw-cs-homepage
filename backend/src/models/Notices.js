@@ -38,7 +38,6 @@ const Notices = sequelize.define('Notices', {
     created_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
     },
     updated_at: {
         type: DataTypes.DATE,
@@ -51,7 +50,7 @@ const Notices = sequelize.define('Notices', {
     },
 }, {
     tableName: 'Notices',
-    timestamps: true,
+    timestamps: false,
 });
 
 module.exports = Notices;
