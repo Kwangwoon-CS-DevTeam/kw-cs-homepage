@@ -17,7 +17,6 @@ exports.getNotices = async (categoryName, page, size) => {
 
         // 카테고리가 제공된 경우 카테고리 ID 조회 및 필터 설정
         if (categoryName) {
-            console.log(categoryName);
             const category = await CategoryModel.findOne({ where: { category_name: categoryName } });
             if (!category) {
                 throw new Error(`Category '${categoryName}' not found`);
