@@ -44,6 +44,11 @@ const Resources = sequelize.define('Resources', {
 }, {
     tableName: 'Resources',
     timestamps: false,
+    hooks: {
+        beforeUpdate: (resource) => {
+            resource.updated_at = new Date();
+        }
+    }
 });
 
 module.exports = Resources;
