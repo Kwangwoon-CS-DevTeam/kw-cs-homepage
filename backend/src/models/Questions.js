@@ -9,7 +9,7 @@ const Questions = sequelize.define('Questions', {
     },
     admin_id: {
         type: DataTypes.STRING(20),
-        allowNull: false,
+        allowNull: true,
     },
     nickname: {
         type: DataTypes.STRING(20),
