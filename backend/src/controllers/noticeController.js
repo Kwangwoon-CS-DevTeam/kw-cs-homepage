@@ -1,4 +1,4 @@
-const noticeService = require('../services/NoticeService');
+const noticeService = require('../services/noticeService');
 
 /**
  * 카테고리로 필터된 공지사항 불러오기
