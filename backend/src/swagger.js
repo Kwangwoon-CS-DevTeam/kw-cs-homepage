@@ -29,7 +29,7 @@ const swaggerOptions = {
             },
         ],
     },
-    apis: ['./src/*.js', './src/controllers/ResourcesController.js'], // 여러 경로 추가
+    apis: ['./src/*.js', './src/controllers/*.js'], // 여러 경로 추가
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
