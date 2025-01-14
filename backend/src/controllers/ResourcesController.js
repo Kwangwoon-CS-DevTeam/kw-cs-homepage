@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Resources = require("../models/Resources"); // Sequelize 모델 (Resources 테이블에 대한 모델)
+const axios = require("axios");
+const Resources = require("../models/Resources"); // Sequelize 모델
 
 /**
  * @swagger
@@ -138,9 +139,19 @@ router.get("/:id/download", async (req, res) => {
         if (!resource || resource.isDeleted) { // 자료가 없거나 삭제된 경우
             return res.status(404).send("자료를 찾을 수 없습니다.");
         }
-        res.redirect(resource.file_url); 
+
+        // 외부 파일 URL 가져오기
+        const fileUrl = resource.file_url;
+
+        // Axios를 사용하여 외부 URL에서 데이터 가져오기
+        const response = await axios.get(fileUrl, { responseType: 'stream' });
+
+        // 외부 리소스를 클라이언트에 스트림으로 전달
+        res.setHeader('Content-Type', response.headers['content-type']);
+        response.data.pipe(res);
     } catch (error) {
-        res.status(500).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
+        console.error('Error fetching the resource:', error);
+        res.status(500).json({ error: '리소스를 가져오는 도중 문제가 발생했습니다.' });
     }
 });
 
