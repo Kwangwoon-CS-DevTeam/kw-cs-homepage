@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Login from './pages/Login';
+import Home from './pages/Home.jsx';
+import Login from './pages/Login.jsx';
 import Specialization from "./pages/Specialization.jsx";
-import NoticeBoard from './pages/NoticeBoard';
-import ResourceRoom from './pages/ResourceRoom';
+import NoticeBoard from './pages/NoticeBoard.jsx';
+import ResourceRoom from './pages/ResourceRoom.jsx';
 import IntelligentComputingSystems from "./pages/IntelligentComputingSystems.jsx";
 import IntelligentInfo from "./pages/IntelligentInfo.jsx";
-import NotFoundPage from './pages/404';
+import NotFoundPage from './pages/404.jsx';
 import QnaBoard from "./pages/QnaBoard.jsx";
 
 function App() {
