@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const noticeController = require('../controllers/NoticeController');
+const noticeController = require('../controllers/noticeController');
 const validators = require('../validators/noticeValidator');
 const middlewares = require('../middlewares/validationMiddleware');
 
