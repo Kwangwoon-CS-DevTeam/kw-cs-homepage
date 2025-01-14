@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Resources = require("../models/Resources"); // Sequelize 모델
+const Resources = require("../models/Resources"); // Sequelize 모델 (Resources 테이블에 대한 모델)
 
 /**
  * @swagger
@@ -51,10 +51,10 @@ const Resources = require("../models/Resources"); // Sequelize 모델
  */
 router.post("/", async (req, res) => {
     try {
-        const resource = await Resources.create(req.body);
-        res.status(201).json(resource);
+        const resource = await Resources.create(req.body); // 새로운 자료 생성
+        res.status(201).json(resource); 
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
     }
 });
 
@@ -94,21 +94,20 @@ router.post("/", async (req, res) => {
  *       500:
  *         description: Error fetching resources
  */
-// 자료 목록 조회 (페이징 포함)
 router.get("/", async (req, res) => {
     const { category, page = 1, limit = 10 } = req.query;
     try {
-        const whereClause = { isDeleted: 0 };
-        if (category) whereClause.category = category;
+        const whereClause = { isDeleted: 0 }; // 삭제되지 않은 자료만 조회
+        if (category) whereClause.category = category; // 카테고리 필터링
 
         const resources = await Resources.findAll({
             where: whereClause,
-            offset: (page - 1) * limit,
-            limit: parseInt(limit),
+            offset: (page - 1) * limit, 
+            limit: parseInt(limit), // 한 페이지에 표시할 자료 수
         });
-        res.json(resources);
+        res.json(resources); // 조회된 자료 목록 반환
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
     }
 });
 
@@ -133,16 +132,15 @@ router.get("/", async (req, res) => {
  *       500:
  *         description: Error processing request
  */
-// 자료 다운로드
 router.get("/:id/download", async (req, res) => {
     try {
-        const resource = await Resources.findByPk(req.params.id);
-        if (!resource || resource.isDeleted) {
+        const resource = await Resources.findByPk(req.params.id); 
+        if (!resource || resource.isDeleted) { // 자료가 없거나 삭제된 경우
             return res.status(404).send("자료를 찾을 수 없습니다.");
         }
-        res.redirect(resource.file_url); // 파일 다운로드 URL로 리다이렉트
+        res.redirect(resource.file_url); 
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
     }
 });
 
@@ -168,7 +166,7 @@ router.get("/:id/download", async (req, res) => {
  *             properties:
  *               title:
  *                 type: string
- *               category_id:  # 변경된 필드명
+ *               category_id:
  *                 type: integer
  *               content:
  *                 type: string
@@ -178,7 +176,7 @@ router.get("/:id/download", async (req, res) => {
  *                 type: integer
  *             example:
  *               title: "Updated Resource"
- *               category_id: 1  # 카테고리 ID 예시
+ *               category_id: 1
  *               content: "Updated content"
  *               file_url: "http://example.com/updated-resource"
  *               isDeleted: 0
@@ -196,14 +194,14 @@ router.get("/:id/download", async (req, res) => {
  */
 router.put("/:id", async (req, res) => {
     try {
-        const resource = await Resources.findByPk(req.params.id);
-        if (!resource || resource.isDeleted) {
+        const resource = await Resources.findByPk(req.params.id); 
+        if (!resource || resource.isDeleted) { 
             return res.status(404).send("자료를 찾을 수 없습니다.");
         }
-        await resource.update(req.body);
-        res.json(resource);
+        await resource.update(req.body); 
+        res.json(resource); 
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
     }
 });
 
@@ -228,17 +226,17 @@ router.put("/:id", async (req, res) => {
  *       500:
  *         description: Error deleting resource
  */
-// 자료 삭제 (소프트 삭제)
+// 자료 소프트 삭제
 router.delete("/:id", async (req, res) => {
     try {
-        const resource = await Resources.findByPk(req.params.id);
-        if (!resource || resource.isDeleted) {
+        const resource = await Resources.findByPk(req.params.id); 
+        if (!resource || resource.isDeleted) { 
             return res.status(404).send("자료를 찾을 수 없습니다.");
         }
-        await resource.update({ isDeleted: 1 });
+        await resource.update({ isDeleted: 1 }); // 소프트 삭제 처리
         res.send("자료가 삭제되었습니다.");
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
     }
 });
 

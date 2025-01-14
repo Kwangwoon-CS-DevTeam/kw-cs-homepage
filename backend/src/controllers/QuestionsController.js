@@ -40,9 +40,9 @@ const Questions = require('../models/Questions');
 router.post('/add', async (req, res) => {
     try {
         const newQuestion = await Questions.create(req.body);
-        res.status(201).json(newQuestion);
+        res.status(201).json(newQuestion); // 성공적으로 생성된 질문 반환
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: error.message }); // 오류 발생 시 400 에러 반환
     }
 });
 
@@ -64,12 +64,13 @@ router.post('/add', async (req, res) => {
  */
 router.get('/', async (req, res) => {
     try {
+        // 삭제되지 않은 모든 질문 조회
         const questions = await Questions.findAll({
-            where: { isDeleted: 0 }, // 삭제되지 않은 질문만 조회
+            where: { isDeleted: 0 }, // isDeleted가 0인 질문만 조회
         });
-        res.status(200).json(questions);
+        res.status(200).json(questions); // 조회된 질문 목록 반환
     } catch (error) {
-        res.status(400).json({ error: 'Failed to retrieve questions' });
+        res.status(400).json({ error: 'Failed to retrieve questions' }); // 오류 발생 시 400 에러 반환
     }
 });
 
@@ -109,27 +110,26 @@ router.get('/', async (req, res) => {
  *       404:
  *         description: 질문을 찾을 수 없음
  */
-
 router.put('/answer/:id', async (req, res) => {
-    const { id } = req.params;  // URL 파라미터에서 질문의 ID를 받아옴
-    const { admin_id, answer } = req.body;  // 요청 본문에서 admin_id와 answer를 받아옴
+    const { id } = req.params; 
+    const { admin_id, answer } = req.body;  
 
     try {
+        // 해당 ID의 삭제되지 않은 질문 조회
         const question = await Questions.findOne({ where: { id, isDeleted: 0 } });
         if (question) {
-            question.answer = answer;         
-            question.admin_id = admin_id;     
+            question.answer = answer; 
+            question.admin_id = admin_id; 
             question.updated_at = new Date(); 
-            await question.save();
-            res.status(200).json(question);    // 수정된 질문을 응답으로 반환
+            await question.save(); 
+            res.status(200).json(question); 
         } else {
-            res.status(404).json({ error: 'Question not found' });  // 질문 존재 X, 404 에러
+            res.status(404).json({ error: 'Question not found' }); // 질문이 없으면 404 에러 반환
         }
     } catch (error) {
-        res.status(400).json({ error: 'Failed to update answer' });  // 오류가 발생하면 400 에러
+        res.status(400).json({ error: 'Failed to update answer' }); // 오류 발생 시 400 에러 반환
     }
 });
-
 
 /**
  * @swagger
@@ -151,20 +151,19 @@ router.put('/answer/:id', async (req, res) => {
  *         description: 질문을 찾을 수 없음
  */
 router.delete('/delete/:id', async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params; // URL에서 질문 ID를 가져옴
     try {
         const question = await Questions.findOne({ where: { id } });
         if (question) {
-            question.isDeleted = 1;  // 논리 삭제 처리
-            await question.save();
-            res.status(200).json({ message: 'Question deleted' });
+            question.isDeleted = 1; // 논리 삭제 처리 (isDeleted 값을 1로 설정)
+            await question.save(); // 변경사항 저장
+            res.status(200).json({ message: 'Question deleted' }); // 삭제 성공 메시지 반환
         } else {
-            res.status(404).json({ error: 'Question not found' });
+            res.status(404).json({ error: 'Question not found' }); // 질문이 없으면 404 에러 반환
         }
     } catch (error) {
-        res.status(400).json({ error: 'Failed to delete question' });
+        res.status(400).json({ error: 'Failed to delete question' }); // 오류 발생 시 400 에러 반환
     }
 });
 
-
-module.exports = router;
+module.exports = router; 
