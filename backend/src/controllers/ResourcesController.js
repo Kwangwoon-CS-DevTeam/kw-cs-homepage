@@ -5,7 +5,7 @@ const Resources = require("../models/Resources"); // Sequelize 모델
 
 /**
  * @swagger
- * /api/resources:
+ * /api/resources/new-resource:
  *   post:
  *     summary: Create a new resource
  *     description: Adds a new resource to the system.
