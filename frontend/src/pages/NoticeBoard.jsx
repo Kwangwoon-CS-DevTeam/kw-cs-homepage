@@ -2,46 +2,40 @@ import NavbarBlack from "../components/NavbarBlack.jsx";
 import NoticeCard from "../components/NoticeCard.jsx"; // NoticeCard 컴포넌트 임포트
 import FooterBlack from "../components/FooterBlack.jsx";
 import NoticeHeader from "../components/NoticeHeader.jsx";
-import { useState, useRef } from "react";
-
-const notices = [
-    { id: 1, category: "important", title: "공지사항 제목 1", excerpt: "이곳에 공지 내용의 요약이 들어갑니다.", author: "작성자 1", date: "2024-12-01", link: "#" },
-    { id: 2, category: "important", title: "공지사항 제목 2", excerpt: "공지 내용 요약을 적으면 목록에서 더 보기 좋습니다.", author: "작성자 2", date: "2024-12-02", link: "#" },
-    { id: 3, category: "events", title: "공지사항 제목 3", excerpt: "행사에 대한 공지 요약이 들어갑니다.", author: "작성자 3", date: "2024-12-03", link: "#" },
-    { id: 4, category: "important", title: "공지사항 제목 4", excerpt: "추가 공지 내용 요약", author: "작성자 4", date: "2024-12-04", link: "#" },
-    { id: 5, category: "important", title: "공지사항 제목 5", excerpt: "추가 중요 공지 내용 요약", author: "작성자 5", date: "2024-12-05", link: "#" },
-    { id: 6, category: "events", title: "공지사항 제목 6", excerpt: "행사 공지 요약 내용", author: "작성자 6", date: "2024-12-06", link: "#" },
-    { id: 7, category: "important", title: "공지사항 제목 7", excerpt: "추가 최신 공지 내용", author: "작성자 7", date: "2024-12-07", link: "#" },
-    { id: 8, category: "events", title: "공지사항 제목 8", excerpt: "공지사항 내용 요약", author: "작성자 8", date: "2024-12-08", link: "#" },
-    { id: 9, category: "important", title: "공지사항 제목 9", excerpt: "새로운 공지 내용이 여기에 추가됩니다.", author: "작성자 9", date: "2024-12-09", link: "#" },
-    { id: 10, category: "events", title: "공지사항 제목 10", excerpt: "중요 공지 내용 요약이 추가됩니다.", author: "작성자 10", date: "2024-12-10", link: "#" },
-    { id: 11, category: "events", title: "공지사항 제목 11", excerpt: "또 다른 행사 공지 요약이 추가됩니다.", author: "작성자 11", date: "2024-12-11", link: "#" },
-    { id: 12, category: "important", title: "공지사항 제목 12", excerpt: "최신 공지 내용 요약이 여기에 추가됩니다.", author: "작성자 12", date: "2024-12-12", link: "#" },
-    { id: 13, category: "important", title: "공지사항 제목 13", excerpt: "중요한 공지 내용 요약을 확인하세요.", author: "작성자 13", date: "2024-12-13", link: "#" },
-    { id: 14, category: "events", title: "공지사항 제목 14", excerpt: "행사 공지 요약이 또 추가되었습니다.", author: "작성자 14", date: "2024-12-14", link: "#" },
-    { id: 15, category: "important", title: "공지사항 제목 15", excerpt: "최신 공지사항 요약이 이곳에 추가됩니다.", author: "작성자 15", date: "2024-12-15", link: "#" },
-    { id: 16, category: "events", title: "공지사항 제목 16", excerpt: "중요 공지 내용 요약 마지막 항목입니다.", author: "작성자 16", date: "2024-12-16", link: "#" },
-];
+import { useState, useRef, useEffect } from "react";
 
 export default function NoticeBoard() {
+    const [notices, setNotices] = useState([]); // 공지사항 데이터
     const [selectedCategory, setSelectedCategory] = useState("latest");
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
     const categoryRef = useRef(null);
 
     const itemsPerPage = 7;
 
-    // 현재 선택된 카테고리에 따라 필터링된 공지사항
-    const filteredNotices = notices.filter((notice) =>
-        selectedCategory === "latest" ? true : notice.category === selectedCategory
-    );
+    // 공지사항 데이터 가져오기
+    const fetchNotices = async () => {
+        const categoryQuery = selectedCategory !== "latest" ? `&category=${selectedCategory}` : "";
+        const url = `http://localhost:3000/api/notices?page=${currentPage}&size=${itemsPerPage}${categoryQuery}`;
 
-    // 현재 페이지에 표시할 공지사항 계산
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentNotices = filteredNotices.slice(indexOfFirstItem, indexOfLastItem);
+        try {
+            const response = await fetch(url);
+            if (response.ok) {
+                const data = await response.json();
+                setNotices(data.notices); // 공지사항 데이터 업데이트
+                setTotalPages(data.totalPages); // 총 페이지 수 업데이트
+            } else {
+                console.error("공지사항 데이터를 가져오는 데 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("서버 요청 실패:", error);
+        }
+    };
 
-    // 페이지 수 계산
-    const totalPages = Math.ceil(filteredNotices.length / itemsPerPage);
+    // 선택된 카테고리 또는 페이지 변경 시 데이터 가져오기
+    useEffect(() => {
+        fetchNotices();
+    }, [selectedCategory, currentPage]);
 
     // 페이지 버튼 클릭 핸들러
     const handlePageChange = (pageNumber) => {
@@ -56,7 +50,7 @@ export default function NoticeBoard() {
             {/* 네비게이션 바 */}
             <NavbarBlack />
 
-            <NoticeHeader title={"공지사항"} sub={"학과의 중요한 소식과 공지사항을 확인하세요."}/>
+            <NoticeHeader title={"공지사항"} sub={"학과의 중요한 소식과 공지사항을 확인하세요."} />
 
             {/* 카테고리 버튼 */}
             <div
@@ -70,7 +64,10 @@ export default function NoticeBoard() {
                                 ? "bg-blue-900 text-white"
                                 : "text-gray-500 hover:bg-blue-100"
                         }`}
-                        onClick={() => setSelectedCategory("latest")}
+                        onClick={() => {
+                            setSelectedCategory("latest");
+                            setCurrentPage(1); // 페이지 초기화
+                        }}
                     >
                         최신
                     </button>
@@ -80,7 +77,10 @@ export default function NoticeBoard() {
                                 ? "bg-pink-400 text-white"
                                 : "text-gray-500 hover:bg-pink-200"
                         }`}
-                        onClick={() => setSelectedCategory("important")}
+                        onClick={() => {
+                            setSelectedCategory("important");
+                            setCurrentPage(1); // 페이지 초기화
+                        }}
                     >
                         중요
                     </button>
@@ -90,7 +90,10 @@ export default function NoticeBoard() {
                                 ? "bg-blue-200 text-blue-800"
                                 : "text-gray-500 hover:bg-blue-100"
                         }`}
-                        onClick={() => setSelectedCategory("events")}
+                        onClick={() => {
+                            setSelectedCategory("events");
+                            setCurrentPage(1); // 페이지 초기화
+                        }}
                     >
                         행사
                     </button>
@@ -99,8 +102,8 @@ export default function NoticeBoard() {
 
             {/* 공지사항 리스트 */}
             <div className="container mx-auto px-4 lg:px-16 py-8 grid gap-4">
-                {currentNotices.map((notice, index) => (
-                    <NoticeCard key={index} {...notice} />
+                {notices.map((notice) => (
+                    <NoticeCard key={notice.id} {...notice} />
                 ))}
             </div>
 

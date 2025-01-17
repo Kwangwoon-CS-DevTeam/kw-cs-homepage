@@ -31,7 +31,7 @@ export default function ResourceBoard() {
     const itemsPerPage = 5;
 
     const filteredResources = resources.filter((resource) =>
-        selectedCategory === "latest" ? true : resource.category === selectedCategory
+        selectedCategory === "latest" ? true : resource.category_id === selectedCategory
     );
 
     const indexOfLastItem = currentPage * itemsPerPage;

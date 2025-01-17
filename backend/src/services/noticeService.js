@@ -35,11 +35,23 @@ exports.getNotices = async (categoryName, page, size) => {
             order: [['created_at', 'DESC']],
         });
 
+        console.log(count, rows);
+        // 카테고리 ID를 문자열로 변환
+        const categoryMapping = {
+            1: 'important',
+            2: 'event',
+        };
+
+        const notices = rows.map((notice) => ({
+            ...notice.toJSON(), // Sequelize 객체를 일반 객체로 변환
+            category: categoryMapping[notice.category_id] || 'unknown', // 문자열 변환
+        }));
+
         return {
             total: count,        // 전체 공지사항 수
             page,                // 현재 페이지
             size,                // 페이지당 항목 수
-            notices: rows,       // 공지사항 데이터 배열
+            notices,             // 문자열로 변환된 공지사항 데이터 배열
         };
     } catch (error) {
         console.error('Error fetching notices:', error);
@@ -55,6 +67,7 @@ exports.saveNotice = async (noticeData) => {
             category_id: noticeData.category_id,
             title: noticeData.title,
             content: noticeData.content,
+            excerpt: noticeData.excerpt,
             url: noticeData.url || null,
             max_participants: noticeData.max_participants || null,
             current_participants: noticeData.current_participants || null,

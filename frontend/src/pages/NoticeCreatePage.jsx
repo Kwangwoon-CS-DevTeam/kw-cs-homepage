@@ -9,6 +9,7 @@ const NewNoticePage = () => {
     const [url, setUrl] = useState(""); // 신청 URL
     const [content, setContent] = useState(""); // 공지 내용
     const navigate = useNavigate(); // useNavigate 훅 초기화
+    const [excerpt, setExcerpt] = useState(""); // 요약 상태
 
     const handleEditorChange = (content) => {
         setContent(content); // 에디터 내용 업데이트
@@ -23,6 +24,7 @@ const NewNoticePage = () => {
             title,
             url,
             content,
+            excerpt,
             max_participants: 125,
             category: "important", // 카테고리 임시 지정, 필요시 동적으로 변경
         };
@@ -131,7 +133,7 @@ const NewNoticePage = () => {
                                         console.log("Editor content changed:", editor.getContent());
                                     });
                                 },
-                                file_picker_callback: (callback, value, meta) => {
+                                file_picker_callback: (callback) => {
                                     const input = document.createElement("input");
                                     input.setAttribute("type", "file");
                                     input.setAttribute("accept", "image/*");
@@ -155,7 +157,7 @@ const NewNoticePage = () => {
                                                 })
                                                 .then((data) => {
                                                     console.log("Uploaded URL:", data.location);
-                                                    callback(data.location, { title: file.name }); // TinyMCE에 이미지 삽입
+                                                    callback(data.location, {title: file.name}); // TinyMCE에 이미지 삽입
                                                 })
                                                 .catch((error) => {
                                                     console.error("Image upload failed:", error);
@@ -168,6 +170,20 @@ const NewNoticePage = () => {
                             }}
                             onEditorChange={handleEditorChange}
                         />
+                    </div>
+
+                    <div className="mb-6">
+                        <label htmlFor="excerpt" className="block font-medium mb-2">
+                            요약
+                        </label>
+                        <textarea
+                            id="excerpt"
+                            placeholder="공지 요약을 작성하세요. (선택 사항)"
+                            className="w-full px-4 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            rows="4" // 필드 높이를 설정
+                            value={excerpt} // 요약 상태 값
+                            onChange={(e) => setExcerpt(e.target.value)} // 요약 상태 업데이트
+                        ></textarea>
                     </div>
 
                     <div className="flex justify-end">
@@ -188,7 +204,7 @@ const NewNoticePage = () => {
             </div>
 
             {/* 푸터 */}
-            <FooterBlack />
+            <FooterBlack/>
         </div>
     );
 };

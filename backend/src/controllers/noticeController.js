@@ -234,6 +234,7 @@ exports.getNotices = async (req, res) => {
 exports.createNotice = async (req, res) => {
     const noticeData = req.body; // 클라이언트에서 보낸 데이터
 
+    console.log(noticeData);
     // 카테고리 변환
     const categoryMapping = {
         important: 1,

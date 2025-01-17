@@ -73,7 +73,7 @@ export default function QnaBoard() {
                                 <span className="text-base font-medium">{q.content}</span>
                             </div>
                             <div className="flex items-center space-x-4">
-                                <span className="text-sm text-gray-500">{q.date}</span>
+                                <span className="text-sm text-gray-500">{q.created_at}</span>
                                 <button
                                     onClick={() => toggleAnswer(index)}
                                     className="text-blue-500 px-4 py-1 rounded transition flex items-center hover:text-blue-700"
