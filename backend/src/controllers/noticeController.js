@@ -1,5 +1,19 @@
 const noticeService = require('../services/noticeService');
 
+// 이미지 처리 로직
+exports.uploadNoticeImage = (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    // URL 디코딩
+    const fileUrl = decodeURIComponent(req.file.location);
+    console.log("Decoded file URL:", fileUrl);
+
+    res.status(200).json({ location: fileUrl });
+};
+
+
 /**
  * @swagger
  * /api/notices:
@@ -244,7 +258,7 @@ exports.createNotice = async (req, res) => {
             });
         }
     } catch (error) {
-        console.error('공지사항 저장에 실패하였습니다 in Controller: ', error);
+        console.log('공지사항 저장에 실패하였습니다 in Controller: ', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 }
