@@ -3,6 +3,7 @@ import FooterBlack from "../components/FooterBlack.jsx";
 import { useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 import { useState } from "react";
+import CategorySelector from "../components/button/CategorySelector.jsx";
 
 const NewNoticePage = () => {
     const [title, setTitle] = useState(""); // 제목
@@ -10,6 +11,7 @@ const NewNoticePage = () => {
     const [content, setContent] = useState(""); // 공지 내용
     const navigate = useNavigate(); // useNavigate 훅 초기화
     const [excerpt, setExcerpt] = useState(""); // 요약 상태
+    const [category, setCategory] = useState("important"); // 기본값 "important"
 
     const handleEditorChange = (content) => {
         setContent(content); // 에디터 내용 업데이트
@@ -26,7 +28,7 @@ const NewNoticePage = () => {
             content,
             excerpt,
             max_participants: 125,
-            category: "important", // 카테고리 임시 지정, 필요시 동적으로 변경
+            category
         };
 
         try {
@@ -90,6 +92,8 @@ const NewNoticePage = () => {
                             onChange={(e) => setUrl(e.target.value)}
                         />
                     </div>
+
+                    <CategorySelector category={category} setCategory={setCategory} />
 
                     <div className="flex-grow mb-6">
                         <label htmlFor="content" className="block font-medium mb-2 sr-only">
