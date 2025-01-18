@@ -35,7 +35,6 @@ exports.getNotices = async (categoryName, page, size) => {
             order: [['created_at', 'DESC']],
         });
 
-        console.log(count, rows);
         // 카테고리 ID를 문자열로 변환
         const categoryMapping = {
             1: 'important',

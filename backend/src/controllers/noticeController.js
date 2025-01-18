@@ -104,6 +104,7 @@ exports.getPaginatedNotices = async (req, res) => {
  *         description: 카테고리 이름 ("important" 또는 "event"). 값이 없으면 전체 공지사항을 조회합니다.
  *         schema:
  *           type: string
+ *           enum: [important, event]
  *           example: important
  *       - name: page
  *         in: query
@@ -111,6 +112,7 @@ exports.getPaginatedNotices = async (req, res) => {
  *         description: "현재 페이지 번호 (기본값: 1)"
  *         schema:
  *           type: integer
+ *           default: 1
  *           example: 1
  *       - name: size
  *         in: query
@@ -118,6 +120,7 @@ exports.getPaginatedNotices = async (req, res) => {
  *         description: "페이지당 항목 수 (기본값: 10)"
  *         schema:
  *           type: integer
+ *           default: 10
  *           example: 10
  *     responses:
  *       200:
