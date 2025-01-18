@@ -1,19 +1,21 @@
 import NavbarBlack from "../components/NavbarBlack.jsx";
-import NoticeCard from "../components/NoticeCard.jsx"; // NoticeCard 컴포넌트 임포트
+import NoticeCard from "../components/NoticeCard.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
 import NoticeHeader from "../components/NoticeHeader.jsx";
 import { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export default function NoticeBoard() {
     const [notices, setNotices] = useState([]); // 공지사항 데이터
     const [selectedCategory, setSelectedCategory] = useState("latest");
-    const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
     const categoryRef = useRef(null);
 
-    const itemsPerPage = 7;
+    const [searchParams, setSearchParams] = useSearchParams();
+    const currentPage = parseInt(searchParams.get("page") || "1", 10); // 기본값 1
+    const itemsPerPage = parseInt(searchParams.get("size") || "7", 10); // 기본값 7
 
-    // 공지사항 데이터 가져오기
+    // Fetch Notices 부분 수정
     const fetchNotices = async () => {
         const categoryQuery = selectedCategory !== "latest" ? `&category=${selectedCategory}` : "";
         const url = `http://localhost:3000/api/notices?page=${currentPage}&size=${itemsPerPage}${categoryQuery}`;
@@ -22,13 +24,13 @@ export default function NoticeBoard() {
             const response = await fetch(url);
             if (response.ok) {
                 const data = await response.json();
-                setNotices(data.notices); // 공지사항 데이터 업데이트
-                setTotalPages(data.totalPages); // 총 페이지 수 업데이트
+                setNotices(data.notices || []); // 공지사항 데이터 업데이트
+                setTotalPages(Math.ceil(data.total / data.size)); // 총 페이지 수 계산 후 업데이트
             } else {
-                console.error("공지사항 데이터를 가져오는 데 실패했습니다.");
+                console.error("Failed to fetch notices.");
             }
         } catch (error) {
-            console.error("서버 요청 실패:", error);
+            console.error("Failed to fetch notices:", error);
         }
     };
 
@@ -39,7 +41,7 @@ export default function NoticeBoard() {
 
     // 페이지 버튼 클릭 핸들러
     const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+        setSearchParams({ page: pageNumber, size: itemsPerPage }); // URL에 쿼리 업데이트
         if (categoryRef.current) {
             categoryRef.current.scrollIntoView({ behavior: "smooth" });
         }
@@ -66,7 +68,7 @@ export default function NoticeBoard() {
                         }`}
                         onClick={() => {
                             setSelectedCategory("latest");
-                            setCurrentPage(1); // 페이지 초기화
+                            handlePageChange(1); // 페이지 초기화
                         }}
                     >
                         최신
@@ -79,7 +81,7 @@ export default function NoticeBoard() {
                         }`}
                         onClick={() => {
                             setSelectedCategory("important");
-                            setCurrentPage(1); // 페이지 초기화
+                            handlePageChange(1); // 페이지 초기화
                         }}
                     >
                         중요
@@ -92,7 +94,7 @@ export default function NoticeBoard() {
                         }`}
                         onClick={() => {
                             setSelectedCategory("events");
-                            setCurrentPage(1); // 페이지 초기화
+                            handlePageChange(1); // 페이지 초기화
                         }}
                     >
                         행사
@@ -102,9 +104,13 @@ export default function NoticeBoard() {
 
             {/* 공지사항 리스트 */}
             <div className="container mx-auto px-4 lg:px-16 py-8 grid gap-4">
-                {notices.map((notice) => (
-                    <NoticeCard key={notice.id} {...notice} />
-                ))}
+                {notices.length > 0 ? (
+                    notices.map((notice) => (
+                        <NoticeCard key={notice.id} {...notice} />
+                    ))
+                ) : (
+                    <p className="text-center text-gray-500">공지사항이 없습니다.</p>
+                )}
             </div>
 
             {/* 페이지네이션 */}
