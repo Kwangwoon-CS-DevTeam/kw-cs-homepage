@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"; // PropTypes 임포트
 
 // components/NoticeCard.jsx
-export default function NoticeCard({ category, title, excerpt, admin_id, created_at, url }) {
+export default function NoticeCard({ id, category, title, excerpt, admin_id, created_at, url }) {
     // 카테고리 색상 설정
     const categoryBgColor =
         category === "important"
@@ -12,7 +12,7 @@ export default function NoticeCard({ category, title, excerpt, admin_id, created
         <div className="relative bg-white p-6 py-6 rounded-lg shadow-md hover:drop-shadow-lg transition-shadow">
             {/* 카드 전체를 감싸는 링크 */}
             <a
-                href={url} // 상세 페이지 링크
+                href={id} // 상세 페이지 링크
                 className="absolute inset-0 z-0"
                 style={{ textDecoration: "none" }}
             ></a>
