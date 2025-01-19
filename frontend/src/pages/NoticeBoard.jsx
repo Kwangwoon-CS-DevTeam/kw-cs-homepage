@@ -5,6 +5,7 @@ import NoticeHeader from "../components/NoticeHeader.jsx";
 import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../api/axiosClient"; // axiosClient를 import
 
 export default function NoticeBoard() {
     const [notices, setNotices] = useState([]); // 공지사항 데이터
@@ -26,7 +27,10 @@ export default function NoticeBoard() {
         try {
             const response = await fetch(url);
             if (response.ok) {
-                const data = await response.json();
+                // axiosClient로 API 호출
+                const response = await apiClient.get(url);
+                const data = response.data;
+
                 setNotices(data.notices || []);
                 setTotalPages(Math.ceil(data.total / data.size));
             } else {

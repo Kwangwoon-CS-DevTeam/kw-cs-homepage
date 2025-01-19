@@ -2,8 +2,10 @@ import NavbarBlack from "../components/NavbarBlack.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
 import { useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import CategorySelector from "../components/button/CategorySelector.jsx";
+import apiClient from "../api/axiosClient.js";
+import { useCheckAuth } from "../api/auth";
 
 const NewNoticePage = () => {
     const [title, setTitle] = useState(null); // 제목
@@ -13,6 +15,12 @@ const NewNoticePage = () => {
     const [excerpt, setExcerpt] = useState(null); // 요약 상태
     const [category, setCategory] = useState("important"); // 기본값 "important"
     const [maxParticipants, setMaxParticipants] = useState(null);
+
+    const checkAuth = useCheckAuth(); // useCheckAuth 훅 호출
+
+    useEffect(() => {
+        checkAuth(); // 인증 확인
+    }, []);
 
     const handleEditorChange = (content) => {
         setContent(content); // 에디터 내용 업데이트
@@ -38,24 +46,16 @@ const NewNoticePage = () => {
         }
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/notices/new-notice`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(requestData),
-            });
+            const response = await apiClient.post("/notices/new-notice", requestData);
 
-            if (response.ok) {
-                const result = await response.json();
-                console.log("공지사항이 성공적으로 저장되었습니다:", result);
+            if (response.status === 200 || response.status === 201) {
+
                 alert("공지사항이 등록되었습니다!");
 
                 // 저장 성공 시 /notices 페이지로 이동
                 navigate("/notices");
             } else {
-                const errorData = await response.json();
-                console.log("에러 발생 in front:", errorData);
+                console.log("에러 발생 in front:", response.data);
                 alert("공지사항 등록 중 에러가 발생했습니다.");
             }
         } catch (error) {

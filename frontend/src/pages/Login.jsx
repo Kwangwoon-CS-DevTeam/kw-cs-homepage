@@ -10,18 +10,20 @@ function Home() {
         event.preventDefault();
         const formData = new FormData(event.target);
         const data = {
-            email: formData.get("id"),
+            id: formData.get("id"),
             password: formData.get("password"),
         };
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
             });
+
+            console.log("성공적으로 로그인하였습니다!");
 
             if (!response.ok) {
                 throw new Error("로그인에 실패했습니다.");
