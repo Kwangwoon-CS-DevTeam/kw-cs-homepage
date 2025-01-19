@@ -21,6 +21,13 @@ const swaggerOptions = {
                         isDeleted: { type: 'integer' },
                     },
                 },
+                Questions: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'integer' },
+                        title: { type: 'string' },
+                    }
+                }
             },
         },
         servers: [

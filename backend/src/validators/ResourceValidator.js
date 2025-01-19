@@ -21,9 +21,6 @@ const createResourceValidator = [
 
 // 자료 목록 조회 시 검증 규칙 (예: 페이지네이션)
 const getResourcesValidator = [
-    query('category')
-        .optional()
-        .isString().withMessage('category는 문자열이어야 합니다.'),
     query('page')
         .optional()
         .isInt({ min: 1 }).withMessage('page는 1 이상의 정수여야 합니다.'),
@@ -38,6 +35,7 @@ const updateResourceValidator = [
         .isInt().withMessage('id는 숫자이어야 합니다.'),
     body('title')
         .optional()
+        .notEmpty().withMessage("title은 필수입니다.")
         .isString().withMessage('title은 문자열이어야 합니다.'),
     body('content')
         .optional()

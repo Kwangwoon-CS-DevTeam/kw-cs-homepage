@@ -23,6 +23,10 @@ const Questions = sequelize.define('Questions', {
         type: DataTypes.STRING(50),
         allowNull: false,
     },
+    title: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+    },
     answer: {
         type: DataTypes.TEXT,
         allowNull: true,
