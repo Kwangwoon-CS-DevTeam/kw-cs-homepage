@@ -21,7 +21,7 @@ export default function NoticeBoard() {
         const category = searchParams.get("category");
         // 카테고리 쿼리 생성 (null일 경우 제외)
         const categoryQuery = category ? `&category=${category}` : "";
-        const url = `http://localhost:3000/api/notices?page=${currentPage}&size=${itemsPerPage}${categoryQuery}`;
+        const url = `${import.meta.env.VITE_API_URL}/notices?page=${currentPage}&size=${itemsPerPage}${categoryQuery}`;
 
         try {
             const response = await fetch(url);

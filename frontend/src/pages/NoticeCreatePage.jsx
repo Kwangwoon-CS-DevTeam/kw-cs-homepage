@@ -38,7 +38,7 @@ const NewNoticePage = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/api/notices/new-notice", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/notices/new-notice`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -169,7 +169,7 @@ const NewNoticePage = () => {
                                             const formData = new FormData();
                                             formData.append("file", file);
 
-                                            fetch("http://localhost:3000/api/notices/new-notice/upload", {
+                                            fetch(`${import.meta.env.VITE_API_URL}/notices/new-notice/upload`, {
                                                 method: "POST",
                                                 body: formData,
                                             })

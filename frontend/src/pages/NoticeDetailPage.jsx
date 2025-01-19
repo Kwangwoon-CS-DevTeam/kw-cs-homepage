@@ -10,7 +10,7 @@ function NoticeDetailPage() {
     useEffect(() => {
         const fetchNotice = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/notices/${id}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/notices/${id}`);
                 if (!response.ok) {
                     throw new Error("공지사항을 가져오지 못했습니다.");
                 }
