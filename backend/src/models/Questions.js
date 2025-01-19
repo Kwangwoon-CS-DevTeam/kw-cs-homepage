@@ -45,6 +45,10 @@ const Questions = sequelize.define('Questions', {
         allowNull: false,
         defaultValue: 0,
     },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    }
 }, {
     tableName: 'Questions',
     timestamps: false,
