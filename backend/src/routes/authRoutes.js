@@ -1,8 +1,15 @@
 const express = require("express");
-const router = express.Router();
-const authController = require("../controllers/AuthController");
+const { validateLogin } = require("../validators/authValidator");
+const { handleValidationErrors } = require("../middlewares/validationMiddleware");
+const authController = require("../controllers/authController");
 
-// POST /api/auth/login
-router.post("/login", authController.login);
+const router = express.Router();
+
+router.post(
+    "/login",
+    ...validateLogin,
+    handleValidationErrors,
+    authController.login
+);
 
 module.exports = router;

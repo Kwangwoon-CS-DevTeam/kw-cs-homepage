@@ -23,8 +23,6 @@ function Home() {
                 body: JSON.stringify(data),
             });
 
-            console.log("성공적으로 로그인하였습니다!");
-
             if (!response.ok) {
                 throw new Error("로그인에 실패했습니다.");
             }
