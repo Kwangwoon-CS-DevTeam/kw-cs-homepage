@@ -31,7 +31,7 @@ app.use('/api/notices', noticeRoutes);
         await sequelize.sync({ alter: false }); // { force: true }로 설정 시 기존 데이터 삭제 후 재생성
         console.log('All tables synced successfully.');
     } catch (error) {
-        console.error('Error syncing tables:', error);
+        console.error('Error syncing tables: ', error);
     }
 })();
 
