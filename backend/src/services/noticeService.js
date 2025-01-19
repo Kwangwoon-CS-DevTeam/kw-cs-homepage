@@ -93,7 +93,7 @@ exports.saveNotice = async (noticeData) => {
             url: noticeData.url || null,
             max_participants: noticeData.max_participants || null,
             current_participants: noticeData.current_participants || null,
-            created_at: Sequelize.literal('NOW()'), // DB의 현재 시간을 삽입
+            created_at: Date.now(),
         });
 
         return {

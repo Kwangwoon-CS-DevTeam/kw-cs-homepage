@@ -173,7 +173,6 @@ exports.getNoticeById = async (req, res) => {
  */
 exports.getNotices = async (req, res) => {
     const { category, page, size } = req.query; // page와 size는 이미 toInt로 변환됨
-
     try {
         const notices = await noticeService.getNotices(category, page, size);
         res.status(200).json(notices);
@@ -239,7 +238,7 @@ exports.getNotices = async (req, res) => {
  */
 exports.createNotice = async (req, res) => {
     const noticeData = req.body; // 클라이언트에서 보낸 데이터
-    
+
     // 카테고리 변환
     const categoryMapping = {
         important: 1,

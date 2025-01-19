@@ -43,7 +43,6 @@ const validateCreateNotice = [
             }
             return true;
         })
-        .isInt({ min: 1 }).withMessage('Max participants는 1 이상의 정수여야 합니다.')
         .toInt(),
     body('current_participants')
         .default(0) // 기본값을 0으로 설정

@@ -40,20 +40,22 @@ export default function NoticeCard({ id, category, title, excerpt, admin_id, cre
                         <span className="font-semibold">AUTHOR:</span> {admin_id}
                     </div>
                     <div>
-                        <span className="font-semibold">DATE:</span> {created_at}
+                        <span className="font-semibold">DATE:</span> {created_at.split("T")[0]}
                     </div>
                 </div>
             </div>
 
             {/* 신청하기 버튼 */}
-            <a
-                href={url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative z-20 mt-4 inline-block text-blue-700 font-semibold hover:underline pointer-events-auto"
-            >
-                신청하기 →
-            </a>
+            {url && (
+                <a
+                    href={url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative z-20 mt-4 inline-block text-blue-700 font-semibold hover:underline pointer-events-auto"
+                >
+                    신청하기 →
+                </a>
+            )}
         </div>
     );
 }

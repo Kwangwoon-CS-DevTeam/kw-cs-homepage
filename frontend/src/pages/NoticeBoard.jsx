@@ -4,11 +4,12 @@ import FooterBlack from "../components/FooterBlack.jsx";
 import NoticeHeader from "../components/NoticeHeader.jsx";
 import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function NoticeBoard() {
     const [notices, setNotices] = useState([]); // 공지사항 데이터
-    const [selectedCategory, setSelectedCategory] = useState("latest");
     const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
+    const navigate = useNavigate(); // React Router 네비게이션 훅
     const categoryRef = useRef(null);
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -17,15 +18,17 @@ export default function NoticeBoard() {
 
     // Fetch Notices 부분 수정
     const fetchNotices = async () => {
-        const categoryQuery = selectedCategory !== "latest" ? `&category=${selectedCategory}` : "";
+        const category = searchParams.get("category");
+        // 카테고리 쿼리 생성 (null일 경우 제외)
+        const categoryQuery = category ? `&category=${category}` : "";
         const url = `http://localhost:3000/api/notices?page=${currentPage}&size=${itemsPerPage}${categoryQuery}`;
 
         try {
             const response = await fetch(url);
             if (response.ok) {
                 const data = await response.json();
-                setNotices(data.notices || []); // 공지사항 데이터 업데이트
-                setTotalPages(Math.ceil(data.total / data.size)); // 총 페이지 수 계산 후 업데이트
+                setNotices(data.notices || []);
+                setTotalPages(Math.ceil(data.total / data.size));
             } else {
                 console.error("Failed to fetch notices.");
             }
@@ -37,7 +40,7 @@ export default function NoticeBoard() {
     // 선택된 카테고리 또는 페이지 변경 시 데이터 가져오기
     useEffect(() => {
         fetchNotices();
-    }, [selectedCategory, currentPage]);
+    }, [searchParams]); // searchParams가 변경될 때 fetchNotices 실행
 
     // 페이지 버튼 클릭 핸들러
     const handlePageChange = (pageNumber) => {
@@ -60,41 +63,46 @@ export default function NoticeBoard() {
                 className="container mx-auto px-4 pt-8 sm:pt-12 lg:pt-8 pb-4 sm:pb-8 lg:pb-16"
             >
                 <div className="flex justify-start space-x-2.5">
+                    {/* 최신 */}
                     <button
                         className={`px-6 py-2 rounded-lg font-semibold ${
-                            selectedCategory === "latest"
+                            !searchParams.get("category")
                                 ? "bg-blue-900 text-white"
                                 : "text-gray-500 hover:bg-blue-100"
                         }`}
                         onClick={() => {
-                            setSelectedCategory("latest");
-                            handlePageChange(1); // 페이지 초기화
+                            setSearchParams({page: 1, size: itemsPerPage}); // 쿼리 업데이트
+                            navigate(`?page=1&size=${itemsPerPage}`); // URL 이동
                         }}
                     >
                         최신
                     </button>
+
+                    {/* 중요 */}
                     <button
                         className={`px-6 py-2 rounded-lg font-semibold ${
-                            selectedCategory === "important"
+                            searchParams.get("category") === "important"
                                 ? "bg-pink-400 text-white"
                                 : "text-gray-500 hover:bg-pink-200"
                         }`}
                         onClick={() => {
-                            setSelectedCategory("important");
-                            handlePageChange(1); // 페이지 초기화
+                            setSearchParams({page: 1, size: itemsPerPage, category: "important"});
+                            navigate(`?page=1&size=${itemsPerPage}&category=important`); // 네비게이션
                         }}
                     >
                         중요
                     </button>
+
+                    {/* 행사 */}
                     <button
                         className={`px-6 py-2 rounded-lg font-semibold ${
-                            selectedCategory === "events"
+                            searchParams.get("category") === "event"
                                 ? "bg-blue-200 text-blue-800"
                                 : "text-gray-500 hover:bg-blue-100"
                         }`}
                         onClick={() => {
-                            setSelectedCategory("events");
-                            handlePageChange(1); // 페이지 초기화
+                            setSearchParams({page: 1, size: itemsPerPage, category: "event"});
+                            navigate(`?page=1&size=${itemsPerPage}&category=event`); // 네비게이션
                         }}
                     >
                         행사
@@ -115,7 +123,7 @@ export default function NoticeBoard() {
 
             {/* 페이지네이션 */}
             <div className="container mx-auto px-4 py-4 pb-16 flex justify-center">
-                {Array.from({ length: totalPages }, (_, index) => (
+                {Array.from({length: totalPages}, (_, index) => (
                     <button
                         key={index + 1}
                         className={`mx-1 px-3 py-1 rounded-lg ${
@@ -131,7 +139,7 @@ export default function NoticeBoard() {
             </div>
 
             {/* Footer */}
-            <FooterBlack />
+            <FooterBlack/>
         </div>
     );
 }

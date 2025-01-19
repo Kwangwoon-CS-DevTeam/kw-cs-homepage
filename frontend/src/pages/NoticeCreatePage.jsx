@@ -6,12 +6,13 @@ import { useState } from "react";
 import CategorySelector from "../components/button/CategorySelector.jsx";
 
 const NewNoticePage = () => {
-    const [title, setTitle] = useState(""); // 제목
-    const [url, setUrl] = useState(""); // 신청 URL
-    const [content, setContent] = useState(""); // 공지 내용
+    const [title, setTitle] = useState(null); // 제목
+    const [url, setUrl] = useState(null); // 신청 URL
+    const [content, setContent] = useState(null); // 공지 내용
     const navigate = useNavigate(); // useNavigate 훅 초기화
-    const [excerpt, setExcerpt] = useState(""); // 요약 상태
+    const [excerpt, setExcerpt] = useState(null); // 요약 상태
     const [category, setCategory] = useState("important"); // 기본값 "important"
+    const [maxParticipants, setMaxParticipants] = useState(null);
 
     const handleEditorChange = (content) => {
         setContent(content); // 에디터 내용 업데이트
@@ -27,9 +28,14 @@ const NewNoticePage = () => {
             url,
             content,
             excerpt,
-            max_participants: 125,
+            max_participants: maxParticipants,
             category
         };
+
+        if(url == null || url.length == 0){
+            delete requestData.url;
+            delete requestData.max_participants;
+        }
 
         try {
             const response = await fetch("http://localhost:3000/api/notices/new-notice", {
@@ -93,7 +99,21 @@ const NewNoticePage = () => {
                         />
                     </div>
 
-                    <CategorySelector category={category} setCategory={setCategory} />
+                    <div className="mb-6 ">
+                        <label htmlFor="max_participants" className="block text-sm mb-2 font-medium text-gray-700">
+                            최대 인원
+                        </label>
+                        <input
+                            type="number"
+                            id="max_participants"
+                            placeholder="최대 참가자 수를 입력하세요."
+                            className="w-1/4 px-4 py-2 border rounded-lg"
+                            value={maxParticipants}
+                            onChange={(e) => setMaxParticipants(e.target.value)}
+                        />
+                    </div>
+
+                    <CategorySelector category={category} setCategory={setCategory}/>
 
                     <div className="flex-grow mb-6">
                         <label htmlFor="content" className="block font-medium mb-2 sr-only">
