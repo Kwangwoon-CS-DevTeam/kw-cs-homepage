@@ -89,77 +89,6 @@ exports.getNoticeById = async (req, res) => {
 };
 
 /**
- * @swagger
- * /api/notices:
- *   get:
- *     summary: 공지사항 목록 조회 (페이징 포함)
- *     description: 페이지와 크기를 기준으로 공지사항 목록을 조회합니다.
- *     tags:
- *       - Notices
- *     parameters:
- *       - name: page
- *         in: query
- *         required: false
- *         description: "현재 페이지 번호 (기본값: 1)"
- *         schema:
- *           type: integer
- *           example: 1
- *       - name: size
- *         in: query
- *         required: false
- *         description: "페이지당 항목 수 (기본값: 10)"
- *         schema:
- *           type: integer
- *           example: 10
- *     responses:
- *       200:
- *         description: 공지사항 목록이 성공적으로 반환됨
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 total:
- *                   type: integer
- *                   description: 총 공지사항 개수
- *                   example: 100
- *                 page:
- *                   type: integer
- *                   description: 현재 페이지 번호
- *                   example: 1
- *                 size:
- *                   type: integer
- *                   description: 페이지당 항목 수
- *                   example: 10
- *                 notices:
- *                   type: array
- *                   description: 공지사항 데이터 배열
- *                   items:
- *                     $ref: '#/components/schemas/Notice'
- *       500:
- *         description: 서버 내부 에러
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   example: Internal Server Error
- */
-exports.getPaginatedNotices = async (req, res) => {
-    const { page = 1, size = 10 } = req.query; // 기본값: page=1, size=10
-    try {
-        const notices = await noticeService.getNotices(page, size);
-        console.log(notices.notices);
-        res.json(notices);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-/**
  * 특정 카테고리의 공지사항 목록 조회
  * 카테고리로 필터된 공지사항 불러오기
  */
@@ -310,8 +239,7 @@ exports.getNotices = async (req, res) => {
  */
 exports.createNotice = async (req, res) => {
     const noticeData = req.body; // 클라이언트에서 보낸 데이터
-
-    console.log(noticeData);
+    
     // 카테고리 변환
     const categoryMapping = {
         important: 1,
