@@ -4,9 +4,9 @@ const { body, param } = require('express-validator');
 const createQuestionValidator = [
   body('nickname').isString().notEmpty().withMessage('닉네임은 필수입니다.'),
   body('title').isString().notEmpty().withMessage('제목은 필수입니다.'),
-  body('IP').isIP().withMessage('유효한 IP 주소를 입력하세요.'),
+  body('IP').isIP().notEmpty().withMessage('유효한 IP 주소를 입력하세요.'),
   body('question').isString().notEmpty().withMessage('질문 내용을 입력하세요.'),
-  body('password').isInt({ min: 1 }).withMessage('비밀번호는 숫자여야 하며 1 이상의 값이어야 합니다.')
+  body('password').isInt({ min: 1000 , max : 9999 }).withMessage('비밀번호는 4자리 숫자여야 합니다.')
 ];
 
 const updateAnswerValidator = [
