@@ -1,6 +1,4 @@
-const express = require('express');
-const router = express.Router();
-const Questions = require('../models/Questions');
+const Questions = require('../models/Questions')
 
 /**
  * @swagger
@@ -15,6 +13,9 @@ const Questions = require('../models/Questions');
  *           schema:
  *             type: object
  *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "Example title"
  *               nickname:
  *                 type: string
  *                 example: userNickname
@@ -37,14 +38,14 @@ const Questions = require('../models/Questions');
  *       400:
  *         description: 질문 등록 실패
  */
-router.post('/add', async (req, res) => {
+exports.createQuestion = async (req, res) => {
     try {
         const newQuestion = await Questions.create(req.body);
         res.status(201).json(newQuestion); // 성공적으로 생성된 질문 반환
     } catch (error) {
         res.status(400).json({ error: error.message }); // 오류 발생 시 400 에러 반환
     }
-});
+};
 
 /**
  * @swagger
@@ -62,7 +63,7 @@ router.post('/add', async (req, res) => {
  *               items:
  *                 $ref: '#/components/schemas/Question'
  */
-router.get('/', async (req, res) => {
+exports.getQuestions = async (req, res) => {
     try {
         // 삭제되지 않은 모든 질문 조회
         const questions = await Questions.findAll({
@@ -72,7 +73,7 @@ router.get('/', async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: 'Failed to retrieve questions' }); // 오류 발생 시 400 에러 반환
     }
-});
+};
 
 /**
  * @swagger
@@ -110,7 +111,7 @@ router.get('/', async (req, res) => {
  *       404:
  *         description: 질문을 찾을 수 없음
  */
-router.put('/answer/:id', async (req, res) => {
+exports.updateAnswer = async (req, res) => {
     const { id } = req.params; 
     const { admin_id, answer } = req.body;  
 
@@ -129,7 +130,7 @@ router.put('/answer/:id', async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: 'Failed to update answer' }); // 오류 발생 시 400 에러 반환
     }
-});
+};
 
 /**
  * @swagger
@@ -150,7 +151,7 @@ router.put('/answer/:id', async (req, res) => {
  *       404:
  *         description: 질문을 찾을 수 없음
  */
-router.delete('/delete/:id', async (req, res) => {
+exports.deleteQuestion = async (req, res) => {
     const { id } = req.params; // URL에서 질문 ID를 가져옴
     try {
         const question = await Questions.findOne({ where: { id } });
@@ -164,6 +165,4 @@ router.delete('/delete/:id', async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: 'Failed to delete question' }); // 오류 발생 시 400 에러 반환
     }
-});
-
-module.exports = router; 
+};

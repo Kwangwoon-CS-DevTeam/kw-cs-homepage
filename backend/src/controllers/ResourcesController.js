@@ -1,5 +1,3 @@
-const express = require("express");
-const router = express.Router();
 const axios = require("axios");
 const Resources = require("../models/Resources"); // Sequelize 모델
 
@@ -50,14 +48,14 @@ const Resources = require("../models/Resources"); // Sequelize 모델
  *       400:
  *         description: Invalid input
  */
-router.post("/", async (req, res) => {
+exports.createResource = async (req, res) => {
     try {
         const resource = await Resources.create(req.body); // 새로운 자료 생성
-        res.status(201).json(resource); 
+        res.status(201).json(resource); // 생성된 자료 반환
     } catch (error) {
         res.status(400).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
     }
-});
+};
 
 /**
  * @swagger
@@ -95,7 +93,7 @@ router.post("/", async (req, res) => {
  *       500:
  *         description: Error fetching resources
  */
-router.get("/", async (req, res) => {
+exports.getResources = async (req, res) => {
     const { category, page = 1, limit = 10 } = req.query;
     try {
         const whereClause = { isDeleted: 0 }; // 삭제되지 않은 자료만 조회
@@ -110,7 +108,7 @@ router.get("/", async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
     }
-});
+};
 
 /**
  * @swagger
@@ -133,7 +131,7 @@ router.get("/", async (req, res) => {
  *       500:
  *         description: Error processing request
  */
-router.get("/:id/download", async (req, res) => {
+exports.downloadResource = async (req, res) => {
     try {
         const resource = await Resources.findByPk(req.params.id); 
         if (!resource || resource.isDeleted) { // 자료가 없거나 삭제된 경우
@@ -153,11 +151,11 @@ router.get("/:id/download", async (req, res) => {
         console.error('Error fetching the resource:', error);
         res.status(500).json({ error: '리소스를 가져오는 도중 문제가 발생했습니다.' });
     }
-});
+};
 
 /**
  * @swagger
- * /api/resources/{id}:
+ * /api/resources/new-resource/{id}:
  *   put:
  *     summary: Update an existing resource
  *     description: Modifies the details of an existing resource.
@@ -203,7 +201,7 @@ router.get("/:id/download", async (req, res) => {
  *       400:
  *         description: Invalid input
  */
-router.put("/:id", async (req, res) => {
+exports.updateResource = async (req, res) => {
     try {
         const resource = await Resources.findByPk(req.params.id); 
         if (!resource || resource.isDeleted) { 
@@ -214,7 +212,7 @@ router.put("/:id", async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
     }
-});
+};
 
 /**
  * @swagger
@@ -238,7 +236,7 @@ router.put("/:id", async (req, res) => {
  *         description: Error deleting resource
  */
 // 자료 소프트 삭제
-router.delete("/:id", async (req, res) => {
+exports.deleteResource = async (req, res) => {
     try {
         const resource = await Resources.findByPk(req.params.id); 
         if (!resource || resource.isDeleted) { 
@@ -249,6 +247,5 @@ router.delete("/:id", async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
     }
-});
+};
 
-module.exports = router;
