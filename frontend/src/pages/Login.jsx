@@ -1,15 +1,47 @@
 import NavbarWhite from "../components/NavbarWhite.jsx";
 import FooterWhite from "../components/FooterWhite.jsx";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
-    const handleSubmit = (event) => {
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
         const data = {
-            email: formData.get("email"),
+            email: formData.get("id"),
             password: formData.get("password"),
         };
-        console.log(data);
+
+        try {
+            const response = await fetch("http://localhost:3000/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error("로그인에 실패했습니다.");
+            }
+
+            const result = await response.json();
+
+            // JWT 저장
+            if (result.token) {
+                localStorage.setItem("jwt", result.token);
+                console.log("JWT 저장 완료:", result.token);
+            } else {
+                throw new Error("토큰이 응답에 포함되어 있지 않습니다.");
+            }
+
+            // 페이지 이동
+            navigate("/");
+        } catch (error) {
+            console.error("로그인 오류:", error);
+        }
     };
 
     return (
@@ -18,7 +50,7 @@ function Home() {
             <div
                 className="fixed inset-0 bg-cover bg-center pointer-events-none"
                 style={{
-                    backgroundImage: "url('/images/pub1.jpg')", // 배경 이미지 복구
+                    backgroundImage: "url('/images/pub1.jpg')",
                     backgroundSize: "cover",
                 }}
             ></div>
@@ -27,7 +59,7 @@ function Home() {
             <div className="relative z-10">
                 <NavbarWhite/>
 
-                <div className="flex items-center justify-center h-screen" style={{marginTop: "-4rem"}}>
+                <div className="flex items-center justify-center h-screen" style={{ marginTop: "-4rem" }}>
                     {/* 로그인 컨테이너 */}
                     <form
                         onSubmit={handleSubmit}
@@ -36,14 +68,14 @@ function Home() {
                         {/* 헤더 */}
                         <h2 className="text-2xl font-bold text-center text-white mb-6">Login</h2>
 
-                        {/* Email 입력 */}
+                        {/* 아이디 입력 */}
                         <div className="mb-4">
-                            <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
+                            <label htmlFor="id" className="block text-sm font-medium text-white mb-1">
                                 아이디
                             </label>
                             <div className="relative">
                                 <input
-                                    type="id"
+                                    type="text"
                                     name="id"
                                     id="id"
                                     placeholder="kwcs_dev"
@@ -92,11 +124,11 @@ function Home() {
                             Login
                         </button>
 
-                        {/* Footer */}
+                        {/* Footer 안내 */}
                         <div className="mt-4 text-center">
-                        <span className="text-sm text-white">
-                            관리자 인증을 위해 로그인해주세요
-                        </span>
+                            <span className="text-sm text-white">
+                                관리자 인증을 위해 로그인해주세요
+                            </span>
                         </div>
                     </form>
                 </div>

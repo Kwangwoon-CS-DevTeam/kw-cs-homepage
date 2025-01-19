@@ -9,7 +9,7 @@ const Questions = sequelize.define('Questions', {
     },
     admin_id: {
         type: DataTypes.STRING(20),
-        allowNull: false,
+        allowNull: true,
     },
     nickname: {
         type: DataTypes.STRING(20),
@@ -45,6 +45,10 @@ const Questions = sequelize.define('Questions', {
         allowNull: false,
         defaultValue: 0,
     },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    }
 }, {
     tableName: 'Questions',
     timestamps: false,
