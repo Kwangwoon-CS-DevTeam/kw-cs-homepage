@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const questionsController = require('./QuestionsController'); // 컨트롤러 가져오기
+const questionsController = require('../controllers/questionsController'); // 컨트롤러 가져오기
 
 // 1. 질문 등록 (Create)
 router.post('/add', questionsController.createQuestion);
