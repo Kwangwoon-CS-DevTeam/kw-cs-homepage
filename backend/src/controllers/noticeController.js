@@ -13,6 +13,80 @@ exports.uploadNoticeImage = (req, res) => {
     res.status(200).json({ location: fileUrl });
 };
 
+// noticeController.js
+
+/**
+ * 특정 ID의 공지사항 조회 컨트롤러
+ */
+/**
+ * @swagger
+ * /api/notices/{id}:
+ *   get:
+ *     summary: 특정 공지사항 조회
+ *     description: 주어진 ID에 해당하는 공지사항을 조회합니다.
+ *     tags:
+ *       - Notices
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: 조회할 공지사항의 고유 ID
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     responses:
+ *       200:
+ *         description: 공지사항이 성공적으로 조회됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Notice'
+ *       404:
+ *         description: 페이지를 찾을 수 없습니다.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 페이지를 찾을 수 없습니다.
+ *       500:
+ *         description: 서버 내부 에러
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 공지사항 조회 중 오류가 발생했습니다.
+ *                 error:
+ *                   type: string
+ *                   example: 에러 메시지 내용
+ */
+exports.getNoticeById = async (req, res) => {
+    try {
+        const { id } = req.params;   // /notices/:id
+
+        // Service를 통해 공지사항 데이터 가져오기
+        const notice = await noticeService.getNoticeById(id);
+
+        // 공지사항이 없으면 404
+        if (!notice) {
+            return res.status(404).json({ message: '페이지를 찾을 수 없습니다.' });
+        }
+
+        // 성공 시 공지사항 객체 반환
+        return res.json(notice);
+    } catch (error) {
+        console.error('Error in getNoticeById Controller:', error);
+        return res.status(500).json({
+            message: '공지사항 조회 중 오류가 발생했습니다.',
+            error: error.message,
+        });
+    }
+};
 
 /**
  * @swagger

@@ -11,8 +11,10 @@ router.get('/',
     validationMiddleware.handleValidationErrors,    // 에러 처리 미들웨어
     noticeController.getNotices);
 
-// 페이징 기능이 포함된 사용자 목록 API
-router.get('/', noticeController.getPaginatedNotices);
+router.get('/:id',
+    noticeController.getNoticeById,
+    )
+
 // 공지사항 저장 API
 router.post('/new-notice',
     validators.validateCreateNotice,

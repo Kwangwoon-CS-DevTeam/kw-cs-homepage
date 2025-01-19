@@ -58,6 +58,29 @@ exports.getNotices = async (categoryName, page, size) => {
     }
 };
 
+// noticeService.js
+
+/**
+ * 특정 ID의 공지사항 조회
+ * @param {number} id
+ * @returns {object|null} 공지사항 데이터 혹은 null
+ */
+exports.getNoticeById = async (id) => {
+    try {
+        // PK로 공지사항 찾기
+        const notice = await NoticeModel.findByPk(id);
+
+        // 존재하지 않거나, 삭제된(isDeleted=1) 공지사항인 경우
+        if (!notice || notice.isDeleted === 1) {
+            return null;
+        }
+
+        return notice;
+    } catch (error) {
+        throw error; // Controller에서 처리
+    }
+};
+
 exports.saveNotice = async (noticeData) => {
     try {
         // 데이터 저장
