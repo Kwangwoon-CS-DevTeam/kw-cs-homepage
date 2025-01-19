@@ -99,7 +99,7 @@ export default function NavbarBlack() {
                     {!isLoggedIn && ( // 로그인 상태가 아닌 경우에만 렌더링
                         <a
                             href={NAVBAR.fifth.url}
-                            className="relative text-base text-black font-semibold px-3 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-50"
+                            className="relative text-base text-black font-base px-3 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-50"
                         >
                             {NAVBAR.fifth.title} <span aria-hidden="true">&rarr;</span>
                         </a>

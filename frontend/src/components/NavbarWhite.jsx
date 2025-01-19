@@ -97,7 +97,7 @@ export default function NavbarWhite() {
                     {!isLoggedIn && ( // 로그인 상태가 아닌 경우에만 렌더링
                         <a
                             href={NAVBAR.fifth.url}
-                            className="relative text-base text-white font-semibold px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-50"
+                            className="relative text-base text-white font px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-50"
                         >
                             {NAVBAR.fifth.title} <span aria-hidden="true">&rarr;</span>
                         </a>
