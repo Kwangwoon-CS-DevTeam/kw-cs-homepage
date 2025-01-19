@@ -125,6 +125,7 @@ const NewNoticePage = () => {
                             init={{
                                 height: 500,
                                 menubar: false,
+                                script_url: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/tinymce.min.js",
                                 plugins: [
                                     "advlist autolink lists link image charmap preview anchor",
                                     "searchreplace visualblocks code fullscreen",

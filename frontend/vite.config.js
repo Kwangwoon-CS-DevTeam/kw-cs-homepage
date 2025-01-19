@@ -7,9 +7,4 @@ export default defineConfig({
   css: {
     postcss: './postcss.config.js', // PostCSS 설정 경로
   },
-  build: {
-    rollupOptions: {
-      external: ["@tinymce/tinymce-react"],
-    },
-  },
 });
