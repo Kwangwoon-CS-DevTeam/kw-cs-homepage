@@ -9,6 +9,7 @@ import IntelligentInfo from "./pages/IntelligentInfo.jsx";
 import NotFoundPage from './pages/404.jsx';
 import QnaBoard from "./pages/QnaBoard.jsx";
 import NoticeCreatePage from "./pages/NoticeCreatePage.jsx";
+import NoticeDetailPage from "./pages/NoticeDetailPage";
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
 
                 {/* 공지사항 페이지 */}
                 <Route path="/notices" element={<NoticeBoard />} />
+
+                <Route>
+                    <Route path="/notices/:id" element={<NoticeDetailPage />} />
+                </Route>
 
                 {/* 공지사항 작성 페이지 */}
                 <Route path="/notices/new-notice" element={<NoticeCreatePage />} />

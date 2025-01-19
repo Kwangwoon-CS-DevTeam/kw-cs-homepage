@@ -12,7 +12,7 @@ export default function NoticeCard({ id, category, title, excerpt, admin_id, cre
         <div className="relative bg-white p-6 py-6 rounded-lg shadow-md hover:drop-shadow-lg transition-shadow">
             {/* 카드 전체를 감싸는 링크 */}
             <a
-                href={id} // 상세 페이지 링크
+                href={`/notices/${id}`} // 상세 페이지 링크
                 className="absolute inset-0 z-0"
                 style={{ textDecoration: "none" }}
             ></a>
