@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"; // PropTypes 임포트
 
 // components/NoticeCard.jsx
-export default function NoticeCard({ category, title, excerpt, author, date, link }) {
+export default function NoticeCard({ id, category, title, excerpt, admin_id, created_at, url }) {
     // 카테고리 색상 설정
     const categoryBgColor =
         category === "important"
@@ -12,7 +12,7 @@ export default function NoticeCard({ category, title, excerpt, author, date, lin
         <div className="relative bg-white p-6 py-6 rounded-lg shadow-md hover:drop-shadow-lg transition-shadow">
             {/* 카드 전체를 감싸는 링크 */}
             <a
-                href={link} // 상세 페이지 링크
+                href={`/notices/${id}`} // 상세 페이지 링크
                 className="absolute inset-0 z-0"
                 style={{ textDecoration: "none" }}
             ></a>
@@ -37,23 +37,25 @@ export default function NoticeCard({ category, title, excerpt, author, date, lin
                 {/* 작성자 및 날짜 */}
                 <div className="text-gray-600 text-sm">
                     <div className="mb-1">
-                        <span className="font-semibold">AUTHOR:</span> {author}
+                        <span className="font-semibold">AUTHOR:</span> {admin_id}
                     </div>
                     <div>
-                        <span className="font-semibold">DATE:</span> {date}
+                        <span className="font-semibold">DATE:</span> {created_at.split("T")[0]}
                     </div>
                 </div>
             </div>
 
             {/* 신청하기 버튼 */}
-            <a
-                href="https://google.com" // 구글 폼 링크
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative z-20 mt-4 inline-block text-blue-700 font-semibold hover:underline pointer-events-auto"
-            >
-                신청하기 →
-            </a>
+            {url && (
+                <a
+                    href={url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative z-20 mt-4 inline-block text-blue-700 font-semibold hover:underline pointer-events-auto"
+                >
+                    신청하기 →
+                </a>
+            )}
         </div>
     );
 }
@@ -63,7 +65,7 @@ NoticeCard.propTypes = {
     category: PropTypes.string.isRequired, // 반드시 문자열이어야 함
     title: PropTypes.string.isRequired,
     excerpt: PropTypes.string.isRequired, // 새로 추가된 요약 필드
-    author: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired, // 날짜 추가
-    link: PropTypes.string.isRequired,
+    admin_id: PropTypes.string.isRequired,
+    created_at: PropTypes.string.isRequired, // 날짜 추가
+    url: PropTypes.string.isRequired,
 };

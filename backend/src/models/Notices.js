@@ -8,7 +8,7 @@ const Notices = sequelize.define('Notices', {
         autoIncrement: true,
     },
     admin_id: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     category_id: {
@@ -16,7 +16,7 @@ const Notices = sequelize.define('Notices', {
         allowNull: false,
     },
     title: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     content: {
@@ -24,7 +24,7 @@ const Notices = sequelize.define('Notices', {
         allowNull: false,
     },
     url: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING,
         allowNull: true,
     },
     max_participants: {
@@ -35,10 +35,13 @@ const Notices = sequelize.define('Notices', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    excerpt:{
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
     created_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
     },
     updated_at: {
         type: DataTypes.DATE,
