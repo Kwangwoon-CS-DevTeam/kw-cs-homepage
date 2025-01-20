@@ -50,6 +50,7 @@ const NewNoticePage = () => {
                     image: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/image/plugin.min.js",
                     advlist: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/advlist/plugin.min.js",
                     autolink: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1cjt69gxy1q0387/tinymce/6/plugins/autolink/plugin.min.js",
+
                     lists: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/lists/plugin.min.js",
                     link: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/link/plugin.min.js",
                     charmap: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/charmap/plugin.min.js",
@@ -137,10 +138,9 @@ const NewNoticePage = () => {
 
             if (response.status === 200 || response.status === 201) {
                 alert("공지사항이 등록되었습니다!");
-
-                // 저장 성공 시 /notices 페이지로 이동
                 navigate("/notices");
             } else {
+
                 console.log("에러 발생 in front:", response.data);
             }
         } catch (error) {

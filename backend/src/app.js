@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-    origin: ["http://localhost:5173", "https://api.kwangwoon-cie.com"], // 허용할 프론트엔드 주소 추가
+    origin: ["http://localhost:5173", "https://api.kwangwoon-cie.com", "https://www.kwangwoon-cie.com"], // 허용할 프론트엔드 주소 추가
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
