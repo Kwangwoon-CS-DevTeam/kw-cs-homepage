@@ -5,8 +5,8 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const sequelize = require("./db"); // Sequelize 인스턴스 가져오기
 const noticeRoutes = require('./routes/noticeRoutes');
-const ResourcesRoutes = require("./routes/resourcesRoutes");
-const QuestionsRoutes = require("./routes/questionsRoutes");
+const ResourcesRoutes = require("./routes/ResourcesRoutes");
+const QuestionsRoutes = require("./routes/QuestionsRoutes");
 const authRoutes = require('./routes/authRoutes');
 require('./models'); // 관계가 정의된 모델 불러오기 (객체로 묶을 필요 없음)
 
