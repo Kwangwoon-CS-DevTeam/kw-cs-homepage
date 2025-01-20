@@ -8,7 +8,7 @@ const {
     getResourcesValidator,
     updateResourceValidator,
     deleteResourceValidator,
-} = require("../validators/resourceValidator");
+} = require("../validators/ResourceValidator");
 
 // 1. 자료 등록
 router.post("/new-resource", verifyAuth,createResourceValidator, validationMiddleware.handleValidationErrors, resourcesController.createResource);
