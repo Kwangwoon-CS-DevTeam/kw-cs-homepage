@@ -1,10 +1,12 @@
-require('dotenv').config();
-const express = require('express');
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./swagger');
-const sequelize = require('./db'); // Sequelize 인스턴스 가져오기
+require("dotenv").config();
+const express = require("express");
 const cors = require('cors');
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
+const sequelize = require("./db"); // Sequelize 인스턴스 가져오기
 const noticeRoutes = require('./routes/noticeRoutes');
+const ResourcesRoutes = require("./routes/resourcesRoutes");
+const QuestionsRoutes = require("./routes/questionsRoutes");
 const authRoutes = require('./routes/authRoutes');
 require('./models'); // 관계가 정의된 모델 불러오기 (객체로 묶을 필요 없음)
 
@@ -20,7 +22,13 @@ app.use(cors({
 }));
 
 // Swagger UI 세팅
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Resources 관련 라우트
+app.use("/api/resources", ResourcesRoutes);
+
+// Q&A 관련 라우트
+app.use("/api/qna", QuestionsRoutes);
 
 // Auth/admin 라우터
 app.use('/api/auth', authRoutes);
