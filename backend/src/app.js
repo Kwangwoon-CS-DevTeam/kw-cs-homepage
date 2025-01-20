@@ -12,14 +12,18 @@ require('./models'); // 관계가 정의된 모델 불러오기 (객체로 묶�
 
 const app = express();
 
+// 프록시 신뢰 설정
+app.set("trust proxy", 1); // 프록시 서버 뒤에서 동작할 경우 필요
+
+// CORS 설정
 app.use(cors({
     origin: ["http://localhost:5173", "https://www.kwangwoon-cie.com", "https://kwangwoon-cie.com"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // OPTIONS 추가
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // 쿠키 포함 설정
+    credentials: true,
 }));
 
-// OPTIONS 요청에 대한 처리 추가
+// OPTIONS 요청 처리
 app.options("*", cors());
 
 app.use(express.json());
