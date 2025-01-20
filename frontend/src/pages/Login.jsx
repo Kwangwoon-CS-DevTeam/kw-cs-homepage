@@ -10,12 +10,12 @@ function Home() {
         event.preventDefault();
         const formData = new FormData(event.target);
         const data = {
-            email: formData.get("id"),
+            id: formData.get("id"),
             password: formData.get("password"),
         };
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

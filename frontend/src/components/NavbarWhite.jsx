@@ -9,9 +9,9 @@ export default function NavbarWhite() {
 
     useEffect(() => {
         // 브라우저 세션에 토큰이 있는지 확인
-        const token = sessionStorage.getItem('authToken');
+        const token = localStorage.getItem('jwt'); // 'jwt' 키로 변경
         if (token) {
-            setIsLoggedIn(true);
+            setIsLoggedIn(true); // 로그인 상태로 설정
         }
     }, []);
 
@@ -94,7 +94,20 @@ export default function NavbarWhite() {
                     </a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    {!isLoggedIn && ( // 로그인 상태가 아닌 경우에만 렌더링
+                    {isLoggedIn ? (
+                        // 로그아웃 버튼
+                        <button
+                            onClick={() => {
+                                localStorage.removeItem('jwt'); // 세션에서 토큰 삭제
+                                setIsLoggedIn(false); // 상태 업데이트
+                                window.location.reload();
+                            }}
+                            className="relative text-base text-white font px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-50"
+                        >
+                            Log out
+                        </button>
+                    ) : (
+                        // 로그인 버튼
                         <a
                             href={NAVBAR.fifth.url}
                             className="relative text-base text-white font px-3 py-2 rounded-lg hover:bg-white hover:bg-opacity-50"

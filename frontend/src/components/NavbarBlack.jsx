@@ -23,7 +23,7 @@ export default function NavbarBlack() {
 
     useEffect(() => {
         // 브라우저 세션에서 토큰 확인
-        const token = sessionStorage.getItem('authToken');
+        const token = localStorage.getItem('jwt');
         if (token) {
             setIsLoggedIn(true);
         }
@@ -96,7 +96,20 @@ export default function NavbarBlack() {
                     </a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    {!isLoggedIn && ( // 로그인 상태가 아닌 경우에만 렌더링
+                    {isLoggedIn ? (
+                        // 로그아웃 버튼
+                        <button
+                            onClick={() => {
+                                localStorage.removeItem('jwt'); // 세션에서 토큰 삭제
+                                setIsLoggedIn(false); // 상태 업데이트
+                                window.location.reload();
+                            }}
+                            className="relative text-base text-black font-base px-3 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-50"
+                        >
+                            Log out
+                        </button>
+                    ) : (
+                        // 로그인 버튼
                         <a
                             href={NAVBAR.fifth.url}
                             className="relative text-base text-black font-base px-3 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-50"

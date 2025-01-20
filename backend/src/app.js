@@ -5,6 +5,7 @@ const swaggerSpec = require('./swagger');
 const sequelize = require('./db'); // Sequelize 인스턴스 가져오기
 const cors = require('cors');
 const noticeRoutes = require('./routes/noticeRoutes');
+const authRoutes = require('./routes/authRoutes');
 require('./models'); // 관계가 정의된 모델 불러오기 (객체로 묶을 필요 없음)
 
 
@@ -13,13 +14,16 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-    origin: ["http://localhost:5173", "https://api.kwangwoon-cie.com"], // 허용할 프론트엔드 주소 추가
+    origin: ["http://localhost:5173", "https://api.kwangwoon-cie.com", "https://www.kwangwoon-cie.com"], // 허용할 프론트엔드 주소 추가
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 // Swagger UI 세팅
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Auth/admin 라우터
+app.use('/api/auth', authRoutes);
 
 // Notice 라우터
 app.use('/api/notices', noticeRoutes);
