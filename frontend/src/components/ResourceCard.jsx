@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"; // PropTypes 임포트
 
 // components/ResourceCard.jsx
-export default function ResourceCard({ category, title, excerpt, provider, subject, date, link }) {
+export default function ResourceCard({ category, subject, title, content, provider, created_at, file_url }) {
     const categoryBgColor =
         category === "전공"
             ? "bg-pink-400 text-white" // 전공의 경우 핑크 배경
@@ -24,7 +24,7 @@ export default function ResourceCard({ category, title, excerpt, provider, subje
                 <h2 className="text-xl font-bold text-gray-800 mb-2">{title}</h2>
 
                 {/* 내용 요약 */}
-                <p className="text-gray-600 text-sm mb-4">{excerpt}</p>
+                <p className="text-gray-600 text-sm mb-4">{content}</p>
 
                 {/* 제공자 및 과목, 날짜 */}
                 <div className="text-gray-600 text-sm">
@@ -35,14 +35,14 @@ export default function ResourceCard({ category, title, excerpt, provider, subje
                         <span className="font-semibold">과목:</span> {subject}
                     </div>
                     <div>
-                        <span className="font-semibold">DATE:</span> {date}
+                        <span className="font-semibold">DATE:</span> {created_at}
                     </div>
                 </div>
             </div>
 
             {/* 다운받기 버튼 */}
             <a
-                href={link} // 다운로드 링크
+                href={file_url} // 다운로드 링크
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 inline-flex items-center bg-blue-900 text-white font-medium px-3 py-1.5 text-sm rounded shadow hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -62,9 +62,9 @@ export default function ResourceCard({ category, title, excerpt, provider, subje
 ResourceCard.propTypes = {
     category: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    excerpt: PropTypes.string.isRequired, // 새로 추가된 요약 필드
+    content: PropTypes.string.isRequired, // 새로 추가된 요약 필드
     provider: PropTypes.string.isRequired, // 제공자
     subject: PropTypes.string.isRequired, // 과목
-    date: PropTypes.string.isRequired, // 날짜 추가
-    link: PropTypes.string.isRequired, // 링크 추가
+    created_at: PropTypes.string.isRequired, // 날짜 추가
+    file_url: PropTypes.string.isRequired, // 링크 추가
 };

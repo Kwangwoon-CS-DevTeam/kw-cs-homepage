@@ -11,7 +11,7 @@ const {
 } = require("../validators/resourceValidator");
 
 // 1. 자료 등록
-router.post("/new-resource", verifyAuth, createResourceValidator, validationMiddleware.handleValidationErrors, resourcesController.createResource);
+router.post("/new-resource", verifyAuth,createResourceValidator, validationMiddleware.handleValidationErrors, resourcesController.createResource);
 
 // 2. 자료 목록 조회 (페이징 포함) 및 특정 카테고리 조회
 router.get("/", getResourcesValidator, validationMiddleware.handleValidationErrors, resourcesController.getResources);

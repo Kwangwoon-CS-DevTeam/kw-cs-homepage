@@ -134,7 +134,7 @@ const NewNoticePage = () => {
         }
 
         try {
-            const response = await apiClient.post("/notices/new-notice", requestData);
+            const response = await apiClient.post(`${import.meta.env.VITE_API_URL}/notices/new-notice`, requestData);
 
             if (response.status === 200 || response.status === 201) {
                 alert("공지사항이 등록되었습니다!");

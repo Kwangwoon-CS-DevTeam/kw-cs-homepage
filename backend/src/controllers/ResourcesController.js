@@ -50,9 +50,12 @@ const Resources = require("../models/Resources"); // Sequelize 모델
  */
 exports.createResource = async (req, res) => {
     try {
+        const data = req.body;
+        data.admin_id = req.user.id;
         const resource = await Resources.create(req.body); // 새로운 자료 생성
         res.status(201).json(resource); // 생성된 자료 반환
     } catch (error) {
+        console.error(error);
         res.status(400).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
     }
 };
@@ -94,19 +97,33 @@ exports.createResource = async (req, res) => {
  *         description: Error fetching resources
  */
 exports.getResources = async (req, res) => {
-    const { category, page = 1, limit = 10 } = req.query;
-    try {
-        const whereClause = { isDeleted: 0 }; // 삭제되지 않은 자료만 조회
-        if (category) whereClause.category = category; // 카테고리 필터링
+    const { page = 1, limit = 5, category } = req.query; // 페이지, 항목 수, 카테고리 필터
+    const offset = (page - 1) * limit;
 
-        const resources = await Resources.findAll({
+    try {
+        // 조건 설정
+        const whereClause = { isDeleted: 0 };
+        if (category) {
+            whereClause.category = category;
+        }
+
+        // 데이터 및 총 개수 조회
+        const { rows: resources, count } = await Resources.findAndCountAll({
             where: whereClause,
-            offset: (page - 1) * limit, 
-            limit: parseInt(limit), // 한 페이지에 표시할 자료 수
+            offset: offset,
+            limit: limit,
+            order: [["created_at", "DESC"]], // 최신순 정렬
         });
-        res.json(resources); // 조회된 자료 목록 반환
+
+        // 응답 데이터 구성
+        res.json({
+            total: count,       // 전체 자료 수
+            page: page, // 현재 페이지
+            size: limit, // 페이지당 항목 수
+            resources,          // 데이터 배열
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message }); // 오류 발생 시 에러 메시지 반환
+        res.status(500).json({ error: error.message }); // 오류 처리
     }
 };
 
