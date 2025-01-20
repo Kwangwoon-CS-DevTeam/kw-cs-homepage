@@ -7,7 +7,9 @@ const sequelize = require("./db"); // Sequelize 인스턴스 가져오기
 const noticeRoutes = require('./routes/noticeRoutes');
 const ResourcesRoutes = require("./routes/resourcesRoutes");
 const QuestionsRoutes = require("./routes/questionsRoutes");
-require("./models"); // 관계가 정의된 모델 불러오기 (객체로 묶을 필요 없음)
+const authRoutes = require('./routes/authRoutes');
+require('./models'); // 관계가 정의된 모델 불러오기 (객체로 묶을 필요 없음)
+
 
 const app = express();
 
@@ -27,6 +29,9 @@ app.use("/api/resources", ResourcesRoutes);
 
 // Q&A 관련 라우트
 app.use("/api/qna", QuestionsRoutes);
+
+// Auth/admin 라우터
+app.use('/api/auth', authRoutes);
 
 // Notice 라우터
 app.use('/api/notices', noticeRoutes);
