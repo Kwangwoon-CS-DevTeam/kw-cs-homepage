@@ -10,16 +10,15 @@ const QuestionsRoutes = require("./routes/questionsRoutes");
 const authRoutes = require('./routes/authRoutes');
 require('./models'); // 관계가 정의된 모델 불러오기 (객체로 묶을 필요 없음)
 
-
 const app = express();
-
-app.use(express.json());
 
 app.use(cors({
     origin: ["http://localhost:5173", "https://www.kwangwoon-cie.com", "https://kwangwoon-cie.com"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
+app.use(express.json());
 
 // Swagger UI 세팅
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
