@@ -20,7 +20,7 @@ exports.login = async (id, password) => {
 
     // JWT 토큰 생성
     const token = jwt.sign(
-        { id: admin.id, role: admin.department },
+        { id: admin.id, department: admin.department },
         process.env.JWT_SECRET,
         { expiresIn: "5h" }
     );

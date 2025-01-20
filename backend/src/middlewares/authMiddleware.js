@@ -13,6 +13,8 @@ const verifyAuth = (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded; // 검증된 사용자 정보를 요청 객체에 추가
 
+        console.log(req.user);
+
         next(); // 다음 미들웨어 또는 컨트롤러로 이동
     } catch (error) {
         console.error("토큰 검증 실패:", error.message);
