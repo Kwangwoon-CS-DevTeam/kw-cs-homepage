@@ -8,23 +8,31 @@ const Resources = sequelize.define('Resources', {
         autoIncrement: true,
     },
     admin_id: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     title: {
-        type: DataTypes.STRING(30),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     content: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    category: {
+        type: DataTypes.STRING,
         allowNull: true,
     },
     file_url: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING,
         allowNull: true,
     },
     provider: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    subject: {
+        type: DataTypes.STRING,
         allowNull: true,
     },
     created_at: {

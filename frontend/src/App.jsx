@@ -10,6 +10,7 @@ import NotFoundPage from './pages/404.jsx';
 import QnaBoard from "./pages/QnaBoard.jsx";
 import NoticeCreatePage from "./pages/NoticeCreatePage.jsx";
 import NoticeDetailPage from "./pages/NoticeDetailPage";
+import ResourceCreatePage from "./pages/ResourceCreatePage.jsx";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
 
                 {/* 자료실 페이지 */}
                 <Route path="/resources" element={<ResourceRoom />} />
+
+                {/* 자료실 작성 페이지 */}
+                <Route path="/resources/new-resource" element={<ResourceCreatePage />} />
 
                 {/* 세부전공 페이지 */}
                 <Route path="/specializations" element={<Specialization />} />
