@@ -14,9 +14,13 @@ const app = express();
 
 app.use(cors({
     origin: ["http://localhost:5173", "https://www.kwangwoon-cie.com", "https://kwangwoon-cie.com"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // OPTIONS 추가
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // 쿠키 포함 설정
 }));
+
+// OPTIONS 요청에 대한 처리 추가
+app.options("*", cors());
 
 app.use(express.json());
 
