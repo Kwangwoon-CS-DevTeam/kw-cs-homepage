@@ -3,6 +3,8 @@ import FooterBlack from "../components/FooterBlack.jsx";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CategorySelector from "../components/button/CategorySelector.jsx";
+import apiClient from "../api/axiosClient.js";
+import { useCheckAuth } from "../api/auth";
 
 const NewNoticePage = () => {
     const [title, setTitle] = useState(null);
@@ -14,8 +16,23 @@ const NewNoticePage = () => {
     const editorRef = useRef(null);
     const navigate = useNavigate();
 
+    const checkAuth = useCheckAuth(); // useCheckAuth 훅 호출
+
     useEffect(() => {
-        if (window.tinymce) {
+        checkAuth(); // 인증 확인
+    }, []);
+
+    useEffect(() => {
+        const loadTinyMCE = async () => {
+            if (!window.tinymce) {
+                await new Promise((resolve) => {
+                    const script = document.createElement("script");
+                    script.src = "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/tinymce.min.js";
+                    script.onload = resolve;
+                    document.body.appendChild(script);
+                });
+            }
+
             window.tinymce.init({
                 selector: "#content-editor",
                 height: 500,
@@ -26,13 +43,14 @@ const NewNoticePage = () => {
                     "insertdatetime media table paste help wordcount",
                 ],
                 toolbar: "formatselect | bold forecolor backcolor image | \
-                  alignleft aligncenter alignright alignjustify lineheight | \
-                  bullist numlist outdent indent",
+                      alignleft aligncenter alignright alignjustify lineheight | \
+                      bullist numlist outdent indent",
                 script_url: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/tinymce.min.js",
                 external_plugins: {
                     image: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/image/plugin.min.js",
                     advlist: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/advlist/plugin.min.js",
-                    autolink: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/autolink/plugin.min.js",
+                    autolink: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1cjt69gxy1q0387/tinymce/6/plugins/autolink/plugin.min.js",
+
                     lists: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/lists/plugin.min.js",
                     link: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/link/plugin.min.js",
                     charmap: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/charmap/plugin.min.js",
@@ -50,13 +68,10 @@ const NewNoticePage = () => {
                     wordcount: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/wordcount/plugin.min.js",
                 },
                 setup: (editor) => {
-                    // 에디터가 초기화된 후 참조 저장
                     editorRef.current = editor;
-
-                    // 에디터 내용 변경 시 setContent 호출
                     editor.on("change", () => {
                         const content = editor.getContent();
-                        setContent(content); // 상태 업데이트
+                        setContent(content);
                     });
                 },
                 file_picker_callback: (callback, value, meta) => {
@@ -96,14 +111,15 @@ const NewNoticePage = () => {
                     }
                 },
             });
-        }
+        };
+
+        loadTinyMCE();
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const requestData = {
-            admin_id: "admin123",
             title,
             url,
             content,
@@ -118,24 +134,14 @@ const NewNoticePage = () => {
         }
 
         try {
-            console.log("Request Data:", requestData);
-            console.log("API URL:", `${import.meta.env.VITE_API_URL}/notices/new-notice`);
+            const response = await apiClient.post("/notices/new-notice", requestData);
 
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/notices/new-notice`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(requestData),
-            });
-
-            if (response.ok) {
+            if (response.status === 200 || response.status === 201) {
                 alert("공지사항이 등록되었습니다!");
                 navigate("/notices");
             } else {
-                const errorData = await response.json();
-                console.error("Error from server:", errorData);
-                alert("공지사항 등록 중 에러가 발생했습니다.");
+
+                console.log("에러 발생 in front:", response.data);
             }
         } catch (error) {
             console.error("Network Error:", error);

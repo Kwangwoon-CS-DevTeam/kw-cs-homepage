@@ -16,9 +16,6 @@ const validateNoticesQuery = [
 ];
 
 const validateCreateNotice = [
-    body('admin_id')
-        .exists().withMessage('Admin ID는 필수 값입니다.')
-        .isString().withMessage('Admin ID는 문자열이어야 합니다.'),
     body('category')
         .exists().withMessage('Category는 필수 값입니다.')
         .isString().withMessage('Category는 문자열이어야 합니다.')
