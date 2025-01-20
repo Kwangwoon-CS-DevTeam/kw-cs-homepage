@@ -7,7 +7,7 @@ const validationMiddleware = require('../middlewares/validationMiddleware');
 const { 
     createQuestionValidator,
     updateAnswerValidator,
-    deleteQuestionValidator } = require('../validators/QuestionsValidator');
+    deleteQuestionValidator } = require('../validators/questionsValidator');
 
 // 1. 질문 등록 (Create)
 router.post('/add', createQuestionValidator, validationMiddleware.handleValidationErrors, questionsController.createQuestion);
