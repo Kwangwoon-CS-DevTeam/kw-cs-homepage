@@ -11,11 +11,18 @@ export default function NoticeBoard() {
     const [notices, setNotices] = useState([]); // 공지사항 데이터
     const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
     const navigate = useNavigate(); // React Router 네비게이션 훅
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
     const categoryRef = useRef(null);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const currentPage = parseInt(searchParams.get("page") || "1", 10); // 기본값 1
     const itemsPerPage = parseInt(searchParams.get("size") || "7", 10); // 기본값 7
+
+    // 로그인 상태 확인
+    useEffect(() => {
+        const token = localStorage.getItem("jwt"); // 토큰 확인
+        setIsLoggedIn(!!token); // 토큰이 있으면 true, 없으면 false
+    }, []);
 
     // Fetch Notices 부분 수정
     const fetchNotices = async () => {
@@ -66,52 +73,64 @@ export default function NoticeBoard() {
                 ref={categoryRef}
                 className="container mx-auto px-4 pt-8 sm:pt-12 lg:pt-8 pb-4 sm:pb-8 lg:pb-16"
             >
-                <div className="flex justify-start space-x-2.5">
-                    {/* 최신 */}
-                    <button
-                        className={`px-6 py-2 rounded-lg font-semibold ${
-                            !searchParams.get("category")
-                                ? "bg-blue-900 text-white"
-                                : "text-gray-500 hover:bg-blue-100"
-                        }`}
-                        onClick={() => {
-                            setSearchParams({page: 1, size: itemsPerPage}); // 쿼리 업데이트
-                            navigate(`?page=1&size=${itemsPerPage}`); // URL 이동
-                        }}
-                    >
-                        최신
-                    </button>
+                <div className="flex justify-between items-center space-x-2.5">
+                    {/* 카테고리 버튼 */}
+                    <div className="flex space-x-2.5">
+                        <button
+                            className={`px-6 py-2 rounded-lg font-semibold ${
+                                !searchParams.get("category")
+                                    ? "bg-blue-900 text-white"
+                                    : "text-gray-500 hover:bg-blue-100"
+                            }`}
+                            onClick={() => {
+                                setSearchParams({page: 1, size: itemsPerPage}); // 쿼리 업데이트
+                                navigate(`?page=1&size=${itemsPerPage}`); // URL 이동
+                            }}
+                        >
+                            최신
+                        </button>
 
-                    {/* 중요 */}
-                    <button
-                        className={`px-6 py-2 rounded-lg font-semibold ${
-                            searchParams.get("category") === "important"
-                                ? "bg-pink-400 text-white"
-                                : "text-gray-500 hover:bg-pink-200"
-                        }`}
-                        onClick={() => {
-                            setSearchParams({page: 1, size: itemsPerPage, category: "important"});
-                            navigate(`?page=1&size=${itemsPerPage}&category=important`); // 네비게이션
-                        }}
-                    >
-                        중요
-                    </button>
+                        <button
+                            className={`px-6 py-2 rounded-lg font-semibold ${
+                                searchParams.get("category") === "important"
+                                    ? "bg-pink-400 text-white"
+                                    : "text-gray-500 hover:bg-pink-200"
+                            }`}
+                            onClick={() => {
+                                setSearchParams({page: 1, size: itemsPerPage, category: "important"});
+                                navigate(`?page=1&size=${itemsPerPage}&category=important`);
+                            }}
+                        >
+                            중요
+                        </button>
 
-                    {/* 행사 */}
-                    <button
-                        className={`px-6 py-2 rounded-lg font-semibold ${
-                            searchParams.get("category") === "event"
-                                ? "bg-blue-200 text-blue-800"
-                                : "text-gray-500 hover:bg-blue-100"
-                        }`}
-                        onClick={() => {
-                            setSearchParams({page: 1, size: itemsPerPage, category: "event"});
-                            navigate(`?page=1&size=${itemsPerPage}&category=event`); // 네비게이션
-                        }}
-                    >
-                        행사
-                    </button>
+                        <button
+                            className={`px-6 py-2 rounded-lg font-semibold ${
+                                searchParams.get("category") === "event"
+                                    ? "bg-blue-200 text-blue-800"
+                                    : "text-gray-500 hover:bg-blue-100"
+                            }`}
+                            onClick={() => {
+                                setSearchParams({page: 1, size: itemsPerPage, category: "event"});
+                                navigate(`?page=1&size=${itemsPerPage}&category=event`);
+                            }}
+                        >
+                            행사
+                        </button>
+                    </div>
+
+                    {/* 글쓰기 버튼 */}
+                    {isLoggedIn && (
+                        <button
+                            className="ml-auto px-6 py-2 rounded-lg font-semibold bg-green-500 text-white hover:bg-green-600"
+                            onClick={() => navigate("/notices/new-notice")}
+                        >
+                            글쓰기
+                        </button>
+                    )}
                 </div>
+
+
             </div>
 
             {/* 공지사항 리스트 */}

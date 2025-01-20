@@ -31,7 +31,6 @@ const NewNoticePage = () => {
 
         // 요청에 보낼 데이터
         const requestData = {
-            admin_id: "admin123",
             title,
             url,
             content,

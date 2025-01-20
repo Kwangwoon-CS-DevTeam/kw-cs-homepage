@@ -96,12 +96,14 @@ exports.saveNotice = async (noticeData) => {
             created_at: Date.now(),
         });
 
+        console.log("데이터 admin_id: " + noticeData.admin_id);
+
         return {
             success: true,
             data: newNotice,
         };
     } catch (error) {
-        console.error('공지사항 저장을 실패하였습니다. 에러내용:', error);
+        console.error('공지사항 저장을 실패하였습니다 in service. 에러내용:', error);
         return {
             success: false,
             message: 'Failed to save notice',
