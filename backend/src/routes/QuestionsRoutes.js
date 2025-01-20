@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const verifyAuth = require('../middlewares/authMiddleware');
-const questionsController = require('../controllers/questionsController'); // 컨트롤러 가져오기
+const questionsController = require('../controllers/QuestionsController'); // 컨트롤러 가져오기
 const validationMiddleware = require('../middlewares/validationMiddleware');
 const { 
     createQuestionValidator,

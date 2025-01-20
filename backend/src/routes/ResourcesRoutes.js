@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const verifyAuth = require('../middlewares/authMiddleware');
-const resourcesController = require("../controllers/resourcesController"); // 컨트롤러 가져오기
+const resourcesController = require("../controllers/ResourcesController"); // 컨트롤러 가져오기
 const validationMiddleware = require('../middlewares/validationMiddleware');
 const {
     createResourceValidator,
