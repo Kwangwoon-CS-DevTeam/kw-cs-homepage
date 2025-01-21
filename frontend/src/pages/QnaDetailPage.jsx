@@ -83,6 +83,7 @@ const QnaDetailPage = () => {
             alert("질문이 성공적으로 수정되었습니다.");
             setIsEditing(false);
             setQuestion((prev) => ({ ...prev, ...editableQuestion })); // 로컬 상태 업데이트
+            setShowPasswordInput(null);
         } catch (error) {
             console.error("Error updating question:", error);
             alert("질문 수정에 실패했습니다.");
@@ -191,13 +192,13 @@ const QnaDetailPage = () => {
                             // 수정 모드: 취소 및 저장 버튼 표시
                             <div className="flex justify-end space-x-4 mt-4 mb-56">
                                 <button
-                                    className="px-8 py-2 border border-gray-700 text-gray-700 rounded-full hover:bg-gray-100 transition"
+                                    className="px-10 py-2 border border-gray-700 text-gray-700 rounded-full hover:bg-gray-100 transition"
                                     onClick={() => setIsEditing(false)} // 수정 취소
                                 >
                                     취소
                                 </button>
                                 <button
-                                    className="px-8 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
+                                    className="px-10 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
                                     onClick={handleSave} // 저장 동작
                                 >
                                     저장
@@ -207,13 +208,13 @@ const QnaDetailPage = () => {
                             // 로그인 상태
                             <div className="flex justify-end space-x-4 mt-4 mb-56">
                                 <button
-                                    className="px-8 py-2 border border-gray-700 text-gray-700 rounded-full hover:bg-gray-100 transition"
+                                    className="px-10 py-2 border border-gray-700 text-gray-700 rounded-full hover:bg-gray-100 transition"
                                     onClick={handleDelete}
                                 >
                                     삭제
                                 </button>
                                 <button
-                                    className="px-8 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
+                                    className="px-10 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
                                     onClick={handleAnswer}
                                 >
                                     답변하기
@@ -224,13 +225,13 @@ const QnaDetailPage = () => {
                             showPasswordInput === null ? (
                                 <div className="flex justify-end space-x-4 mt-4 mb-56">
                                     <button
-                                        className="px-8 py-2 border border-gray-700 text-gray-700 rounded-full hover:bg-gray-100 transition"
+                                        className="px-10 py-2 border border-gray-700 text-gray-700 rounded-full hover:bg-gray-100 transition"
                                         onClick={() => setShowPasswordInput("delete")}
                                     >
                                         삭제
                                     </button>
                                     <button
-                                        className="px-8 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
+                                        className="px-10 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
                                         onClick={() => setShowPasswordInput("edit")}
                                     >
                                         수정
