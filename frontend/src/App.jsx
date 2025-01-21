@@ -52,6 +52,9 @@ function App() {
                 {/* QnA 작성 페이지(사용자) */}
                 <Route path="/qna/new-question" element={<QnaCreatePage />} />
 
+                {/* QnA 수정 페이지(사용자) */}
+                <Route path="/qna/new-question/:id" element={<QnaCreatePage />} />
+
                 {/* QnA 상세 페이지 */}
                 <Route path="/qna/:id" element={<QnaDetailPage />} />
 

@@ -18,6 +18,11 @@ router.get('/', questionsController.getQuestions);
 // 2-1. 특정 질문 조회 (Read)
 router.get('/:id', questionsController.getQuestionById);
 
+// 2-2. 특정 질문 수정 (Update)
+router.put("/update/:id", questionsController.updateQuestion);
+
+module.exports = router;
+
 router.post('/validate-password', questionsController.validatePassword);
 
 // 3. 질문 답변 작성 (Update)

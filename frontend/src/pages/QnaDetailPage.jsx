@@ -10,7 +10,10 @@ const QnaDetailPage = () => {
     const [showPasswordInput, setShowPasswordInput] = useState(null); // null: 입력창 안보임, "delete": 삭제, "edit": 수정
     const [password, setPassword] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
+    const [isEditing, setIsEditing] = useState(false); // 수정 상태
+    const [editableQuestion, setEditableQuestion] = useState({ title: "", question: "" });
     const navigate = useNavigate();
+
 
     // 로그인 상태 확인
     useEffect(() => {
@@ -64,6 +67,28 @@ const QnaDetailPage = () => {
         }
     };
 
+    // 수정 버튼 클릭 후 비밀번호 검증 및 수정 활성화
+    const handleEdit = async () => {
+        const isValid = await validatePassword();
+        if (isValid) {
+            setIsEditing(true);
+            setEditableQuestion({ title: question.title, question: question.question });
+        }
+    };
+
+    // 수정 내용 저장
+    const handleSave = async () => {
+        try {
+            await axios.put(`${import.meta.env.VITE_API_URL}/qna/update/${id}`, editableQuestion);
+            alert("질문이 성공적으로 수정되었습니다.");
+            setIsEditing(false);
+            setQuestion((prev) => ({ ...prev, ...editableQuestion })); // 로컬 상태 업데이트
+        } catch (error) {
+            console.error("Error updating question:", error);
+            alert("질문 수정에 실패했습니다.");
+        }
+    };
+
 // 질문 삭제 요청
     const handleDelete = async () => {
         try {
@@ -99,24 +124,6 @@ const QnaDetailPage = () => {
         }
     };
 
-// 질문 수정 요청
-    const handleEdit = async () => {
-        if (!isLoggedIn && password.length != 4) {
-            alert("비밀번호는 4자리 입니다.");
-            setShowPasswordInput(null);
-            return;
-        }
-        if (!isLoggedIn && isNaN(password)) {
-            alert("비밀번호는 숫자여야 합니다.");
-            setShowPasswordInput(null);
-            return;
-        }
-
-        const isValid = await validatePassword();
-        if (isValid) {
-            navigate(`/qna/new-question/${id}`); // 비밀번호 검증 후 수정 페이지로 이동
-        }
-    };
 
     return (
         <div>
@@ -127,44 +134,76 @@ const QnaDetailPage = () => {
                 {/* 질문 상세 내용 */}
                 <div className="bg-white shadow-[0_0_6px_rgba(0,0,0,0.25)] rounded-lg p-6 mb-12 px-8">
                     <div className="px-7 mt-8">
-                        {/* Title과 nickname, created_at 정렬 */}
                         <div className="flex justify-between items-center">
-                            <h2 className="text-2xl font-semibold">{question.title || "제목 없음"}</h2>
+                            {isEditing ? (
+                                <input
+                                    type="text"
+                                    value={editableQuestion.title}
+                                    onChange={(e) => setEditableQuestion({ ...editableQuestion, title: e.target.value })}
+                                    className="text-2xl font-semibold w-3/4 px-3 py-2 border-neutral-100 border rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+                                />
+                            ) : (
+                                <h2 className="text-2xl font-semibold">{question.title || "제목 없음"}</h2>
+                            )}
                             <div className="flex space-x-4 text-gray-500 text-sm">
                                 <span>{question.nickname}</span>
                                 <span>{new Date(question.created_at).toLocaleDateString()}</span>
                             </div>
                         </div>
 
-                        {/* 구분선 */}
                         <hr className="border-t border-[1px] border-neutral-500 my-2 mb-10" />
 
-                        {/* 질문 내용 */}
-                        <p className="text-gray-600 mb-4">{question.question}</p>
+                        <div>
+                            {isEditing ? (
+                                <textarea
+                                    value={editableQuestion.question}
+                                    onChange={(e) => setEditableQuestion({ ...editableQuestion, question: e.target.value })}
+                                    className="w-full px-3 py-2 border border-neutral-100 border rounded-md h-40 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                                />
+                            ) : (
+                                <p className="text-gray-600 mb-4">{question.question}</p>
+                            )}
+                        </div>
                     </div>
                 </div>
 
                 {/* 조건부 렌더링 */}
                 {question.admin_id ? (
-                    // 답변 작성 내용
+                    // 답변 작성 내용 (관리자가 작성한 답변이 있는 경우)
                     <div className="bg-neutral-100 border-neutral-200 border-[1px] rounded-lg p-6 mb-6">
                         <div className="px-7 mt-10 mb-10">
                             <div className="flex justify-between items-center">
                                 <h2 className="text-2xl font-bold mb-4">질문하신 글에 대한 답변입니다.</h2>
                                 <div className="flex space-x-4 text-gray-500 text-sm">
-                                    <span>{question.admin_id}</span>
+                                    <span>관리자: {question.admin_id}</span>
                                     <span>{new Date(question.updated_at).toLocaleDateString()}</span>
                                 </div>
                             </div>
                             {/* 구분선 */}
-                            <hr className="border-t border-[1px] border-neutral-200 my-2 mb-10"/>
+                            <hr className="border-t border-[1px] border-neutral-200 my-2 mb-10" />
                             <p className="text-black">{question.answer}</p>
                         </div>
                     </div>
                 ) : (
-                    // 로그인 상태 확인 후 UI 렌더링
+                    // 답변이 없는 경우
                     <>
-                        {isLoggedIn ? (
+                        {isEditing ? (
+                            // 수정 모드: 취소 및 저장 버튼 표시
+                            <div className="flex justify-end space-x-4 mt-4 mb-56">
+                                <button
+                                    className="px-8 py-2 border border-gray-700 text-gray-700 rounded-full hover:bg-gray-100 transition"
+                                    onClick={() => setIsEditing(false)} // 수정 취소
+                                >
+                                    취소
+                                </button>
+                                <button
+                                    className="px-8 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
+                                    onClick={handleSave} // 저장 동작
+                                >
+                                    저장
+                                </button>
+                            </div>
+                        ) : isLoggedIn ? (
                             // 로그인 상태
                             <div className="flex justify-end space-x-4 mt-4 mb-56">
                                 <button
@@ -206,17 +245,18 @@ const QnaDetailPage = () => {
                                         className="w-32 px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring focus:border-blue-300"
                                         placeholder="비밀번호"
                                     />
+                                    {/* 비밀번호 입력 후 버튼 동작 */}
                                     {showPasswordInput === "delete" ? (
                                         <button
                                             className="ml-4 px-6 py-2 border-black border-[1px] text-black rounded-lg hover:bg-neutral-700 hover:text-white transition"
-                                            onClick={handleDelete}
+                                            onClick={handleDelete} // 삭제 버튼 동작
                                         >
                                             확인
                                         </button>
                                     ) : (
                                         <button
                                             className="ml-4 px-6 py-2 text-black border-[1px] border-black rounded-lg hover:bg-neutral-700 hover:text-white transition"
-                                            onClick={handleAnswer}
+                                            onClick={handleEdit} // 수정 버튼 동작
                                         >
                                             확인
                                         </button>

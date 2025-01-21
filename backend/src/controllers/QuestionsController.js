@@ -160,6 +160,35 @@ exports.validatePassword = async (req, res) => {
     }
 };
 
+exports.updateQuestion = async (req, res) => {
+    const { id } = req.params; // URL의 ID 추출
+    const { title, question } = req.body; // 요청 본문에서 제목과 질문 내용 추출
+
+    try {
+        // 해당 ID의 삭제되지 않은 질문 조회
+        const existingQuestion = await Questions.findOne({ where: { id, isDeleted: 0 } });
+
+        if (!existingQuestion) {
+            return res.status(404).json({ error: "Question not found" }); // 질문이 없으면 404 반환
+        }
+
+        // 제목과 질문 내용 업데이트
+        existingQuestion.title = title || existingQuestion.title;
+        existingQuestion.question = question || existingQuestion.question;
+        existingQuestion.updated_at = new Date(); // 수정 시간 업데이트
+
+        await existingQuestion.save(); // 변경 사항 저장
+
+        res.status(200).json({
+            message: "Question updated successfully",
+            question: existingQuestion,
+        });
+    } catch (error) {
+        console.error("Error updating question:", error);
+        res.status(500).json({ error: "Failed to update question" });
+    }
+};
+
 /**
  * @swagger
  * /api/qna/answer/{id}:
