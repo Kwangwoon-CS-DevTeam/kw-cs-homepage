@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import NavbarBlack from "../components/NavbarBlack.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
-import QnACard from "../components/QnACard.jsx";
+import QnACard from "../components/QnaCard.jsx";
 import axios from "axios";
 import NoticeHeader from "../components/NoticeHeader.jsx";
 
