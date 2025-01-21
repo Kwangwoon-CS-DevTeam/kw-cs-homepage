@@ -2,7 +2,7 @@ const Questions = require('../models/Questions')
 
 /**
  * @swagger
- * /api/qna/add:
+ * /api/qna/new-question:
  *   post:
  *     summary: 질문을 등록합니다.
  *     description: 새로운 질문을 등록합니다.
@@ -40,9 +40,19 @@ const Questions = require('../models/Questions')
  */
 exports.createQuestion = async (req, res) => {
     try {
-        const newQuestion = await Questions.create(req.body);
+        const data = req.body;
+        const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+        // IPv6 루프백 주소를 IPv4로 변환
+        const formattedIP = clientIP === '::1' ? '127.0.0.1' : clientIP;
+        data.IP = formattedIP;
+        data.password = parseInt(data.password, 10);
+
+        const newQuestion = await Questions.create(data);
+
         res.status(201).json(newQuestion); // 성공적으로 생성된 질문 반환
     } catch (error) {
+        console.log("createQuestion error in server Controller: " + error);
         res.status(400).json({ error: error.message }); // 오류 발생 시 400 에러 반환
     }
 };
@@ -64,14 +74,89 @@ exports.createQuestion = async (req, res) => {
  *                 $ref: '#/components/schemas/Question'
  */
 exports.getQuestions = async (req, res) => {
+    const { page = 1, size = 10 } = req.query; // 기본 페이지: 1, 기본 크기: 10
+    const offset = (page - 1) * size; // 데이터 시작 지점
+    const limit = parseInt(size); // 페이지당 항목 수
+
     try {
-        // 삭제되지 않은 모든 질문 조회
-        const questions = await Questions.findAll({
-            where: { isDeleted: 0 }, // isDeleted가 0인 질문만 조회
+        const { count, rows } = await Questions.findAndCountAll({
+            where: { isDeleted: 0 }, // 삭제되지 않은 질문만
+            offset,
+            limit,
+            attributes: { exclude: ['password'] }, // password 컬럼 제외
+            order: [['created_at', 'DESC']], // 최신 질문 우선
         });
-        res.status(200).json(questions); // 조회된 질문 목록 반환
+
+        res.status(200).json({
+            total: count,   // 전체 질문 수
+            page,           // 현재 페이지
+            size,           // 페이지당 항목 수
+            questions: rows // 질문 데이터
+        });
     } catch (error) {
-        res.status(400).json({ error: 'Failed to retrieve questions' }); // 오류 발생 시 400 에러 반환
+        console.error('Error fetching questions:', error);
+        res.status(500).json({ error: 'Failed to retrieve questions' });
+    }
+};
+
+/**
+ * @swagger
+ * /api/qna/{id}:
+ *   get:
+ *     summary: 특정 질문의 상세 정보를 조회합니다.
+ *     description: 질문 ID를 사용하여 특정 질문의 상세 정보를 조회합니다.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 조회할 질문의 ID
+ *     responses:
+ *       200:
+ *         description: 질문 상세 정보
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Question'
+ *       404:
+ *         description: 질문을 찾을 수 없음
+ */
+exports.getQuestionById = async (req, res) => {
+    const { id } = req.params; // URL에서 질문 ID 가져오기
+
+    try {
+        // ID로 질문 조회 (삭제되지 않은 질문만)
+        const question = await Questions.findOne({ where: { id, isDeleted: 0 } });
+        if (question) {
+            res.status(200).json(question); // 질문 반환
+        } else {
+            res.status(404).json({ error: 'Question not found' }); // 질문이 없으면 404 에러 반환
+        }
+    } catch (error) {
+        console.log('Error fetching question:', error);
+        res.status(500).json({ error: 'Failed to retrieve question' }); // 오류 발생 시 500 에러 반환
+    }
+};
+
+exports.validatePassword = async (req, res) => {
+    const { id, password } = req.body;
+
+    try {
+        const question = await Questions.findByPk(id);
+        if (!question) {
+            return res.status(404).json({ error: "질문을 찾을 수 없습니다." });
+        }
+
+        // 비밀번호 검증
+        if (question.password !== parseInt(password, 10)) {
+            return res.status(403).json({ error: "비밀번호가 올바르지 않습니다." });
+        }
+
+        res.status(200).json({ message: "비밀번호가 유효합니다." });
+    } catch (error) {
+        console.error("Error validating password:", error);
+        res.status(500).json({ error: "서버 오류가 발생했습니다." });
     }
 };
 

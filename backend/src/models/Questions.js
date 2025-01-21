@@ -8,23 +8,19 @@ const Questions = sequelize.define('Questions', {
         autoIncrement: true,
     },
     admin_id: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
+        type: DataTypes.STRING,
+        allowNull: true, // NULL 허용 설정
     },
     nickname: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     IP: {
-        type: DataTypes.STRING(30),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     question: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-    },
-    title: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     answer: {
@@ -37,7 +33,7 @@ const Questions = sequelize.define('Questions', {
     },
     created_at: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
         defaultValue: DataTypes.NOW,
     },
     updated_at: {
@@ -46,7 +42,7 @@ const Questions = sequelize.define('Questions', {
     },
     isDeleted: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         defaultValue: 0,
     },
     title: {
