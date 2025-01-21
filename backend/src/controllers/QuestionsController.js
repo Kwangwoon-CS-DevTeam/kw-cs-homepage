@@ -197,8 +197,9 @@ exports.validatePassword = async (req, res) => {
  *         description: 질문을 찾을 수 없음
  */
 exports.updateAnswer = async (req, res) => {
-    const { id } = req.params; 
-    const { admin_id, answer } = req.body;  
+    const { id } = req.params;
+    const answer = req.body.answer;
+    const admin_id = req.user.id;
 
     try {
         // 해당 ID의 삭제되지 않은 질문 조회

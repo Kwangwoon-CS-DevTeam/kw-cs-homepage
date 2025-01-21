@@ -16,7 +16,16 @@ const QnaCreatePage = () => {
         e.preventDefault();
         try {
 
-            console.log(title, nickname, password, question);
+            // 비밀번호 유효성 검사
+            if (password.length != 4) {
+                alert("비밀번호 4자리를 입력해주세요.");
+                return;
+            }
+
+            if (isNaN(password)) {
+                alert("비밀번호는 숫자여야 합니다.");
+                return;
+            }
 
             // 서버로 POST 요청 보내기
             await axios.post(`${import.meta.env.VITE_API_URL}/qna/new-question`, {

@@ -13,6 +13,7 @@ import NoticeDetailPage from "./pages/NoticeDetailPage";
 import ResourceCreatePage from "./pages/ResourceCreatePage.jsx";
 import QnaCreatePage from "./pages/QnaCreatePage.jsx";
 import QnaDetailPage from "./pages/QnaDetailPage.jsx";
+import AnswerCreatePage from "./pages/AnswerCreatePage.jsx";
 
 function App() {
   return (
@@ -53,6 +54,9 @@ function App() {
 
                 {/* QnA 상세 페이지 */}
                 <Route path="/qna/:id" element={<QnaDetailPage />} />
+
+                {/* QnA 답변 페이지(관리자) */}
+                <Route path="/qna/answer/:id" element={<AnswerCreatePage />} />
 
                 {/* 로그인 페이지 */}
                 <Route path="/login" element={<Login />} />

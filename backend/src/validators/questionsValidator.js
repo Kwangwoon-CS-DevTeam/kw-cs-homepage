@@ -9,8 +9,6 @@ const createQuestionValidator = [
 ];
 
 const updateAnswerValidator = [
-  param('id').isInt().withMessage('유효한 질문 ID를 입력하세요.'),
-  body('admin_id').isString().notEmpty().withMessage('관리자 ID는 필수입니다.'),
   body('answer').isString().notEmpty().withMessage('답변을 입력하세요.')
 ];
 

@@ -24,6 +24,6 @@ router.post('/validate-password', questionsController.validatePassword);
 router.put('/answer/:id', verifyAuth, updateAnswerValidator, validationMiddleware.handleValidationErrors, questionsController.updateAnswer);
 
 // 4. 질문 삭제 (Delete) - 소프트 삭제
-router.delete('/delete/:id', verifyAuth, deleteQuestionValidator, validationMiddleware.handleValidationErrors, questionsController.deleteQuestion);
+router.delete('/delete/:id', deleteQuestionValidator, validationMiddleware.handleValidationErrors, questionsController.deleteQuestion);
 
 module.exports = router;
