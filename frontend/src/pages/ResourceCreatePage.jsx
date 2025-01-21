@@ -2,8 +2,6 @@ import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarBlack from "../components/NavbarBlack.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
-
-import axios from "axios";
 import apiClient from "../api/axiosClient.js";
 import {useCheckAuth} from "../api/auth.js";
 
