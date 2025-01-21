@@ -133,7 +133,7 @@ const QnaDetailPage = () => {
 
                 {/* 질문 상세 내용 */}
                 <div className="bg-white shadow-[0_0_6px_rgba(0,0,0,0.25)] rounded-lg p-6 mb-12 px-8">
-                    <div className="px-7 mt-8">
+                    <div className="px-7 mt-8 mb-10">
                         <div className="flex justify-between items-center">
                             {isEditing ? (
                                 <input
