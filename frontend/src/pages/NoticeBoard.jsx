@@ -71,11 +71,12 @@ export default function NoticeBoard() {
             {/* 카테고리 버튼 */}
             <div
                 ref={categoryRef}
-                className="container mx-auto px-4 pt-8 sm:pt-12 lg:pt-8 pb-4 sm:pb-8 lg:pb-16"
+                className="container ml-8 px-6 md:px-10 lg:px-4 pt-8 sm:pt-12 lg:pt-8 pb-4 sm:pb-8 lg:pb-16"
             >
                 <div className="flex justify-between items-center space-x-2.5">
                     {/* 카테고리 버튼 */}
-                    <div className="flex space-x-2.5">
+                    <div
+                        className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2.5">
                         <button
                             className={`px-6 py-2 rounded-lg font-semibold ${
                                 !searchParams.get("category")
@@ -83,11 +84,11 @@ export default function NoticeBoard() {
                                     : "text-gray-500 hover:bg-blue-100"
                             }`}
                             onClick={() => {
-                                setSearchParams({page: 1, size: itemsPerPage}); // 쿼리 업데이트
-                                navigate(`?page=1&size=${itemsPerPage}`); // URL 이동
+                                setSearchParams({page: 1, size: itemsPerPage});
+                                navigate(`?page=1&size=${itemsPerPage}`);
                             }}
                         >
-                            최신
+                            전체
                         </button>
 
                         <button
@@ -97,8 +98,14 @@ export default function NoticeBoard() {
                                     : "text-gray-500 hover:bg-pink-200"
                             }`}
                             onClick={() => {
-                                setSearchParams({page: 1, size: itemsPerPage, category: "important"});
-                                navigate(`?page=1&size=${itemsPerPage}&category=important`);
+                                setSearchParams({
+                                    page: 1,
+                                    size: itemsPerPage,
+                                    category: "important",
+                                });
+                                navigate(
+                                    `?page=1&size=${itemsPerPage}&category=important`
+                                );
                             }}
                         >
                             중요
@@ -111,7 +118,11 @@ export default function NoticeBoard() {
                                     : "text-gray-500 hover:bg-blue-100"
                             }`}
                             onClick={() => {
-                                setSearchParams({page: 1, size: itemsPerPage, category: "event"});
+                                setSearchParams({
+                                    page: 1,
+                                    size: itemsPerPage,
+                                    category: "event",
+                                });
                                 navigate(`?page=1&size=${itemsPerPage}&category=event`);
                             }}
                         >

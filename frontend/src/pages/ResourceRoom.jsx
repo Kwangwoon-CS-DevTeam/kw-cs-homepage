@@ -54,36 +54,32 @@ export default function ResourceBoard() {
         }
     };
 
-    const handleCategoryChange = (category) => {
-        setSelectedCategory(category);
-        setCurrentPage(1);
-        setSearchParams({ page: 1, size: itemsPerPage, category }); // 쿼리 업데이트
-        if (categoryRef.current) {
-            categoryRef.current.scrollIntoView({ behavior: "smooth" });
-        }
-    };
-
     return (
         <div className="relative bg-white min-h-screen">
             <NavbarBlack />
             <NoticeHeader title={"자료실"} sub={"학과의 소중한 자료를 공유하고 활용하세요."} />
 
+            {/* 카테고리 버튼 */}
             <div
                 ref={categoryRef}
-                className="container mx-auto px-4 pt-8 sm:pt-12 lg:pt-8 pb-4 sm:pb-8 lg:pb-16"
+                className="container ml-8 px-6 md:px-10 lg:px-4 pt-8 sm:pt-12 lg:pt-8 pb-4 sm:pb-8 lg:pb-16"
             >
                 <div className="flex justify-between items-center space-x-2.5">
                     {/* 카테고리 버튼 */}
-                    <div className="flex space-x-2.5">
+                    <div
+                        className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2.5">
                         <button
                             className={`px-6 py-2 rounded-lg font-semibold ${
                                 !searchParams.get("category")
                                     ? "bg-blue-900 text-white"
                                     : "text-gray-500 hover:bg-blue-100"
                             }`}
-                            onClick={() => handleCategoryChange("latest")}
+                            onClick={() => {
+                                setSearchParams({page: 1, size: itemsPerPage});
+                                navigate(`?page=1&size=${itemsPerPage}`);
+                            }}
                         >
-                            최신
+                            전체
                         </button>
 
                         <button
@@ -92,7 +88,16 @@ export default function ResourceBoard() {
                                     ? "bg-pink-400 text-white"
                                     : "text-gray-500 hover:bg-pink-200"
                             }`}
-                            onClick={() => handleCategoryChange("전공")}
+                            onClick={() => {
+                                setSearchParams({
+                                    page: 1,
+                                    size: itemsPerPage,
+                                    category: "전공",
+                                });
+                                navigate(
+                                    `?page=1&size=${itemsPerPage}&category=전공`
+                                );
+                            }}
                         >
                             전공
                         </button>
@@ -103,7 +108,14 @@ export default function ResourceBoard() {
                                     ? "bg-blue-200 text-blue-800"
                                     : "text-gray-500 hover:bg-blue-100"
                             }`}
-                            onClick={() => handleCategoryChange("교양")}
+                            onClick={() => {
+                                setSearchParams({
+                                    page: 1,
+                                    size: itemsPerPage,
+                                    category: "교양",
+                                });
+                                navigate(`?page=1&size=${itemsPerPage}&category=교양`);
+                            }}
                         >
                             교양
                         </button>
@@ -119,6 +131,8 @@ export default function ResourceBoard() {
                         </button>
                     )}
                 </div>
+
+
             </div>
 
             <div className="container mx-auto px-4 lg:px-16 py-8 grid gap-6">

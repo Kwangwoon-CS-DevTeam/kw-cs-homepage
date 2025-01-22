@@ -17,7 +17,7 @@ export default function NoticeHeader({ title, sub }) {
             </div>
 
             {/* 구분선 */}
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto">
                 <hr className="border-t border-gray-300" />
             </div>
         </div>
