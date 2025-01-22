@@ -7,6 +7,8 @@ export default function NavbarWhite() {
     const [menuClosing, setMenuClosing] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    const currentPath = window.location.pathname;
+
     useEffect(() => {
         // 브라우저 세션에 토큰이 있는지 확인
         const token = localStorage.getItem('jwt'); // 'jwt' 키로 변경
@@ -25,6 +27,14 @@ export default function NavbarWhite() {
         } else {
             setMobileMenuOpen(true);
         }
+    };
+
+    // 활성화된 링크 스타일링 함수
+    const getNavLinkClass = (path) => {
+        if (currentPath === path) {
+            return "bg-blue-200 bg-opacity-30 hover:default"; // 활성화된 링크 배경색, hover 비활성화
+        }
+        return "hover:bg-blue-100 hover:bg-opacity-15"; // 기본 hover 스타일
     };
 
     return (
@@ -82,7 +92,7 @@ export default function NavbarWhite() {
                     </a>
                     <a
                         href={NAVBAR.third.url}
-                        className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
+                        className={`relative text-base text-white font-base px-4 py-2 rounded-lg ${getNavLinkClass(NAVBAR.third.url)}`}
                     >
                         {NAVBAR.third.title}
                     </a>
@@ -145,7 +155,7 @@ export default function NavbarWhite() {
                     <li>
                         <a
                             href={NAVBAR.third.url}
-                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
+                            className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.third.url)}`}
                         >
                             {NAVBAR.third.title}
                         </a>

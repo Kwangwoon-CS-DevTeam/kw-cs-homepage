@@ -9,6 +9,8 @@ export default function NavbarBlack() {
     const [menuClosing, setMenuClosing] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    const currentPath = window.location.pathname;
+
     const toggleMenu = () => {
         if (mobileMenuOpen) {
             setMenuClosing(true);
@@ -22,12 +24,19 @@ export default function NavbarBlack() {
     };
 
     useEffect(() => {
-        // 브라우저 세션에서 토큰 확인
         const token = localStorage.getItem('jwt');
         if (token) {
             setIsLoggedIn(true);
         }
     }, []);
+
+    // 활성화된 링크 스타일링 함수
+    const getNavLinkClass = (path) => {
+        if (currentPath === path) {
+            return "bg-blue-200 bg-opacity-30 hover:default"; // 활성화된 링크 배경색, hover 비활성화
+        }
+        return "hover:bg-blue-200 hover:bg-opacity-15"; // 기본 hover 스타일
+    };
 
     return (
         <header className="relative top-0 left-0 w-full z-10 bg-white">
@@ -72,36 +81,35 @@ export default function NavbarBlack() {
                 <div className="hidden lg:flex lg:gap-x-1">
                     <a
                         href={NAVBAR.first.url}
-                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
+                        className={`relative text-base text-black font-base px-4 py-2 rounded-lg ${getNavLinkClass(NAVBAR.first.url)}`}
                     >
                         {NAVBAR.first.title}
                     </a>
                     <a
                         href={NAVBAR.second.url}
-                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
+                        className={`relative text-base text-black font-base px-4 py-2 rounded-lg ${getNavLinkClass(NAVBAR.second.url)}`}
                     >
                         {NAVBAR.second.title}
                     </a>
                     <a
                         href={NAVBAR.third.url}
-                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
+                        className={`relative text-base text-black font-base px-4 py-2 rounded-lg ${getNavLinkClass(NAVBAR.third.url)}`}
                     >
                         {NAVBAR.third.title}
                     </a>
                     <a
                         href={NAVBAR.forth.url}
-                        className="relative text-base text-black font-base px-4 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-15"
+                        className={`relative text-base text-black font-base px-4 py-2 rounded-lg ${getNavLinkClass(NAVBAR.forth.url)}`}
                     >
                         {NAVBAR.forth.title}
                     </a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     {isLoggedIn ? (
-                        // 로그아웃 버튼
                         <button
                             onClick={() => {
-                                localStorage.removeItem('jwt'); // 세션에서 토큰 삭제
-                                setIsLoggedIn(false); // 상태 업데이트
+                                localStorage.removeItem('jwt');
+                                setIsLoggedIn(false);
                                 window.location.reload();
                             }}
                             className="relative text-base text-black font-base px-3 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-50"
@@ -109,7 +117,6 @@ export default function NavbarBlack() {
                             Log out
                         </button>
                     ) : (
-                        // 로그인 버튼
                         <a
                             href={NAVBAR.fifth.url}
                             className="relative text-base text-black font-base px-3 py-2 rounded-lg hover:bg-blue-100 hover:bg-opacity-50"
@@ -130,7 +137,7 @@ export default function NavbarBlack() {
                     <li>
                         <a
                             href={NAVBAR.first.url}
-                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
+                            className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.first.url)}`}
                         >
                             {NAVBAR.first.title}
                         </a>
@@ -138,7 +145,7 @@ export default function NavbarBlack() {
                     <li>
                         <a
                             href={NAVBAR.second.url}
-                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
+                            className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.second.url)}`}
                         >
                             {NAVBAR.second.title}
                         </a>
@@ -146,7 +153,7 @@ export default function NavbarBlack() {
                     <li>
                         <a
                             href={NAVBAR.third.url}
-                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
+                            className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.third.url)}`}
                         >
                             {NAVBAR.third.title}
                         </a>
@@ -154,7 +161,7 @@ export default function NavbarBlack() {
                     <li>
                         <a
                             href={NAVBAR.forth.url}
-                            className="block text-sm font-base text-gray-900 hover:bg-gray-100 rounded-lg px-4 py-2"
+                            className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.forth.url)}`}
                         >
                             {NAVBAR.forth.title}
                         </a>
