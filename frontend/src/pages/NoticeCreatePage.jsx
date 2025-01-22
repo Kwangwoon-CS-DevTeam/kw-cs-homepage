@@ -11,7 +11,7 @@ const NewNoticePage = () => {
     const [url, setUrl] = useState(null);
     const [content, setContent] = useState("");
     const [excerpt, setExcerpt] = useState(null);
-    const [category, setCategory] = useState("important");
+    const [category, setCategory] = useState("학과");
     const [maxParticipants, setMaxParticipants] = useState(null);
     const editorRef = useRef(null);
     const navigate = useNavigate();
@@ -158,7 +158,7 @@ const NewNoticePage = () => {
                     <input
                         type="text"
                         placeholder="제목을 입력하세요."
-                        className="w-full px-4 py-2 mb-6 border-b rounded-lg text-2xl"
+                        className="w-full px-4 py-2 mb-6 border-b rounded-lg text-2xl focus:outline-none"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     />
@@ -166,7 +166,7 @@ const NewNoticePage = () => {
                     <input
                         type="text"
                         placeholder="구글 폼 URL을 입력하세요.(선택)"
-                        className="w-full px-4 py-2 mb-6 border rounded-lg"
+                        className="w-full px-4 py-2 mb-6 border rounded-lg focus:outline-none"
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                     />
@@ -174,7 +174,7 @@ const NewNoticePage = () => {
                     <input
                         type="number"
                         placeholder="최대 참가자 수를 입력하세요."
-                        className="w-1/4 px-4 py-2 mb-6 border rounded-lg"
+                        className="w-1/4 px-4 py-2 mb-6 border rounded-lg focus:outline-none"
                         value={maxParticipants}
                         onChange={(e) => setMaxParticipants(e.target.value)}
                     />

@@ -4,7 +4,7 @@ const validateNoticesQuery = [
     query('category')
         .optional()
         .isString().withMessage('카테고리는 문자열이어야 합니다.')
-        .isIn(['important', 'event']).withMessage('카테고리는 "important" 또는 "event"만 허용됩니다.'),
+        .isIn(['학과', '총학']).withMessage('카테고리는 "학과" 또는 "총학"만 허용됩니다.'),
     query('page')
         .exists().withMessage('Page는 필수 값입니다.') // 필수 값으로 지정
         .isInt({ min: 1}).withMessage('Page는 1 이상의 정수여야 합니다.')
@@ -19,7 +19,7 @@ const validateCreateNotice = [
     body('category')
         .exists().withMessage('Category는 필수 값입니다.')
         .isString().withMessage('Category는 문자열이어야 합니다.')
-        .isIn(['important', 'event']).withMessage('Category는 "important" 또는 "event"만 허용됩니다.'),
+        .isIn(['학과', '총학']).withMessage('Category는 "학과" 또는 "총학"만 허용됩니다.'),
     body('title')
         .exists().withMessage('Title은 필수 값입니다.')
         .isString().withMessage('Title은 문자열이어야 합니다.')

@@ -3,8 +3,8 @@ import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { CheckIcon } from "@heroicons/react/20/solid";
 
 const categories = [
-    { id: 1, name: "중요", value: "important" },
-    { id: 2, name: "행사", value: "event" },
+    { id: 1, name: "학과", value: "학과" },
+    { id: 2, name: "총학", value: "총학" },
 ];
 
 export default function CategorySelector({ category, setCategory }) {

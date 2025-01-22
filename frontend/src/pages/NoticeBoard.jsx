@@ -93,7 +93,7 @@ export default function NoticeBoard() {
 
                         <button
                             className={`px-6 py-2 rounded-lg font-semibold ${
-                                searchParams.get("category") === "important"
+                                searchParams.get("category") === "학과"
                                     ? "bg-pink-400 text-white"
                                     : "text-gray-500 hover:bg-pink-200"
                             }`}
@@ -101,19 +101,19 @@ export default function NoticeBoard() {
                                 setSearchParams({
                                     page: 1,
                                     size: itemsPerPage,
-                                    category: "important",
+                                    category: "학과",
                                 });
                                 navigate(
-                                    `?page=1&size=${itemsPerPage}&category=important`
+                                    `?page=1&size=${itemsPerPage}&category=학과`
                                 );
                             }}
                         >
-                            중요
+                            학과
                         </button>
 
                         <button
                             className={`px-6 py-2 rounded-lg font-semibold ${
-                                searchParams.get("category") === "event"
+                                searchParams.get("category") === "총학"
                                     ? "bg-blue-200 text-blue-800"
                                     : "text-gray-500 hover:bg-blue-100"
                             }`}
@@ -121,12 +121,12 @@ export default function NoticeBoard() {
                                 setSearchParams({
                                     page: 1,
                                     size: itemsPerPage,
-                                    category: "event",
+                                    category: "총학",
                                 });
-                                navigate(`?page=1&size=${itemsPerPage}&category=event`);
+                                navigate(`?page=1&size=${itemsPerPage}&category=총학`);
                             }}
                         >
-                            행사
+                            총학
                         </button>
                     </div>
 

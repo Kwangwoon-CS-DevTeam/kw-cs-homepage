@@ -37,8 +37,8 @@ exports.getNotices = async (categoryName, page, size) => {
 
         // 카테고리 ID를 문자열로 변환
         const categoryMapping = {
-            1: 'important',
-            2: 'event',
+            1: '학과',
+            2: '총학',
         };
 
         const notices = rows.map((notice) => ({

@@ -104,11 +104,11 @@ exports.getNoticeById = async (req, res) => {
  *       - name: category
  *         in: query
  *         required: false
- *         description: 카테고리 이름 ("important" 또는 "event"). 값이 없으면 전체 공지사항을 조회합니다.
+ *         description: 카테고리 이름 ("학과" 또는 "총학"). 값이 없으면 전체 공지사항을 조회합니다.
  *         schema:
  *           type: string
- *           enum: [important, event]
- *           example: important
+ *           enum: [학과, 총학]
+ *           example: 학과
  *       - name: page
  *         in: query
  *         required: false
@@ -175,6 +175,7 @@ exports.getNotices = async (req, res) => {
     const { category, page, size } = req.query; // page와 size는 이미 toInt로 변환됨
     try {
         const notices = await noticeService.getNotices(category, page, size);
+        console.log(notices);
         res.status(200).json(notices);
     } catch (error) {
         console.error('Error in getNotices Controller:', error);
@@ -241,8 +242,8 @@ exports.createNotice = async (req, res) => {
     noticeData.admin_id = req.user.id;
     // 카테고리 변환
     const categoryMapping = {
-        important: 1,
-        event: 2,
+        학과: 1,
+        총학: 2,
     };
 
     noticeData.category_id = categoryMapping[noticeData.category];
@@ -344,8 +345,8 @@ exports.updateNotice = async (req, res) => {
     try {
 
         const categoryMapping = {
-            important: 1,
-            event: 2,
+            학과: 1,
+            총학: 2,
         };
 
         updateData.category_id = categoryMapping[updateData.category];

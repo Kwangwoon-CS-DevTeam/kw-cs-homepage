@@ -4,7 +4,7 @@ import PropTypes from "prop-types"; // PropTypes 임포트
 export default function NoticeCard({ id, category, title, excerpt, admin_id, created_at, url }) {
     // 카테고리 색상 설정
     const categoryBgColor =
-        category === "important"
+        category === "학과"
             ? "bg-pink-400 text-white" // 중요한 경우 핑크 배경
             : "bg-blue-200 text-blue-800"; // 기본 블루 배경
 
