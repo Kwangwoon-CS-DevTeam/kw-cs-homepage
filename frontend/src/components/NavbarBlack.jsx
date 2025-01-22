@@ -32,7 +32,7 @@ export default function NavbarBlack() {
 
     // 활성화된 링크 스타일링 함수
     const getNavLinkClass = (path) => {
-        if (currentPath === path) {
+        if (currentPath === `${path}/` || currentPath === path) {
             return "bg-blue-200 bg-opacity-30 hover:default"; // 활성화된 링크 배경색, hover 비활성화
         }
         return "hover:bg-blue-200 hover:bg-opacity-15"; // 기본 hover 스타일
