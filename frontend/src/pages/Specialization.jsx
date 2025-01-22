@@ -17,8 +17,8 @@ export default function Specialization() {
             <NavbarWhite className="pb-20"/>
 
             {/* 콘텐츠 영역 */}
-            <div className="relative mb-32 z-10 block overflow-visible">
-                <div className="text-center mt-4 mb-20 px-4 z-20">
+            <div className="relative mb-32 block overflow-visible xs:mt-12">
+                <div className="text-center mt-4 mb-20 px-4">
                     <h1 className="text-4xl font-bold text-white mb-4">
                         세부전공
                     </h1>

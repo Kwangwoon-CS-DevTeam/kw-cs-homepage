@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: '375px', // 아이폰 SE와 유사한 작은 화면을 위한 xs 추가
+      },
       animation: {
         typing: 'typing 3.5s steps(30, end), blink 1s step-end infinite',
         "card-appear": "blur-scale 1s ease-out forwards",

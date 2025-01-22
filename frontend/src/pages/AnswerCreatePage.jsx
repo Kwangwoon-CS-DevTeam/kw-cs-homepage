@@ -60,7 +60,7 @@ const AnswerCreatePage = () => {
                 {/* 답변 작성 */}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-6">
-                        <label className="block text-gray-700 text-sm mb-2">
+                        <label className="block text-gray-700 text-base mb-2">
                             답변 내용
                         </label>
                         <textarea
