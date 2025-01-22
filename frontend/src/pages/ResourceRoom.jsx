@@ -124,7 +124,7 @@ export default function ResourceBoard() {
                     {/* 글쓰기 버튼 */}
                     {isLoggedIn && (
                         <button
-                            className="ml-auto px-6 py-2 rounded-lg font-semibold bg-green-500 text-white hover:bg-green-600"
+                            className="ml-auto px-6 py-2 rounded-lg font-semibold bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
                             onClick={() => navigate("/resources/new-resource")}
                         >
                             자료 업로드
