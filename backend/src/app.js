@@ -17,7 +17,7 @@ app.set("trust proxy", 1); // 프록시 서버 뒤에서 동작할 경우 필요
 
 // CORS 설정
 app.use(cors({
-    origin: ["http://localhost:5173", "https://www.kwangwoon-cie.com", "https://kwangwoon-cie.com"],
+    origin: ["http://localhost:5173", "https://www.kwangwoon-cie.com", "https://kwangwoon-cie.com", "http://192.168.1.46:5173"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,

@@ -175,7 +175,6 @@ exports.getNotices = async (req, res) => {
     const { category, page, size } = req.query; // page와 size는 이미 toInt로 변환됨
     try {
         const notices = await noticeService.getNotices(category, page, size);
-        console.log(notices);
         res.status(200).json(notices);
     } catch (error) {
         console.error('Error in getNotices Controller:', error);

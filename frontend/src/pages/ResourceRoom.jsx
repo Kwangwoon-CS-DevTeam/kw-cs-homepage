@@ -62,14 +62,16 @@ export default function ResourceBoard() {
             {/* 카테고리 버튼 */}
             <div
                 ref={categoryRef}
-                className="container ml-8 px-6 md:px-10 lg:px-4 pt-8 sm:pt-12 lg:pt-8 pb-4 sm:pb-8 lg:pb-16"
+                className="container ml-3 md:px-10 lg:px-4 pt-8 sm:pt-12 lg:pt-8 lg:ml-8 pb-4 sm:pb-8 lg:pb-16 overflow-x-auto"
             >
-                <div className="flex justify-between items-center space-x-2.5">
-                    {/* 카테고리 버튼 */}
+                <div
+                    className="flex justify-between items-center space-x-2 flex-nowrap"
+                >
                     <div
-                        className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2.5">
+                        className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2 flex-nowrap"
+                    >
                         <button
-                            className={`px-6 py-2 rounded-lg font-semibold ${
+                            className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                 !searchParams.get("category")
                                     ? "bg-blue-900 text-white"
                                     : "text-gray-500 hover:bg-blue-100"
@@ -83,7 +85,7 @@ export default function ResourceBoard() {
                         </button>
 
                         <button
-                            className={`px-6 py-2 rounded-lg font-semibold ${
+                            className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                 searchParams.get("category") === "전공"
                                     ? "bg-pink-400 text-white"
                                     : "text-gray-500 hover:bg-pink-200"
@@ -94,16 +96,14 @@ export default function ResourceBoard() {
                                     size: itemsPerPage,
                                     category: "전공",
                                 });
-                                navigate(
-                                    `?page=1&size=${itemsPerPage}&category=전공`
-                                );
+                                navigate(`?page=1&size=${itemsPerPage}&category=전공`);
                             }}
                         >
                             전공
                         </button>
 
                         <button
-                            className={`px-6 py-2 rounded-lg font-semibold ${
+                            className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                 searchParams.get("category") === "교양"
                                     ? "bg-blue-200 text-blue-800"
                                     : "text-gray-500 hover:bg-blue-100"
@@ -121,18 +121,15 @@ export default function ResourceBoard() {
                         </button>
                     </div>
 
-                    {/* 글쓰기 버튼 */}
                     {isLoggedIn && (
                         <button
-                            className="ml-auto px-6 py-2 rounded-lg font-semibold bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
-                            onClick={() => navigate("/resources/new-resource")}
+                            className="ml-auto px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
+                            onClick={() => navigate("/notices/new-notice")}
                         >
-                            자료 업로드
+                            글 작성
                         </button>
                     )}
                 </div>
-
-
             </div>
 
             <div className="container mx-auto px-4 lg:px-16 py-8 grid gap-6">
@@ -142,7 +139,7 @@ export default function ResourceBoard() {
             </div>
 
             <div className="container mx-auto px-4 py-4 pb-16 flex justify-center">
-                {Array.from({ length: totalPages }, (_, index) => (
+                {Array.from({length: totalPages}, (_, index) => (
                     <button
                         key={index + 1}
                         className={`mx-1 px-3 py-1 rounded-lg ${
@@ -157,7 +154,7 @@ export default function ResourceBoard() {
                 ))}
             </div>
 
-            <FooterBlack />
+            <FooterBlack/>
         </div>
     );
 }

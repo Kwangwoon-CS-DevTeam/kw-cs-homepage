@@ -64,21 +64,22 @@ export default function NoticeBoard() {
     return (
         <div className="relative bg-white min-h-screen">
             {/* 네비게이션 바 */}
-            <NavbarBlack />
+            <NavbarBlack/>
 
-            <NoticeHeader title={"공지사항"} sub={"학과의 중요한 소식과 공지사항을 확인하세요."} />
+            <NoticeHeader title={"공지사항"} sub={"학과의 중요한 소식과 공지사항을 확인하세요."}/>
 
-            {/* 카테고리 버튼 */}
             <div
                 ref={categoryRef}
-                className="container ml-8 px-6 md:px-10 lg:px-4 pt-8 sm:pt-12 lg:pt-8 pb-4 sm:pb-8 lg:pb-16"
+                className="container ml-3 md:px-10 lg:px-4 pt-8 sm:pt-12 lg:pt-8 lg:ml-8 pb-4 sm:pb-8 lg:pb-16 overflow-x-auto"
             >
-                <div className="flex justify-between items-center space-x-2.5">
-                    {/* 카테고리 버튼 */}
+                <div
+                    className="flex justify-between items-center space-x-2 flex-nowrap"
+                >
                     <div
-                        className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2.5">
+                        className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2 flex-nowrap"
+                    >
                         <button
-                            className={`px-6 py-2 rounded-lg font-semibold ${
+                            className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                 !searchParams.get("category")
                                     ? "bg-blue-900 text-white"
                                     : "text-gray-500 hover:bg-blue-100"
@@ -92,7 +93,7 @@ export default function NoticeBoard() {
                         </button>
 
                         <button
-                            className={`px-6 py-2 rounded-lg font-semibold ${
+                            className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                 searchParams.get("category") === "학과"
                                     ? "bg-pink-400 text-white"
                                     : "text-gray-500 hover:bg-pink-200"
@@ -103,16 +104,14 @@ export default function NoticeBoard() {
                                     size: itemsPerPage,
                                     category: "학과",
                                 });
-                                navigate(
-                                    `?page=1&size=${itemsPerPage}&category=학과`
-                                );
+                                navigate(`?page=1&size=${itemsPerPage}&category=학과`);
                             }}
                         >
                             학과
                         </button>
 
                         <button
-                            className={`px-6 py-2 rounded-lg font-semibold ${
+                            className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                 searchParams.get("category") === "총학"
                                     ? "bg-blue-200 text-blue-800"
                                     : "text-gray-500 hover:bg-blue-100"
@@ -130,22 +129,19 @@ export default function NoticeBoard() {
                         </button>
                     </div>
 
-                    {/* 글쓰기 버튼 */}
                     {isLoggedIn && (
                         <button
-                            className="ml-auto px-6 py-2 rounded-lg font-semibold bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
+                            className="ml-auto px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
                             onClick={() => navigate("/notices/new-notice")}
                         >
                             글 작성
                         </button>
                     )}
                 </div>
-
-
             </div>
 
             {/* 공지사항 리스트 */}
-            <div className="container mx-auto px-4 lg:px-16 py-8 grid gap-4">
+            <div className="container mx-auto lg:px-16 py-8 grid gap-4">
                 {notices.length > 0 ? (
                     notices.map((notice) => (
                         <NoticeCard key={notice.id} {...notice} />

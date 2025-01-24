@@ -33,6 +33,7 @@ export const useCheckAuth = () => {
 
         if (isTokenExpired(token)) {
             alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+            localStorage.removeItem("jwt"); // 만료된 토큰 삭제
             navigate("/login");
             return false; // 토큰 만료
         }
