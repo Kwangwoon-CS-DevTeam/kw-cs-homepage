@@ -18,10 +18,11 @@ export default function ResourceCard({ category, subject, title, content, provid
                     >
                         {category}
                     </span>
+
+                    {/* 제목 */}
+                    <h2 className="text-xl font-bold text-gray-800 ml-2.5">{title}</h2>
                 </div>
 
-                {/* 제목 */}
-                <h2 className="text-xl font-bold text-gray-800 mb-2">{title}</h2>
 
                 {/* 내용 요약 */}
                 <p className="text-gray-600 text-sm mb-4">{content}</p>
@@ -45,7 +46,7 @@ export default function ResourceCard({ category, subject, title, content, provid
                 href={file_url} // 다운로드 링크
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center bg-blue-900 text-white font-medium px-3 py-1.5 text-sm rounded shadow hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="mt-4 -ml-0.5 inline-flex items-center bg-blue-900 text-white font-medium px-2.5 py-1.5 text-sm rounded shadow hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
                 다운받기
                 <img
