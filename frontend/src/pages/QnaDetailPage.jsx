@@ -129,7 +129,7 @@ const QnaDetailPage = () => {
     return (
         <div>
             <NavbarBlack />
-            <div className="container mx-auto mt-10 sm:px-8">
+            <div className="container mx-auto mt-10 sm:px-32">
                 <h1 className="text-3xl font-bold mb-6 px-8">Q&A</h1>
 
                 {/* 질문 상세 내용 */}
