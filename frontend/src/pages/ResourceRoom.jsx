@@ -124,7 +124,7 @@ export default function ResourceBoard() {
                     {isLoggedIn && (
                         <button
                             className="ml-auto px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
-                            onClick={() => navigate("/notices/new-notice")}
+                            onClick={() => navigate("/resources/new-resource")}
                         >
                             글 작성
                         </button>

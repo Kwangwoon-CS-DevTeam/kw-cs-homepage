@@ -46,7 +46,7 @@ export default function ResourceCreatePage() {
             <NavbarBlack />
 
             <div className="min-h-screen flex flex-col flex-grow px-80 py-12">
-                <h1 className="text-2xl font mb-10">자료실 작성</h1>
+                <h1 className="text-2xl font-bold mb-10">자료 등록</h1>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* 제목 입력 */}
                     <div>

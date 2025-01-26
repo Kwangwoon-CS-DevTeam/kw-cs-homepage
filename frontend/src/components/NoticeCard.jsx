@@ -35,7 +35,7 @@ export default function NoticeCard({ id, category, title, excerpt, admin_id, cre
                 <p className="text-gray-600 text-sm hidden sm:block">{excerpt}</p>
 
                 {/* 작성자 및 날짜 */}
-                <div className="text-gray-600 text-sm mt-4">
+                <div className="text-gray-600 text-xs mt-4">
                     <div className="mb-1">
                         <span className="font-semibold">AUTHOR:</span> {admin_id}
                     </div>
