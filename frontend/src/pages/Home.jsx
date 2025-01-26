@@ -46,10 +46,10 @@ function Home() {
                 {/* 메인 콘텐츠 */}
                 <div className="flex flex-col items-center justify-center min-h-screen -mt-24 text-white">
                     {/* -mt-24로 네비게이션 높이 보정 */}
-                    <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold flex items-center">
+                    <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold flex items-center bg-gradient-to-top bg-clip-text text-transparent">
                         {text}
                         <h1
-                            className= "animate-blink delay-[2000ms] ml-1"
+                            className= "animate-blink delay-[2000ms] ml-1 bg-gradient-to-top bg-clip-text text-transparent"
                             style={{ animationDelay: "2.5s" }}
                         >|</h1> {/* 커서 애니메이션 */}
                     </h1>

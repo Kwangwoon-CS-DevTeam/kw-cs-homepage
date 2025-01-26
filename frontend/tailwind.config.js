@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'gradient-to-top': 'linear-gradient(0deg, #4D5C98 -126.03%, #FFF 159.59%)',
+      },
       screens: {
         xs: '375px', // 아이폰 SE와 유사한 작은 화면을 위한 xs 추가
       },
