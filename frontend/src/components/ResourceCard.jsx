@@ -27,7 +27,7 @@ export default function ResourceCard({ category, subject, title, content, provid
                 <p className="text-gray-600 text-sm mb-4">{content}</p>
 
                 {/* 제공자 및 과목, 날짜 */}
-                <div className="text-gray-600 text-sm">
+                <div className="text-blue-900 text-xs">
                     <div className="mb-1">
                         <span className="font-semibold">제공자:</span> {provider}
                     </div>
@@ -35,7 +35,7 @@ export default function ResourceCard({ category, subject, title, content, provid
                         <span className="font-semibold">과목:</span> {subject}
                     </div>
                     <div>
-                        <span className="font-semibold">DATE:</span> {created_at}
+                        <span className="font-semibold">DATE:</span> {created_at.split("T")[0]}
                     </div>
                 </div>
             </div>
