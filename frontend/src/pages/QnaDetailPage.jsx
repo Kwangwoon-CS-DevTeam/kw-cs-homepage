@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavbarBlack from "../components/NavbarBlack.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
+import Linkify from "react-linkify";
 
 const QnaDetailPage = () => {
     const { id } = useParams(); // URL의 {id} 가져오기
@@ -185,13 +186,30 @@ const QnaDetailPage = () => {
                             </div>
                             {/* 구분선 */}
                             <hr className="border-t border-[1px] border-neutral-200 my-2 mb-10"/>
-                            <p className="text-black">{question.answer}</p>
+
+                            <p className="text-black">
+                                <Linkify
+                                    componentDecorator={(decoratedHref, decoratedText, key) => (
+                                        <a
+                                            key={key}
+                                            href={decoratedHref}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-900 underline hover:text-blue-800"
+                                        >
+                                            {decoratedText}
+                                        </a>
+                                    )}
+                                >
+                                    {question.answer || "답변 내용이 없습니다."}
+                                </Linkify>
+                            </p>
                         </div>
                     </div>
                 ) : (
                     // 답변이 없는 경우
                     <>
-                    {isEditing ? (
+                        {isEditing ? (
                             // 수정 모드: 취소 및 저장 버튼 표시
                             <div className="flex justify-end space-x-4 mt-4 mb-56">
                                 <button
