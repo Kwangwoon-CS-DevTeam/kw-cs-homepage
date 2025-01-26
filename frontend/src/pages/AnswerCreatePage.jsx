@@ -34,7 +34,7 @@ const AnswerCreatePage = () => {
     return (
         <div>
             <NavbarBlack />
-            <div className="container mx-auto mt-10 px-8">
+            <div className="container mx-auto mt-10 px-32">
                 <h1 className="text-3xl font-bold mb-6">답변하기</h1>
 
                 {/* 질문 정보 */}

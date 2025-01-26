@@ -133,9 +133,12 @@ export default function ResourceBoard() {
             </div>
 
             <div className="container mx-auto px-4 lg:px-16 py-8 grid gap-6">
-                {resources.map((resource) => (
+                {resources.length > 0 ?
+                    resources.map((resource) => (
                     <ResourceCard key={resource.id} {...resource} />
-                ))}
+                )) : (
+                        <p className="text-center text-gray-500">자료가 없습니다.</p>
+                    )}
             </div>
 
             <div className="container mx-auto px-4 py-4 pb-16 flex justify-center">

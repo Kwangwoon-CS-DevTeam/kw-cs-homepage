@@ -66,9 +66,11 @@ const QnAPage = () => {
 
             <div className="container mx-auto mt-10">
                 <div className="space-y-3.5 py-4">
-                    {questions.map((q) => (
+                    {questions.length > 0 ? questions.map((q) => (
                         <QnACard key={q.id} data={q} />
-                    ))}
+                    )) : (
+                        <p className="text-center text-gray-500">질문이 없습니다.</p>
+                    )}
                 </div>
 
                 {/* 글쓰기 버튼 */}
