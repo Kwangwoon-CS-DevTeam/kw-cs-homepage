@@ -24,6 +24,15 @@ export default function ResourceBoard() {
         setIsLoggedIn(!!token); // 토큰이 있으면 true, 없으면 false
     }, []);
 
+    // category, page 정보를 URL(쿼리 파라미터)로부터 가져와서 state에 반영
+    useEffect(() => {
+        const catFromUrl = searchParams.get("category") || "latest";
+        setSelectedCategory(catFromUrl);
+
+        const pageFromUrl = Number(searchParams.get("page")) || 1;
+        setCurrentPage(pageFromUrl);
+    }, [searchParams]);
+
     // 서버에서 데이터 가져오기
     useEffect(() => {
         const fetchResources = async () => {
