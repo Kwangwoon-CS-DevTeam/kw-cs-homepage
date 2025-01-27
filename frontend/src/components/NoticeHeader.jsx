@@ -9,10 +9,10 @@ export default function NoticeHeader({ title, sub }) {
                 style={{marginTop: "-4rem"}} // Navbar 크기만큼 조정
             >
                 <div className="container mx-auto">
-                    <h1 className="text-4xl font-bold text-neutral-800 text-left">
+                    <h1 className="text-4xl font-bold text-neutral-600 text-left">
                         {title}
                     </h1>
-                    <p className="text-lg text-blue-950 mt-4 text-left">{sub}</p>
+                    <p className="text-lg text-neutral-600 mt-4 text-left">{sub}</p>
                 </div>
             </div>
 
