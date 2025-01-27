@@ -26,10 +26,6 @@ function NoticeDetailPage() {
         fetchNotice();
     }, [id]);
 
-    if (!notice) {
-        return <p>로딩 중이거나, 해당 공지사항을 찾을 수 없습니다.</p>;
-    }
-
     const formatDate = (isoString) => {
         const date = new Date(isoString);
         return date.toLocaleString("ko-KR");
