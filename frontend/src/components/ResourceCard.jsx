@@ -4,8 +4,8 @@ import PropTypes from "prop-types"; // PropTypes 임포트
 export default function ResourceCard({ category, subject, title, content, provider, created_at, file_url }) {
     const categoryBgColor =
         category === "교양"
-            ? "bg-pink-400 text-white"
-            : "bg-blue-200 text-blue-800";
+            ? "bg-연보라 text-white"
+            : "bg-밝은파랑 text-white";
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md hover:drop-shadow-lg transition-shadow">

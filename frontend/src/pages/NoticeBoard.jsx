@@ -88,8 +88,8 @@ export default function NoticeBoard() {
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                         !searchParams.get("category")
-                                            ? "bg-blue-900 text-white"
-                                            : "text-gray-500 hover:bg-blue-100"
+                                            ? `bg-blue-900 text-white`
+                                            : `text-gray-500 hover:bg-blue-100`
                                     }`}
                                     onClick={() => {
                                         setSearchParams({page: 1, size: itemsPerPage});
@@ -102,8 +102,8 @@ export default function NoticeBoard() {
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                         searchParams.get("category") === "학과"
-                                            ? "bg-blue-200 text-blue-800"
-                                            : "text-gray-500 hover:bg-blue-100"
+                                            ? `bg-밝은파랑 text-white`
+                                            : `text-gray-500 hover:bg-연한파랑 hover:text-white hover:opacity-50`
                                     }`}
                                     onClick={() => {
                                         setSearchParams({
@@ -120,8 +120,8 @@ export default function NoticeBoard() {
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                         searchParams.get("category") === "총학"
-                                            ? "bg-pink-400 text-white"
-                                            : "text-gray-500 hover:bg-pink-200"
+                                            ? `bg-연보라 text-white`
+                                            : `text-gray-500 hover:bg-연보라 hover:text-white hover:opacity-50`
                                     }`}
                                     onClick={() => {
                                         setSearchParams({

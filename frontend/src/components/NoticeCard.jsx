@@ -5,8 +5,8 @@ export default function NoticeCard({ id, category, title, excerpt, admin_id, cre
     // 카테고리 색상 설정
     const categoryBgColor =
         category === "총학"
-            ? "bg-pink-400 text-white"
-            : "bg-blue-200 text-blue-800";
+            ? `bg-연보라 text-white`
+            : `bg-밝은파랑 text-white`;
 
     return (
         <div className="relative bg-white p-6 py-6 rounded-lg shadow-md hover:drop-shadow-lg transition-shadow">

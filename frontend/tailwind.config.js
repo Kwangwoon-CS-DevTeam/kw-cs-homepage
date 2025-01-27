@@ -6,6 +6,20 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        연보라: '#748CDB',
+        팔레트핑크: '#E2BFD9',
+        남보라: '#4942E4',
+        보라: '#4E31AA',
+        연녹초: '#A3FFD6',
+        연한파랑: '#3572EF',
+        연한하늘: '#3ABEF9',
+        소다: '#A7E6FF',
+        남색: '#161D6F',
+        연남색: '#124076',
+        밝은파랑: '#163B88',
+        연초록: '#98DED9'
+      },
       backgroundImage: {
         'gradient-to-top': 'linear-gradient(0deg, #4D5C98 -126.03%, #FFF 159.59%)',
       },
