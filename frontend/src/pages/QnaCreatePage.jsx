@@ -56,7 +56,7 @@ const QnaCreatePage = () => {
                 <h1 className="text-3xl font-bold mb-6 mt-6 max-w-3xl mx-auto">1:1 질문하기</h1>
                 <form
                     onSubmit={handleSubmit}
-                    className="bg-white border border-gray-300 rounded-2xl p-6 max-w-3xl mx-auto"
+                    className="bg-white border border-gray-300 rounded-3xl p-6 max-w-3xl mx-auto"
                 >
                     <div className="flex items-center justify-between text-gray-500 text-xs mb-2">
                         <span>모든 질문은 공개입니다 :)</span>
