@@ -5,6 +5,7 @@ import NoticeHeader from "../components/NoticeHeader.jsx";
 import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import LoadingPage from "./LoadingPage.jsx";
 import apiClient from "../api/axiosClient"; // axiosClient를 import
 
 export default function NoticeBoard() {
@@ -13,6 +14,7 @@ export default function NoticeBoard() {
     const navigate = useNavigate(); // React Router 네비게이션 훅
     const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
     const categoryRef = useRef(null);
+    const [isLoading, setIsLoading] = useState(true); // 로딩 상태
 
     const [searchParams, setSearchParams] = useSearchParams();
     const currentPage = parseInt(searchParams.get("page") || "1", 10); // 기본값 1
@@ -40,6 +42,7 @@ export default function NoticeBoard() {
 
                 setNotices(data.notices || []);
                 setTotalPages(Math.ceil(data.total / data.size));
+                setIsLoading(false);
             } else {
                 console.error("Failed to fetch notices.");
             }
@@ -62,114 +65,121 @@ export default function NoticeBoard() {
     };
 
     return (
-        <div className="relative bg-white min-h-screen">
-            {/* 네비게이션 바 */}
-            <NavbarBlack/>
+        <>
+            {isLoading ? (
+                <LoadingPage /> // 로딩 상태일 때 로딩 페이지 표시
+            ) : (
+                <div className="relative bg-white min-h-screen">
+                    {/* 네비게이션 바 */}
+                    <NavbarBlack/>
 
-            <NoticeHeader title={"공지사항"} sub={"학과의 중요한 소식과 공지사항을 확인하세요."}/>
+                    <NoticeHeader title={"공지사항"} sub={"학과의 중요한 소식과 공지사항을 확인하세요."}/>
 
-            <div
-                ref={categoryRef}
-                className="container ml-3 md:px-10 lg:px-4 pt-8 sm:pt-12 lg:pt-8 lg:ml-8 pb-4 sm:pb-8 lg:pb-16 overflow-x-auto"
-            >
-                <div
-                    className="flex justify-between items-center space-x-2 flex-nowrap"
-                >
                     <div
-                        className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2 flex-nowrap"
+                        ref={categoryRef}
+                        className="container ml-3 md:px-10 lg:px-4 pt-8 sm:pt-12 lg:pt-8 lg:ml-8 pb-4 sm:pb-8 lg:pb-16 overflow-x-auto"
                     >
-                        <button
-                            className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
-                                !searchParams.get("category")
-                                    ? "bg-blue-900 text-white"
-                                    : "text-gray-500 hover:bg-blue-100"
-                            }`}
-                            onClick={() => {
-                                setSearchParams({page: 1, size: itemsPerPage});
-                                navigate(`?page=1&size=${itemsPerPage}`);
-                            }}
+                        <div
+                            className="flex justify-between items-center space-x-2 flex-nowrap"
                         >
-                            전체
-                        </button>
+                            <div
+                                className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2 flex-nowrap"
+                            >
+                                <button
+                                    className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
+                                        !searchParams.get("category")
+                                            ? "bg-blue-900 text-white"
+                                            : "text-gray-500 hover:bg-blue-100"
+                                    }`}
+                                    onClick={() => {
+                                        setSearchParams({page: 1, size: itemsPerPage});
+                                        navigate(`?page=1&size=${itemsPerPage}`);
+                                    }}
+                                >
+                                    전체
+                                </button>
 
-                        <button
-                            className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
-                                searchParams.get("category") === "학과"
-                                    ? "bg-blue-200 text-blue-800"
-                                    : "text-gray-500 hover:bg-blue-100"
-                            }`}
-                            onClick={() => {
-                                setSearchParams({
-                                    page: 1,
-                                    size: itemsPerPage,
-                                    category: "학과",
-                                });
-                                navigate(`?page=1&size=${itemsPerPage}&category=학과`);
-                            }}
-                        >
-                            학과
-                        </button>
+                                <button
+                                    className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
+                                        searchParams.get("category") === "학과"
+                                            ? "bg-blue-200 text-blue-800"
+                                            : "text-gray-500 hover:bg-blue-100"
+                                    }`}
+                                    onClick={() => {
+                                        setSearchParams({
+                                            page: 1,
+                                            size: itemsPerPage,
+                                            category: "학과",
+                                        });
+                                        navigate(`?page=1&size=${itemsPerPage}&category=학과`);
+                                    }}
+                                >
+                                    학과
+                                </button>
 
-                        <button
-                            className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
-                                searchParams.get("category") === "총학"
-                                    ? "bg-pink-400 text-white"
-                                    : "text-gray-500 hover:bg-pink-200"
-                            }`}
-                            onClick={() => {
-                                setSearchParams({
-                                    page: 1,
-                                    size: itemsPerPage,
-                                    category: "총학",
-                                });
-                                navigate(`?page=1&size=${itemsPerPage}&category=총학`);
-                            }}
-                        >
-                            총학
-                        </button>
+                                <button
+                                    className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
+                                        searchParams.get("category") === "총학"
+                                            ? "bg-pink-400 text-white"
+                                            : "text-gray-500 hover:bg-pink-200"
+                                    }`}
+                                    onClick={() => {
+                                        setSearchParams({
+                                            page: 1,
+                                            size: itemsPerPage,
+                                            category: "총학",
+                                        });
+                                        navigate(`?page=1&size=${itemsPerPage}&category=총학`);
+                                    }}
+                                >
+                                    총학
+                                </button>
+                            </div>
+
+                            {isLoggedIn && (
+                                <button
+                                    className="ml-auto px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
+                                    onClick={() => navigate("/notices/new-notice")}
+                                >
+                                    글 작성
+                                </button>
+                            )}
+                        </div>
                     </div>
 
-                    {isLoggedIn && (
-                        <button
-                            className="ml-auto px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
-                            onClick={() => navigate("/notices/new-notice")}
-                        >
-                            글 작성
-                        </button>
-                    )}
+                    {/* 공지사항 리스트 */}
+                    <div className="container mx-auto lg:px-16 py-8 grid gap-4">
+                        {notices.length > 0 ? (
+                            notices.map((notice) => (
+                                <NoticeCard key={notice.id} {...notice} />
+                            ))
+                        ) : (
+                            <p className="text-center text-gray-500">공지사항이 없습니다.</p>
+                        )}
+                    </div>
+
+                    {/* 페이지네이션 */}
+                    <div className="container mx-auto px-4 py-4 pb-16 flex justify-center">
+                        {Array.from({length: totalPages}, (_, index) => (
+                            <button
+                                key={index + 1}
+                                className={`mx-1 px-3 py-1 rounded-lg ${
+                                    currentPage === index + 1
+                                        ? "bg-blue-900 text-white"
+                                        : "text-gray-500 bg-gray-200 hover:bg-gray-300"
+                                }`}
+                                onClick={() => handlePageChange(index + 1)}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Footer */}
+                    <FooterBlack/>
                 </div>
-            </div>
+            )}
+        </>
 
-            {/* 공지사항 리스트 */}
-            <div className="container mx-auto lg:px-16 py-8 grid gap-4">
-                {notices.length > 0 ? (
-                    notices.map((notice) => (
-                        <NoticeCard key={notice.id} {...notice} />
-                    ))
-                ) : (
-                    <p className="text-center text-gray-500">공지사항이 없습니다.</p>
-                )}
-            </div>
-
-            {/* 페이지네이션 */}
-            <div className="container mx-auto px-4 py-4 pb-16 flex justify-center">
-                {Array.from({length: totalPages}, (_, index) => (
-                    <button
-                        key={index + 1}
-                        className={`mx-1 px-3 py-1 rounded-lg ${
-                            currentPage === index + 1
-                                ? "bg-blue-900 text-white"
-                                : "text-gray-500 bg-gray-200 hover:bg-gray-300"
-                        }`}
-                        onClick={() => handlePageChange(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-            </div>
-
-            {/* Footer */}
-            <FooterBlack/>
-        </div>
     );
 }
