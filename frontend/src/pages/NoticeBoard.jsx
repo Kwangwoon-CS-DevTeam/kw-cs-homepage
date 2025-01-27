@@ -53,7 +53,6 @@ export default function NoticeBoard() {
 
     // 선택된 카테고리 또는 페이지 변경 시 데이터 가져오기
     useEffect(() => {
-        setIsLoading(true);
         fetchNotices();
     }, [searchParams]); // searchParams가 변경될 때 fetchNotices 실행
 

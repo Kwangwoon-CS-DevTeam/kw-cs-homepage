@@ -28,7 +28,6 @@ export default function ResourceBoard() {
 
     // category, page 정보를 URL(쿼리 파라미터)로부터 가져와서 state에 반영
     useEffect(() => {
-        setIsLoading(true);
         const catFromUrl = searchParams.get("category") || "latest";
         setSelectedCategory(catFromUrl);
 
