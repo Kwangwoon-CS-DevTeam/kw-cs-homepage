@@ -3,16 +3,16 @@ import PropTypes from "prop-types"; // PropTypes 임포트
 // components/ResourceCard.jsx
 export default function ResourceCard({ category, subject, title, content, provider, created_at, file_url }) {
     const categoryBgColor =
-        category === "전공"
-            ? "bg-pink-400 text-white" // 전공의 경우 핑크 배경
-            : "bg-blue-200 text-blue-800"; // 교양의 경우 하늘색 배경
+        category === "교양"
+            ? "bg-pink-400 text-white"
+            : "bg-blue-200 text-blue-800";
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md hover:drop-shadow-lg transition-shadow">
             {/* 카드 내용 */}
             <div>
                 {/* 카테고리 */}
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-3">
                     <span
                         className={`text-sm font-semibold px-3 py-1 rounded ${categoryBgColor}`}
                     >
