@@ -43,8 +43,12 @@ exports.createQuestion = async (req, res) => {
         const data = req.body;
         const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
+        // 콤마(,)를 기준으로 분리하고 첫 번째 IP만 가져옴
+        const formattedIP = clientIP.split(',')[0].trim();
+
         // IPv6 루프백 주소를 IPv4로 변환
-        const formattedIP = clientIP === '::1' ? '127.0.0.1' : clientIP;
+        data.IP = formattedIP == '::1' ? '127.0.0.1' : formattedIP;
+
         data.IP = formattedIP;
         data.password = parseInt(data.password, 10);
 
