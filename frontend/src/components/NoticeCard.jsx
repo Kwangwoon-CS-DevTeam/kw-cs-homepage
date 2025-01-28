@@ -19,15 +19,18 @@ export default function NoticeCard({ id, category, title, excerpt, admin_id, cre
 
             {/* 카드 내용 */}
             <div className="relative z-10 pointer-events-none">
-                {/* 카테고리 */}
-                <div className="flex items-center mb-3">
+                <div className="flex items-start mb-3">
+                    {/* 카테고리 */}
                     <span
-                        className={`text-sm font-semibold px-3 py-1 rounded ${categoryBgColor}`}
+                        className={`text-sm font-semibold px-3 py-1 rounded ${categoryBgColor} whitespace-nowrap flex-shrink-0`}
                     >
-                        {category}
-                    </span>
+        {category}
+    </span>
+
                     {/* 제목 */}
-                    <h2 className="text-xl font-bold text-gray-800 ml-2.5">{title}</h2>
+                    <h2 className="text-lg font-bold text-gray-800 ml-2.5 leading-snug">
+                        {title}
+                    </h2>
                 </div>
 
                 {/* 내용 요약 */}

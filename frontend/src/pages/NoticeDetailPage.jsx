@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavbarBlack from "../components/NavbarBlack.jsx";
+import NoticeHeader from "../components/NoticeHeader.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
 import LoadingPage from "./LoadingPage.jsx";
 
@@ -41,9 +42,9 @@ function NoticeDetailPage() {
                     <NavbarBlack/>
 
                     {/* 메인 콘텐츠 래퍼: 적당한 너비와 패딩 */}
-                    <div className="flex-grow w-full max-w-[950px] mx-auto p-4">
+                    <div className="flex-grow w-full max-w-[950px] mx-auto mt-4 sm:mt-12 p-4">
                         {/* 제목 */}
-                        <h1 className="text-3xl font-semibold text-[#737373] mb-4">
+                        <h1 className="text-2xl sm:text-3xl font-semibold text-[#737373] mb-4">
                             {notice.title}
                         </h1>
 
