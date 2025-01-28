@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useRef} from 'react';
 import NAVBAR from '../messages/Navbar.js';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
@@ -6,6 +6,11 @@ export default function NavbarWhite() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [menuClosing, setMenuClosing] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    // 메뉴 영역을 참조할 ref
+    const menuRef = useRef(null);
+    // 스크롤 여부 상태
+    const [scrolled, setScrolled] = useState(false);
 
     const currentPath = window.location.pathname;
 
@@ -16,6 +21,46 @@ export default function NavbarWhite() {
             setIsLoggedIn(true); // 로그인 상태로 설정
         }
     }, []);
+
+    // 스크롤 이벤트 핸들링
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        // cleanup
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+
+    useEffect(() => {
+        // 메뉴 영역 밖을 클릭하면 닫힘을 유도하는 함수
+        const handleClickOutside = (e) => {
+            // 현재 메뉴가 열려있고, 메뉴 영역이 존재하며, 그 영역을 벗어난 곳을 클릭했다면
+            if (
+                mobileMenuOpen &&
+                menuRef.current &&
+                !menuRef.current.contains(e.target)
+            ) {
+                toggleMenu();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        // 컴포넌트가 언마운트되거나 mobileMenuOpen이 바뀔 때 이벤트를 정리
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [mobileMenuOpen]);
 
     const toggleMenu = () => {
         if (mobileMenuOpen) {
@@ -38,7 +83,14 @@ export default function NavbarWhite() {
     };
 
     return (
-        <header className="relative top-0 left-0 w-full z-10">
+        <header
+            ref={menuRef}
+            className={`
+                sticky -top-1 left-0 w-full z-50
+                transition-all duration-300 ease-in-out
+                ${scrolled ? ' backdrop-blur-sm' : 'bg-transparent backdrop-blur-none'}
+            `}
+        >
             <nav
                 aria-label="Global"
                 className="mx-auto flex max-w-7xl items-center justify-between px-6 pt-2 lg:py-6 lg:px-8 bg-transparent"

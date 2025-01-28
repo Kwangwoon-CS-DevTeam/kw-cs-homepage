@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      spacing: {
+        '2.5rem': '2.5rem', // 사용자 정의
+      },
       colors: {
         연보라: '#748CDB',
         팔레트핑크: '#E2BFD9',
