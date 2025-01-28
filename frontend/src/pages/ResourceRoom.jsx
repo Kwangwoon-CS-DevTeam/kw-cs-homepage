@@ -148,7 +148,7 @@ export default function ResourceBoard() {
                         </div>
                     </div>
 
-                    <div className="container mx-auto px-4 lg:px-16 py-8 grid gap-6">
+                    <div className="container mx-auto px-3 lg:px-16 py-8 grid gap-6">
                         {resources.length > 0 ?
                             resources.map((resource) => (
                                 <ResourceCard key={resource.id} {...resource} />

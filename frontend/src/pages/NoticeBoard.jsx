@@ -148,7 +148,7 @@ export default function NoticeBoard() {
                     </div>
 
                     {/* 공지사항 리스트 */}
-                    <div className="container mx-auto lg:px-16 py-8 grid gap-4">
+                    <div className="container mx-auto px-3 lg:px-16 py-8 grid gap-6">
                         {notices.length > 0 ? (
                             notices.map((notice) => (
                                 <NoticeCard key={notice.id} {...notice} />
