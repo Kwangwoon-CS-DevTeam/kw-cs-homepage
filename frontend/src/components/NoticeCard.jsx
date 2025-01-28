@@ -28,7 +28,7 @@ export default function NoticeCard({ id, category, title, excerpt, admin_id, cre
     </span>
 
                     {/* 제목 */}
-                    <h2 className="text-lg font-bold text-gray-800 ml-2.5 leading-snug">
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-800 ml-2.5 leading-snug">
                         {title}
                     </h2>
                 </div>
