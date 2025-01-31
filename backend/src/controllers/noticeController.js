@@ -13,8 +13,6 @@ exports.uploadNoticeImage = (req, res) => {
     res.status(200).json({ location: fileUrl });
 };
 
-// noticeController.js
-
 /**
  * 특정 ID의 공지사항 조회 컨트롤러
  */
@@ -438,5 +436,25 @@ exports.deleteNotice = async (req, res) => {
     } catch (error) {
         console.error('Error in deleteNotice Controller:', error);
         res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+/**
+ * 참가자 수 증가
+ */
+exports.incrementParticipants = async (req, res) => {
+    const { id } = req.params; // URL에서 공지사항 ID 가져오기
+
+    if (!id || isNaN(id)) {
+        return res.status(400).json({ message: "Invalid notice ID" });
+    }
+
+    try {
+        const result = await noticeService.incrementCount(id);
+
+        res.status(result.success).json(result);
+    } catch (error) {
+        console.error("Error in incrementParticipants Controller:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 };

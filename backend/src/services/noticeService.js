@@ -1,6 +1,5 @@
 const NoticeModel = require("../models/Notices");
 const CategoryModel = require("../models/Category");
-const Sequelize = require("sequelize");
 
 /**
  * 공지사항 목록 조회 (카테고리 포함 가능)
@@ -57,8 +56,6 @@ exports.getNotices = async (categoryName, page, size) => {
         throw new Error('Failed to fetch notices');
     }
 };
-
-// noticeService.js
 
 /**
  * 특정 ID의 공지사항 조회
@@ -178,5 +175,35 @@ exports.deleteNotice = async (id) => {
             message: 'Failed to delete notice',
             error,
         };
+    }
+};
+
+exports.incrementCount = async (id) => {
+    try {
+        const notice = await NoticeModel.findByPk(id);
+
+        if (!notice) {
+            throw new Error("Notice not found");
+        }
+
+        // 만약 current_participants가 NULL이면 0으로 초기화
+        if (notice.current_participants === null) {
+            notice.current_participants = 0;
+        }
+
+        // 직접 증가 연산 수행
+        notice.current_participants += 1;
+
+        // 변경된 값 저장
+        await notice.save();
+
+        return {
+            success: 200,
+            current_participants: notice.current_participants
+        };
+
+    } catch (error) {
+        console.error("Error incrementing participants:", error);
+        throw new Error("Failed to update participants");
     }
 };

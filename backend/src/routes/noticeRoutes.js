@@ -40,4 +40,7 @@ router.delete('/:id/delete',
     verifyAuth,
     noticeController.deleteNotice);
 
+// increment Count API
+router.patch("/:id/increment-participants", noticeController.incrementParticipants);
+
 module.exports = router;
