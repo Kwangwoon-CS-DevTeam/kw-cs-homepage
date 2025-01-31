@@ -42,10 +42,11 @@ const NewNoticePage = () => {
                     "searchreplace visualblocks code fullscreen",
                     "insertdatetime media table paste help wordcount",
                 ],
-                toolbar: "formatselect | bold forecolor backcolor image | \
+                toolbar: "formatselect | bold forecolor backcolor image link| \
                       alignleft aligncenter alignright alignjustify lineheight | \
                       bullist numlist outdent indent",
                 script_url: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/tinymce.min.js",
+                content_style: "a { color: #007bff !important; text-decoration: underline;}",
                 external_plugins: {
                     image: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/image/plugin.min.js",
                     advlist: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/advlist/plugin.min.js",
