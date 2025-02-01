@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import {useEffect, useState} from "react"; // PropTypes 임포트
 import { useNavigate } from "react-router-dom"; // useNavigate 임포트
+import { motion } from "framer-motion"; // Framer Motion 임포트
 import apiClient from "../api/axiosClient.js";
 
 // components/NoticeCard.jsx
@@ -99,14 +100,22 @@ export default function NoticeCard({ id, category, title, excerpt, admin_id, cre
 
             {/* 신청하기 버튼 */}
             {url && (
-                <a
-                    href={url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`}
+                <motion.a
+                    href={
+                        url.startsWith("http://") || url.startsWith("https://")
+                            ? url
+                            : `https://${url}`
+                    }
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative z-20 mt-4 inline-block text-blue-700 font-semibold hover:underline pointer-events-auto"
+                    className="relative z-20 mt-4 inline-block text-blue-700 font-semibold pointer-events-auto"
+                    whileHover={{
+                        scale: [1, 1.05, 0.95, 1.02, 1],
+                        transition: {duration: 0.5, ease: "easeOut"},
+                    }}
                 >
                     신청하기 →
-                </a>
+                </motion.a>
             )}
         </div>
     );
