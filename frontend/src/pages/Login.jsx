@@ -24,6 +24,7 @@ function Home() {
             });
 
             if (!response.ok) {
+                alert("아이디 또는 비밀번호가 일치하지 않습니다.");
                 throw new Error("로그인에 실패했습니다.");
             }
 
