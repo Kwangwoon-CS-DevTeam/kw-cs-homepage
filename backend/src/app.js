@@ -16,8 +16,11 @@ const app = express();
 // 프록시 신뢰 설정
 app.set("trust proxy", 1); // 프록시 서버 뒤에서 동작할 경우 필요
 
-// Morgan 미들웨어를 사용하여 HTTP 요청 로그를 기록 (콘솔 출력)
-app.use(morgan('combined', {
+morgan.token('client-ip', function(req) {
+    return req.headers['x-forwarded-for'] || req.ip;
+});
+
+app.use(morgan(':client-ip - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
     skip: (req, res) => req.method === 'OPTIONS'
 }));
 
