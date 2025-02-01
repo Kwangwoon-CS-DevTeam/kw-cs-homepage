@@ -6,6 +6,7 @@ import QnACard from "../components/QnaCard.jsx";
 import axios from "axios";
 import NoticeHeader from "../components/NoticeHeader.jsx";
 import LoadingPage from "./LoadingPage.jsx";
+import { motion } from "framer-motion";
 
 const QnAPage = () => {
     const [questions, setQuestions] = useState([]);
@@ -81,13 +82,18 @@ const QnAPage = () => {
                         </div>
 
                         {/* 글쓰기 버튼 */}
-                        <div className="container mx-auto px-4 py-4">
-                            <button
+                        <div className="container mx-auto px-4 py-4 mb-12 mt-12">
+                            <motion.button
                                 className="px-4 py-2 bg-blue-900 text-white rounded-lg shadow-lg hover:bg-blue-800"
                                 onClick={handleNewQuestionClick}
+                                initial={{ scale: 1 }}
+                                whileHover={{
+                                    scale: [1, 1.02, 1],
+                                    transition: { duration: 0.5, ease: "easeInOut" }
+                                }}
                             >
                                 질문하기
-                            </button>
+                            </motion.button>
                         </div>
 
                         {/* 페이지네이션 */}
