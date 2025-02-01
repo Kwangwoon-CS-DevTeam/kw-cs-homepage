@@ -17,7 +17,11 @@ const app = express();
 app.set("trust proxy", 1); // 프록시 서버 뒤에서 동작할 경우 필요
 
 morgan.token('client-ip', function(req) {
-    return req.headers['x-forwarded-for'] || req.ip;
+    const xForwardedFor = req.headers['x-forwarded-for'];
+    if (xForwardedFor) {
+        return xForwardedFor.split(',')[0].trim();
+    }
+    return req.ip;
 });
 
 app.use(morgan(':client-ip - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
