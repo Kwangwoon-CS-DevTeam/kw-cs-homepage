@@ -29,7 +29,7 @@ router.post("/new-notice/upload",
     noticeController.uploadNoticeImage);
 
 // 공지사항 수정 API
-router.put('/new-notice/:id',
+router.put('/new-notice/:id/update',
     verifyAuth,
     validators.validateCreateNotice,
     validationMiddleware.handleValidationErrors,

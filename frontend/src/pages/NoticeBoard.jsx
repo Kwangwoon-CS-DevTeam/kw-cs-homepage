@@ -151,7 +151,10 @@ export default function NoticeBoard() {
                     <div className="container mx-auto px-3 lg:px-16 py-8 grid gap-6">
                         {notices.length > 0 ? (
                             notices.map((notice) => (
-                                <NoticeCard key={notice.id} {...notice} />
+                                <NoticeCard
+                                    key={notice.id}
+                                    {...{ ...notice, url: notice.url || "" }}
+                                />
                             ))
                         ) : (
                             <p className="text-center text-gray-500">공지사항이 없습니다.</p>

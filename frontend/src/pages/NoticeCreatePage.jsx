@@ -1,18 +1,21 @@
 import NavbarBlack from "../components/NavbarBlack.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CategorySelector from "../components/button/CategorySelector.jsx";
 import apiClient from "../api/axiosClient.js";
 import { useCheckAuth } from "../api/auth";
 
 const NewNoticePage = () => {
+    const { id } = useParams(); // URL에서 공지사항 ID 가져오기
     const [title, setTitle] = useState(null);
     const [url, setUrl] = useState(null);
     const [content, setContent] = useState("");
     const [excerpt, setExcerpt] = useState(null);
     const [category, setCategory] = useState("학과");
     const [maxParticipants, setMaxParticipants] = useState(null);
+    // 에디터 초기화 여부를 추적할 상태
+    const [isEditorInitialized, setIsEditorInitialized] = useState(false);
     const editorRef = useRef(null);
     const navigate = useNavigate();
 
@@ -70,6 +73,13 @@ const NewNoticePage = () => {
                 },
                 setup: (editor) => {
                     editorRef.current = editor;
+                    editor.on("init", () => {
+                        setIsEditorInitialized(true);
+                        // 만약 이미 API 요청으로 데이터를 받아 content 상태에 값이 있다면 에디터에 설정합니다.
+                        if (content) {
+                            editor.setContent(content);
+                        }
+                    });
                     editor.on("change", () => {
                         const content = editor.getContent();
                         setContent(content);
@@ -117,6 +127,54 @@ const NewNoticePage = () => {
         loadTinyMCE();
     }, []);
 
+    // 에디터가 초기화된 후 content 상태 변경이 있을 때 에디터에 반영하도록 합니다.
+    useEffect(() => {
+        if (isEditorInitialized && content) {
+            const editor = window.tinymce.get("content-editor");
+            if (editor) {
+                // 에디터에 내용 세팅 (이미 내용이 있을 경우 사용자 입력이 덮어씌워질 수 있으니 필요에 따라 조건 추가)
+                editor.setContent(content);
+            }
+        }
+    }, [isEditorInitialized, content]);
+
+
+// 수정 모드라면 기존 공지사항 데이터를 불러옵니다.
+    useEffect(() => {
+        if (id) {
+            const fetchNoticeData = async () => {
+                try {
+                    const response = await apiClient.get(
+                        `${import.meta.env.VITE_API_URL}/notices/${id}`
+                    );
+                    if (response.status === 200) {
+                        const notice = response.data;
+                        setTitle(notice.title);
+                        setUrl(notice.url);
+                        setExcerpt(notice.excerpt);
+                        setCategory(notice.category);
+                        setContent(notice.content);
+                        // 만약 에디터가 이미 초기화된 상태라면 바로 내용 반영
+                        if(notice.max_participants){
+                            setMaxParticipants(notice.max_participants);
+                        }
+                        if (isEditorInitialized) {
+                            const editor = window.tinymce.get("content-editor");
+                            if (editor) {
+                                editor.setContent(notice.content);
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error("공지사항 데이터를 불러오는데 실패했습니다.", error);
+                    alert("공지사항 데이터를 불러오지 못했습니다.");
+                }
+            };
+
+            fetchNoticeData();
+        }
+    }, [id, isEditorInitialized]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -135,14 +193,21 @@ const NewNoticePage = () => {
         }
 
         try {
-            const response = await apiClient.post(`${import.meta.env.VITE_API_URL}/notices/new-notice`, requestData);
+            let response;
+            if (id) {
+                // 수정 모드: PUT 요청
+                response = await apiClient.put(`${import.meta.env.VITE_API_URL}/notices/new-notice/${id}/update`, requestData);
+            } else {
+                // 생성 모드: POST 요청
+                response = await apiClient.post(`${import.meta.env.VITE_API_URL}/notices/new-notice`, requestData);
+            }
+
 
             if (response.status === 200 || response.status === 201) {
-                alert("공지사항이 등록되었습니다!");
+                alert(`공지사항이 ${id ? "수정" : "등록"}되었습니다!`);
                 navigate("/notices");
             } else {
-
-                console.log("에러 발생 in front:", response.data);
+                console.log("프론트엔드에서 에러 발생:", response.data);
             }
         } catch (error) {
             console.error("Network Error:", error);
@@ -193,7 +258,9 @@ const NewNoticePage = () => {
                     />
                     {/* 버튼 */}
                     <div className="flex justify-end">
-                        <button type="button" className="mr-4 px-6 py-2 bg-gray-300 rounded-lg">
+                        <button type="button"
+                                onClick={() => navigate("/notices")}
+                                className="mr-4 px-6 py-2 bg-gray-300 rounded-lg">
                             취소
                         </button>
                         <button type="submit" className="px-6 py-2 bg-black text-white rounded-lg">

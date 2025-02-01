@@ -31,6 +31,9 @@ function App() {
                 {/* 공지사항 작성 페이지 */}
                 <Route path="/notices/new-notice" element={<NoticeCreatePage />} />
 
+                {/* 공지사항 수정 페이지 */}
+                <Route path="/notices/new-notice/:id" element={<NoticeCreatePage />} />
+
                 {/* 자료실 페이지 */}
                 <Route path="/resources" element={<ResourceRoom />} />
 

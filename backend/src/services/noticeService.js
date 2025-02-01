@@ -117,18 +117,21 @@ exports.saveNotice = async (noticeData) => {
  */
 exports.updateNotice = async (id, updateData) => {
     try {
-        // 1. 업데이트할 데이터가 존재하는지 확인
-        const notice = await NoticeModel.findByPk(id);
-        if (!notice) {
-            return {
-                code: 404,
-                success: false,
-                message: 'Notice not found',
-            };
-        }
 
-        // 2. 데이터 업데이트
-        const updatedNotice = await notice.update(updateData);
+        // 데이터 업데이트
+        const updatedNotice = await NoticeModel.update({
+            admin_id: updateData.admin_id,
+            category_id: updateData.category_id,
+            title: updateData.title,
+            content: updateData.content,
+            excerpt: updateData.excerpt,
+            url: updateData.url || null,
+            max_participants: updateData.max_participants || null,
+            current_participants: updateData.current_participants || null,
+            updated_at: Date.now(),
+        }, {
+            where: { id } // 여기서 id 값을 기준으로 업데이트
+        });
 
         return {
             code: 200,
