@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import PropTypes from "prop-types"; // PropTypes 임포트
 
 // components/ResourceCard.jsx
@@ -42,19 +43,28 @@ export default function ResourceCard({ category, subject, title, content, provid
             </div>
 
             {/* 다운받기 버튼 */}
-            <a
+            <motion.a
                 href={file_url} // 다운로드 링크
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 -ml-0.5 inline-flex items-center bg-blue-900 text-white font-medium px-2.5 py-1.5 text-sm rounded shadow hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                whileHover="hover" // 부모 hover 상태를 "hover"로 지정
             >
                 다운받기
-                <img
+                <motion.img
                     src="/images/downloadIconWhite.png"
                     alt="다운로드 아이콘"
                     className="w-4 h-4 ml-2"
+                    initial={{ rotate: 0 }} // 초기 상태 지정
+                    variants={{
+                        hover: {
+                            // 시소처럼 회전하는 애니메이션
+                            rotate: [0, -15, 15, -15, 0],
+                            transition: {duration: 0.5, ease: "easeInOut"}
+                        }
+                    }}
                 />
-            </a>
+            </motion.a>
         </div>
     );
 }
