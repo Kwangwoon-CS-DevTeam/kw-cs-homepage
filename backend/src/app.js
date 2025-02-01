@@ -8,13 +8,18 @@ const noticeRoutes = require('./routes/noticeRoutes');
 const ResourcesRoutes = require("./routes/ResourcesRoutes");
 const QuestionsRoutes = require("./routes/QuestionsRoutes");
 const authRoutes = require('./routes/authRoutes');
-const rateLimit = require('express-rate-limit');
+const morgan = require('morgan');
 require('./models'); // 관계가 정의된 모델 불러오기 (객체로 묶을 필요 없음)
 
 const app = express();
 
 // 프록시 신뢰 설정
 app.set("trust proxy", 1); // 프록시 서버 뒤에서 동작할 경우 필요
+
+// Morgan 미들웨어를 사용하여 HTTP 요청 로그를 기록 (콘솔 출력)
+app.use(morgan('combined', {
+    skip: (req, res) => req.method === 'OPTIONS'
+}));
 
 // CORS 설정
 app.use(cors({
