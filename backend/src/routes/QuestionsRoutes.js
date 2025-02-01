@@ -8,9 +8,21 @@ const {
     createQuestionValidator,
     updateAnswerValidator,
     deleteQuestionValidator } = require('../validators/questionsValidator');
+const rateLimit = require('express-rate-limit');
+
+// 질문 등록에만 적용할 Rate Limiter 설정 (예: 15분 동안 최대 10개 요청)
+const createQuestionLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15분
+    max: 10, // 15분 동안 최대 10개 요청
+    message: "너무 많은 요청이 감지되었습니다. 잠시 후 다시 시도해주세요."
+});
 
 // 1. 질문 등록 (Create)
-router.post('/new-question', createQuestionValidator, validationMiddleware.handleValidationErrors, questionsController.createQuestion);
+router.post('/new-question',
+    createQuestionLimiter,
+    createQuestionValidator,
+    validationMiddleware.handleValidationErrors,
+    questionsController.createQuestion);
 
 // 2. 질문 목록 조회 (Read)
 router.get('/', questionsController.getQuestions);

@@ -8,6 +8,7 @@ const noticeRoutes = require('./routes/noticeRoutes');
 const ResourcesRoutes = require("./routes/ResourcesRoutes");
 const QuestionsRoutes = require("./routes/QuestionsRoutes");
 const authRoutes = require('./routes/authRoutes');
+const rateLimit = require('express-rate-limit');
 require('./models'); // 관계가 정의된 모델 불러오기 (객체로 묶을 필요 없음)
 
 const app = express();

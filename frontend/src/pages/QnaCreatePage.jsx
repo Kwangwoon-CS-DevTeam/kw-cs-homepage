@@ -38,8 +38,13 @@ const QnaCreatePage = () => {
             // 성공 시 /qna로 이동
             navigate("/qna");
         } catch (error) {
-            console.error("Error submitting question:", error);
-            alert("질문 등록에 실패했습니다. 다시 시도해주세요.");
+            if (error.response && error.response.status === 429) {
+                alert("너무 많은 요청이 감지되었습니다. 잠시 후 다시 시도해주세요.");
+                navigate("/");
+            } else {
+                console.error("Error submitting question:", error);
+                alert("질문 등록에 실패했습니다. 다시 시도해주세요.");
+            }
         }
     };
 

@@ -26,7 +26,7 @@ export default function NoticeBoard() {
         setIsLoggedIn(!!token); // 토큰이 있으면 true, 없으면 false
     }, []);
 
-    // Fetch Notices 부분 수정
+    // Fetch Notices 부분
     const fetchNotices = async () => {
         const category = searchParams.get("category");
         // 카테고리 쿼리 생성 (null일 경우 제외)
