@@ -15,8 +15,7 @@ export default function NoticeCard({ id, category, title, excerpt, admin_id, cre
         e.stopPropagation();
         try {
             // DELETE 요청 보내기
-            const response = await apiClient.delete(`/notices/${id}/delete`);
-            console.log("삭제 성공:", response.data);
+            await apiClient.delete(`/notices/${id}/delete`);
             alert("삭제 성공했습니다.");
             window.location.reload();
         } catch (error) {
@@ -52,11 +51,11 @@ export default function NoticeCard({ id, category, title, excerpt, admin_id, cre
                 <div className="flex items-center justify-between mb-3">
                     {/* 왼쪽: 카테고리와 제목 */}
                     <div className="flex items-center">
-    <span
-        className={`text-sm font-semibold px-3 py-1 rounded ${categoryBgColor} whitespace-nowrap flex-shrink-0`}
-    >
-      {category}
-    </span>
+                        <span
+                            className={`text-sm font-semibold px-3 py-1 rounded ${categoryBgColor} whitespace-nowrap flex-shrink-0`}
+                        >
+                            {category}
+                        </span>
                         <h2 className="text-lg sm:text-xl font-bold text-gray-800 ml-2.5 leading-snug">
                             {title}
                         </h2>

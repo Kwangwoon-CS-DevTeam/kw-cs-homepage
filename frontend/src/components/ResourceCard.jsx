@@ -1,8 +1,32 @@
 import { motion } from "framer-motion";
-import PropTypes from "prop-types"; // PropTypes 임포트
+import PropTypes from "prop-types";
+import {useEffect, useState} from "react"; // PropTypes 임포트
+import { useNavigate } from "react-router-dom";
+import apiClient from "../api/axiosClient.js"; // useNavigate 임포트
 
 // components/ResourceCard.jsx
-export default function ResourceCard({ category, subject, title, content, provider, created_at, file_url }) {
+export default function ResourceCard({id, category, subject, title, content, provider, created_at, file_url }) {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate(); // navigate 훅 사용
+
+    useEffect(() => {
+        const token = localStorage.getItem('jwt');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
+    // handleDelete 핸들러 정의
+    const handleDelete = async () => {
+        try {
+            await apiClient.delete(`/resources/${id}/delete`);
+            alert("삭제되었습니다.");
+            window.location.reload();
+        } catch (error) {
+            console.error('요청 중 에러 발생:', error);
+        }
+    };
+
     const categoryBgColor =
         category === "교양"
             ? "bg-연보라 text-white"
@@ -12,16 +36,35 @@ export default function ResourceCard({ category, subject, title, content, provid
         <div className="bg-white p-6 rounded-lg shadow-md hover:drop-shadow-lg transition-shadow">
             {/* 카드 내용 */}
             <div>
-                {/* 카테고리 */}
-                <div className="flex items-center mb-3">
-                    <span
-                        className={`text-sm font-semibold px-3 py-1 rounded ${categoryBgColor}`}
-                    >
-                        {category}
-                    </span>
+                <div className="flex items-center justify-between mb-3">
+                    {/* 왼쪽: 카테고리와 제목 */}
+                    <div className="flex items-center">
+                        <span className={`text-sm font-semibold px-3 py-1 rounded ${categoryBgColor}`}>
+                            {category}
+                        </span>
+                        <h2 className="text-xl font-bold text-gray-800 ml-2.5">{title}</h2>
+                    </div>
 
-                    {/* 제목 */}
-                    <h2 className="text-xl font-bold text-gray-800 ml-2.5">{title}</h2>
+                    {/* 오른쪽: 삭제 및 수정 버튼 */}
+                    {isLoggedIn && (
+                        <div className="flex space-x-2 pointer-events-auto">
+                            <button
+                                className="text-sm text-red-500 hover:underline"
+                                onClick={handleDelete}
+                            >
+                                삭제
+                            </button>
+                            <button
+                                className="text-sm text-blue-500 hover:underline"
+                                onClick={(e) => {
+                                    e.stopPropagation(); // 이벤트 버블링 방지
+                                    navigate(`/resources/edit/${id}`); // 수정 페이지로 이동 (경로는 실제 프로젝트에 맞게 수정)
+                                }}
+                            >
+                                수정
+                            </button>
+                        </div>
+                    )}
                 </div>
 
 
@@ -55,7 +98,7 @@ export default function ResourceCard({ category, subject, title, content, provid
                     src="/images/downloadIconWhite.png"
                     alt="다운로드 아이콘"
                     className="w-4 h-4 ml-2"
-                    initial={{ rotate: 0 }} // 초기 상태 지정
+                    initial={{rotate: 0}} // 초기 상태 지정
                     variants={{
                         hover: {
                             // 시소처럼 회전하는 애니메이션
