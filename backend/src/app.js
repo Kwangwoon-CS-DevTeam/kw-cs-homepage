@@ -16,17 +16,17 @@ const app = express();
 // 프록시 신뢰 설정
 app.set("trust proxy", 1); // 프록시 서버 뒤에서 동작할 경우 필요
 
-// morgan.token('client-ip', function(req) {
-//     const xForwardedFor = req.headers['x-forwarded-for'];
-//     if (xForwardedFor) {
-//         return xForwardedFor.split(',')[0].trim();
-//     }
-//     return req.ip;
-// });
-//
-// app.use(morgan(':client-ip - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
-//     skip: (req, res) => req.method === 'OPTIONS'
-// }));
+morgan.token('client-ip', function(req) {
+    const xForwardedFor = req.headers['x-forwarded-for'];
+    if (xForwardedFor) {
+        return xForwardedFor.split(',')[0].trim();
+    }
+    return req.ip;
+});
+
+app.use(morgan(':client-ip - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', {
+    skip: (req, res) => req.method === 'OPTIONS'
+}));
 
 // CORS 설정
 app.use(cors({
