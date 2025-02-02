@@ -12,8 +12,16 @@ const QnaCreatePage = () => {
 
     const navigate = useNavigate();
 
+    const [submitting, setSubmitting] = useState(false); // 제출 상태를 나타내는 state
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // 이미 제출 중이면 함수를 종료합니다.
+        if (submitting) return;
+
+        setSubmitting(true);
+
         try {
 
             // 비밀번호 유효성 검사
@@ -45,6 +53,8 @@ const QnaCreatePage = () => {
                 console.error("Error submitting question:", error);
                 alert("질문 등록에 실패했습니다. 다시 시도해주세요.");
             }
+        } finally {
+            setSubmitting(false); // 요청 완료 후 제출 상태 해제
         }
     };
 

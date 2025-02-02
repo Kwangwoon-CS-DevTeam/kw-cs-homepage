@@ -18,6 +18,7 @@ const NewNoticePage = () => {
     const [isEditorInitialized, setIsEditorInitialized] = useState(false);
     const editorRef = useRef(null);
     const navigate = useNavigate();
+    const [submitting, setSubmitting] = useState(false); // 제출 상태를 나타내는 state
 
     const checkAuth = useCheckAuth(); // useCheckAuth 훅 호출
 
@@ -178,6 +179,11 @@ const NewNoticePage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // 이미 제출 중이면 함수를 종료합니다.
+        if (submitting) return;
+
+        setSubmitting(true); // 제출 시작
+
         const requestData = {
             title,
             url,
@@ -212,6 +218,8 @@ const NewNoticePage = () => {
         } catch (error) {
             console.error("Network Error:", error);
             alert("서버와의 통신에 실패했습니다.");
+        } finally {
+            setSubmitting(false); // 요청 완료 후 제출 상태 해제
         }
     };
 

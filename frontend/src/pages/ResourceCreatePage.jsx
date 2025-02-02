@@ -19,6 +19,8 @@ export default function ResourceCreatePage() {
     const navigate = useNavigate();
     const checkAuth = useCheckAuth();
 
+    const [submitting, setSubmitting] = useState(false); // 제출 상태를 나타내는 state
+
     useEffect(() => {
         checkAuth(); // 인증 확인
 
@@ -45,6 +47,12 @@ export default function ResourceCreatePage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // 이미 제출 중이면 함수를 종료합니다.
+        if (submitting) return;
+
+        setSubmitting(true); // 제출 시작
+
         try {
             if (id) {
                 console.log(formData);
@@ -67,6 +75,8 @@ export default function ResourceCreatePage() {
         } catch (error) {
             console.error("자료 등록/수정 중 오류 발생:", error);
             alert("자료 등록/수정에 실패했습니다.");
+        } finally {
+            setSubmitting(false); // 요청 완료 후 제출 상태 해제
         }
     };
 
