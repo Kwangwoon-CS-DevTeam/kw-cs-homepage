@@ -16,6 +16,9 @@ router.post("/new-resource", verifyAuth,createResourceValidator, validationMiddl
 // 2. 자료 목록 조회 (페이징 포함) 및 특정 카테고리 조회
 router.get("/", getResourcesValidator, validationMiddleware.handleValidationErrors, resourcesController.getResources);
 
+// 2-1. getById
+router.get("/:id", resourcesController.getById);
+
 // 4. 자료 다운로드
 router.get("/:id/download", resourcesController.downloadResource);
 

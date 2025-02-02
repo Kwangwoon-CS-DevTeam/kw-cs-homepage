@@ -127,6 +127,23 @@ exports.getResources = async (req, res) => {
     }
 };
 
+exports.getById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const data = await Resources.findByPk(id);
+
+        // 자료가 없거나 소프트 삭제된 경우
+        if (!data || data.isDeleted) {
+            return res.status(404).json({ error: "자료를 찾을 수 없습니다." });
+        }
+
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
 /**
  * @swagger
  * /api/resources/{id}/download:

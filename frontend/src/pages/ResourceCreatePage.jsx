@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import NavbarBlack from "../components/NavbarBlack.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
 import apiClient from "../api/axiosClient.js";
-import {useCheckAuth} from "../api/auth.js";
+import { useCheckAuth } from "../api/auth.js";
 
 export default function ResourceCreatePage() {
     const [formData, setFormData] = useState({
@@ -15,38 +15,69 @@ export default function ResourceCreatePage() {
         file_url: "",
     });
 
-    const checkAuth = useCheckAuth(); // useCheckAuth 훅 호출
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const checkAuth = useCheckAuth();
 
     useEffect(() => {
         checkAuth(); // 인증 확인
-    }, []);
 
-    const navigate = useNavigate();
+        if (id) {
+            const fetchResource = async () => {
+                try {
+                    const response = await apiClient.get(
+                        `${import.meta.env.VITE_API_URL}/resources/${id}`
+                    );
+                    setFormData(response.data);
+                } catch (error) {
+                    console.error("자료 불러오기 중 오류 발생:", error);
+                    alert("자료를 불러오는 중 오류가 발생했습니다.");
+                }
+            };
+            fetchResource();
+        }
+    }, [id]); // checkAuth 제거
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await apiClient.post(`${import.meta.env.VITE_API_URL}/resources/new-resource`, formData);
-            alert("자료가 성공적으로 등록되었습니다.");
+            if (id) {
+                console.log(formData);
+                // 수정 모드: PUT 요청으로 기존 자료 수정
+                await apiClient.put(
+
+                    `${import.meta.env.VITE_API_URL}/resources/new-resource/${id}`,
+                    formData
+                );
+                alert("자료가 성공적으로 수정되었습니다.");
+            } else {
+                // 새 글 작성: POST 요청으로 자료 등록
+                await apiClient.post(
+                    `${import.meta.env.VITE_API_URL}/resources/new-resource`,
+                    formData
+                );
+                alert("자료가 성공적으로 등록되었습니다.");
+            }
             navigate("/resources");
         } catch (error) {
-            console.error("자료 등록 중 오류 발생:", error);
-            alert("자료 등록에 실패했습니다.");
+            console.error("자료 등록/수정 중 오류 발생:", error);
+            alert("자료 등록/수정에 실패했습니다.");
         }
     };
 
     return (
         <div className="flex flex-col min-h-screen">
-
             <NavbarBlack />
 
             <div className="min-h-screen flex flex-col flex-grow px-80 py-12">
-                <h1 className="text-3xl font-bold mb-10">자료 등록</h1>
+                <h1 className="text-3xl font-bold mb-10">
+                    {id ? "자료 수정" : "자료 등록"}
+                </h1>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* 제목 입력 */}
                     <div>
@@ -157,7 +188,7 @@ export default function ResourceCreatePage() {
                             type="submit"
                             className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
                         >
-                            등록하기
+                            {id ? "수정하기" : "등록하기"}
                         </button>
                     </div>
                 </form>

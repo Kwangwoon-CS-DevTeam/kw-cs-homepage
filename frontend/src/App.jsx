@@ -40,6 +40,10 @@ function App() {
                 {/* 자료실 작성 페이지 */}
                 <Route path="/resources/new-resource" element={<ResourceCreatePage />} />
 
+                {/* 자료실 수정 페이지 */}
+                <Route path="/resources/new-resource/:id" element={<ResourceCreatePage />} />
+
+
                 {/* 세부전공 페이지 */}
                 <Route path="/specializations" element={<Specialization />} />
 

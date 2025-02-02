@@ -58,7 +58,7 @@ export default function ResourceCard({id, category, subject, title, content, pro
                                 className="text-sm text-blue-500 hover:underline"
                                 onClick={(e) => {
                                     e.stopPropagation(); // 이벤트 버블링 방지
-                                    navigate(`/resources/edit/${id}`); // 수정 페이지로 이동 (경로는 실제 프로젝트에 맞게 수정)
+                                    navigate(`/resources/new-resource/${id}`); // 수정 페이지로 이동 (경로는 실제 프로젝트에 맞게 수정)
                                 }}
                             >
                                 수정
