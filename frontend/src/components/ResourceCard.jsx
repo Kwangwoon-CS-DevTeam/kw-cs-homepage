@@ -39,10 +39,14 @@ export default function ResourceCard({id, category, subject, title, content, pro
                 <div className="flex items-center justify-between mb-3">
                     {/* 왼쪽: 카테고리와 제목 */}
                     <div className="flex items-center">
-                        <span className={`text-sm font-semibold px-3 py-1 rounded ${categoryBgColor}`}>
+                        <span
+                            className={`text-sm font-semibold px-3 py-1 rounded ${categoryBgColor} whitespace-nowrap flex-shrink-0`}
+                        >
                             {category}
                         </span>
-                        <h2 className="text-xl font-bold text-gray-800 ml-2.5">{title}</h2>
+                        <h2 className="text-lg sm:text-xl font-bold text-gray-800 ml-2.5 leading-snug">
+                            {title}
+                        </h2>
                     </div>
 
                     {/* 오른쪽: 삭제 및 수정 버튼 */}

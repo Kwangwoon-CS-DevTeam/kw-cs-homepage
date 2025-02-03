@@ -244,14 +244,14 @@ const NewNoticePage = () => {
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                     />
-                    {/* 최대 인원 */}
-                    <input
-                        type="number"
-                        placeholder="최대 참가자 수를 입력하세요."
-                        className="w-1/4 px-4 py-2 mb-6 border rounded-lg focus:outline-none"
-                        value={maxParticipants}
-                        onChange={(e) => setMaxParticipants(e.target.value)}
-                    />
+                    {/*/!* 최대 인원 *!/*/}
+                    {/*<input*/}
+                    {/*    type="number"*/}
+                    {/*    placeholder="최대 참가자 수를 입력하세요."*/}
+                    {/*    className="w-1/4 px-4 py-2 mb-6 border rounded-lg focus:outline-none"*/}
+                    {/*    value={maxParticipants}*/}
+                    {/*    onChange={(e) => setMaxParticipants(e.target.value)}*/}
+                    {/*/>*/}
                     {/* 카테고리 선택 */}
                     <CategorySelector category={category} setCategory={setCategory} />
                     {/* TinyMCE 에디터 */}
