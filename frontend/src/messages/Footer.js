@@ -10,7 +10,7 @@ export const footer = {
     right: {
         contact: "mobile : 010 4907 7802",
         logoSrcWhite: "/images/logo.png",
-        logoSrcBlack: "/images/logo_lightblue.png",
+        logoSrcBlack: "/images/logo_blue.png",
         logoAlt: "logo"
     },
 };

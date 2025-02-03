@@ -3,10 +3,10 @@ import NAVBAR from '../messages/Navbar.js';
 
 import { useRef, useState, useEffect } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function NavbarBlack() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [menuClosing, setMenuClosing] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     // 메뉴 영역을 참조할 ref
@@ -17,33 +17,18 @@ export default function NavbarBlack() {
     const currentPath = window.location.pathname;
 
     const toggleMenu = () => {
-        if (mobileMenuOpen) {
-            setMenuClosing(true);
-            setTimeout(() => {
-                setMobileMenuOpen(false);
-                setMenuClosing(false);
-            }, 450);
-        } else {
-            setMobileMenuOpen(true);
-        }
+        setMobileMenuOpen((prev) => !prev);
     };
 
     useEffect(() => {
-        // 메뉴 영역 밖을 클릭하면 닫힘을 유도하는 함수
+        // 메뉴 영역 밖을 클릭하면 닫히도록 처리
         const handleClickOutside = (e) => {
-            // 현재 메뉴가 열려있고, 메뉴 영역이 존재하며, 그 영역을 벗어난 곳을 클릭했다면
-            if (
-                mobileMenuOpen &&
-                menuRef.current &&
-                !menuRef.current.contains(e.target)
-            ) {
+            if (mobileMenuOpen && menuRef.current && !menuRef.current.contains(e.target)) {
                 toggleMenu();
             }
         };
 
         document.addEventListener('mousedown', handleClickOutside);
-
-        // 컴포넌트가 언마운트되거나 mobileMenuOpen이 바뀔 때 이벤트를 정리
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
@@ -67,8 +52,6 @@ export default function NavbarBlack() {
         };
 
         window.addEventListener('scroll', handleScroll);
-
-        // cleanup
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -77,9 +60,9 @@ export default function NavbarBlack() {
     // 활성화된 링크 스타일링 함수
     const getNavLinkClass = (path) => {
         if (currentPath === `${path}/` || currentPath === path) {
-            return "bg-blue-200 bg-opacity-30 hover:default"; // 활성화된 링크 배경색, hover 비활성화
+            return "bg-blue-200 bg-opacity-30 hover:default";
         }
-        return "hover:bg-blue-200 hover:bg-opacity-15"; // 기본 hover 스타일
+        return "hover:bg-blue-200 hover:bg-opacity-15";
     };
 
     return (
@@ -88,7 +71,7 @@ export default function NavbarBlack() {
             className={`
                 sticky -top-1 left-0 w-full z-50
                 transition-all duration-300 ease-in-out
-                ${scrolled ? ' backdrop-blur-sm' : 'bg-transparent backdrop-blur-none'}
+                ${scrolled ? 'backdrop-blur-sm' : 'bg-transparent backdrop-blur-none'}
             `}
         >
             <nav
@@ -177,48 +160,52 @@ export default function NavbarBlack() {
                     )}
                 </div>
             </nav>
-            <div
-                className={`absolute top-full left-0 w-full bg-white shadow-lg overflow-hidden transition-[max-height] duration-[450ms] ${
-                    mobileMenuOpen && !menuClosing
-                        ? 'max-h-[500px] ease-[cubic-bezier(0.55, 0.055, 0.675, 0.19)]'
-                        : 'max-h-0 ease-[cubic-bezier(0.215, 0.61, 0.355, 1)]'
-                }`}
-            >
-                <ul className="flex flex-col space-y-2 p-2">
-                    <li>
-                        <a
-                            href={NAVBAR.first.url}
-                            className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.first.url)}`}
-                        >
-                            {NAVBAR.first.title}
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href={NAVBAR.second.url}
-                            className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.second.url)}`}
-                        >
-                            {NAVBAR.second.title}
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href={NAVBAR.third.url}
-                            className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.third.url)}`}
-                        >
-                            {NAVBAR.third.title}
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href={NAVBAR.forth.url}
-                            className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.forth.url)}`}
-                        >
-                            {NAVBAR.forth.title}
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <motion.div
+                        initial={{height: 0, opacity: 0}}
+                        animate={{height: 'auto', opacity: 1, y: 0}}
+                        exit={{height: 0, opacity: 0}}
+                        transition={{duration: 0.25, ease: [0.55, 0.055, 0.675, 0.19]}} // duration 값을 줄여서 속도 조절
+                        className="absolute top-full left-0 w-full bg-white shadow-lg overflow-hidden"
+                    >
+                        <ul className="flex flex-col space-y-2 p-2">
+                            <li>
+                                <a
+                                    href={NAVBAR.first.url}
+                                    className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.first.url)}`}
+                                >
+                                    {NAVBAR.first.title}
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href={NAVBAR.second.url}
+                                    className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.second.url)}`}
+                                >
+                                    {NAVBAR.second.title}
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href={NAVBAR.third.url}
+                                    className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.third.url)}`}
+                                >
+                                    {NAVBAR.third.title}
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href={NAVBAR.forth.url}
+                                    className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.forth.url)}`}
+                                >
+                                    {NAVBAR.forth.title}
+                                </a>
+                            </li>
+                        </ul>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </header>
     );
 }
