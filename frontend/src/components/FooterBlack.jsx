@@ -17,7 +17,7 @@ export default function Footer() {
 
                 {/* 오른쪽 영역 */}
                 <div className="text-center md:text-right mt-4 md:mt-0">
-                    <p className="text-sm font-semibold text-blue-950">{footer.right.contact}</p>
+                    <p className="text-sm text-blue-950">{footer.right.contact}</p>
                     <div className="flex justify-center md:justify-end mt-2">
                         <img
                             src={footer.right.logoSrcBlack}

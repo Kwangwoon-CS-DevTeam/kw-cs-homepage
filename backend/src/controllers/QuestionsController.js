@@ -285,3 +285,20 @@ exports.deleteQuestion = async (req, res) => {
         res.status(400).json({ error: 'Failed to delete question' }); // 오류 발생 시 400 에러 반환
     }
 };
+
+exports.deleteAnswer = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const question = await Questions.findOne({ where: { id } });
+        if (question) {
+            question.admin_id = null;
+            question.answer = null;
+            question.updated_at = new Date();
+
+            await question.save();
+            res.status(200).json({ message: 'Question deleted' });
+        }
+    } catch (e){
+        res.status(404).json({ error: 'Failed to delete answer' });
+    }
+}

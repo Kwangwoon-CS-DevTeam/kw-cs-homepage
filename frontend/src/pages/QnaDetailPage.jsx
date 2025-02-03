@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import apiClient from "../api/axiosClient.js";
 import NavbarBlack from "../components/NavbarBlack.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
 import LoadingPage from "./LoadingPage.jsx";
@@ -14,6 +15,9 @@ const QnaDetailPage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
     const [isEditing, setIsEditing] = useState(false); // 수정 상태
     const [editableQuestion, setEditableQuestion] = useState({ title: "", question: "" });
+    const [isEditingAnswer, setIsEditingAnswer] = useState(false); // 답변 수정 모드 관리
+    const [editableAnswer, setEditableAnswer] = useState(""); // 수정할 답변 내용
+
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태
     const navigate = useNavigate();
 
@@ -45,6 +49,36 @@ const QnaDetailPage = () => {
         fetchQuestion();
     }, [id]);
 
+    // 답변 수정 요청 함수
+    const handleAnswerUpdate = async () => {
+        try {
+            await apiClient.put(`${import.meta.env.VITE_API_URL}/qna/answer/update/${id}`, {
+                answer: editableAnswer,
+            });
+            alert("답변이 성공적으로 수정되었습니다.");
+            // 로컬 상태 업데이트 (답변 내용 변경)
+            setQuestion((prev) => ({ ...prev, answer: editableAnswer }));
+            setIsEditingAnswer(false);
+        } catch (error) {
+            console.error("답변 수정 에러:", error);
+            alert("답변 수정에 실패했습니다.");
+        }
+    };
+
+    // 답변 삭제 요청 함수
+    const handleAnswerDelete = async () => {
+        try {
+            await apiClient.delete(`${import.meta.env.VITE_API_URL}/qna/answer/delete/${id}`);
+            alert("답변이 성공적으로 삭제되었습니다.");
+            // 로컬 상태 업데이트 (답변 제거)
+            setQuestion((prev) => ({ ...prev, answer: "" }));
+            window.location.reload();
+        } catch (error) {
+            console.error("답변 삭제 에러:", error);
+            alert("답변 삭제에 실패했습니다.");
+        }
+    };
+
     // 비밀번호 검증 함수
     const validatePassword = async () => {
         if (!isLoggedIn && password.length != 4) {
@@ -66,6 +100,7 @@ const QnaDetailPage = () => {
             return response.status === 200; // 비밀번호 검증 성공 여부 반환
         } catch (error) {
             alert("비밀번호가 올바르지 않습니다.");
+            console.error(error);
             setShowPasswordInput(null);
             return false;
         }
@@ -185,38 +220,89 @@ const QnaDetailPage = () => {
 
                         {/* 조건부 렌더링 */}
                         {question.admin_id ? (
-                            // 답변 작성 내용 (관리자가 작성한 답변이 있는 경우)
-                            <div className="bg-neutral-100 border-neutral-200 border-[1px] rounded-lg p-6 pt-2 mb-6">
-                                <div className="sm:px-7 mt-10 mb-10">
-                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                                        <h2 className="text-2xl font-bold sm:mb-2">질문하신 글에 대한 답변입니다.</h2>
-                                        <div className="flex items-center space-x-4 text-gray-500 text-sm mt-2 sm:mt-0">
-                                            <span>관리자: {question.admin_id}</span>
-                                            <span>{new Date(question.updated_at).toLocaleDateString()}</span>
+                            <>
+                                {/* 답변 내용이 담긴 박스 */}
+                                <div className="bg-neutral-100 border-neutral-200 border-[1px] rounded-lg p-6 pt-2">
+                                    <div className="sm:px-7 mt-10 mb-10">
+                                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                                            <h2 className="text-2xl font-bold sm:mb-2">
+                                                질문하신 글에 대한 답변입니다.
+                                            </h2>
+                                            <div className="flex items-center space-x-4 text-gray-500 text-sm mt-2 sm:mt-0">
+                                                <span>관리자: {question.admin_id}</span>
+                                                <span>{new Date(question.updated_at).toLocaleDateString()}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    {/* 구분선 */}
-                                    <hr className="border-t border-[1px] border-neutral-200 my-2 mb-10"/>
-
-                                    <p className="text-black">
-                                        <Linkify
-                                            componentDecorator={(decoratedHref, decoratedText, key) => (
-                                                <a
-                                                    key={key}
-                                                    href={decoratedHref}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-blue-900 underline hover:text-blue-800"
+                                        <hr className="border-t border-[1px] border-neutral-200 my-2 mb-10" />
+                                        {isEditingAnswer ? (
+                                            // 답변 수정 모드일 경우 텍스트 에어리어 표시
+                                            <textarea
+                                                value={editableAnswer}
+                                                onChange={(e) => setEditableAnswer(e.target.value)}
+                                                className="w-full px-3 py-2 border border-neutral-100 rounded-md h-40 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                                            />
+                                        ) : (
+                                            // 일반 모드: 답변 텍스트 표시
+                                            <p className="text-black" style={{ whiteSpace: 'pre-wrap' }}>
+                                                <Linkify
+                                                    componentDecorator={(decoratedHref, decoratedText, key) => (
+                                                        <a
+                                                            key={key}
+                                                            href={decoratedHref}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-blue-900 underline hover:text-blue-800"
+                                                        >
+                                                            {decoratedText}
+                                                        </a>
+                                                    )}
                                                 >
-                                                    {decoratedText}
-                                                </a>
-                                            )}
-                                        >
-                                            {question.answer || "답변 내용이 없습니다."}
-                                        </Linkify>
-                                    </p>
+                                                    {question.answer || "답변 내용이 없습니다."}
+                                                </Linkify>
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
+
+                                {isLoggedIn && (
+                                    <div className="flex justify-end space-x-4 mt-4 mb-32">
+                                        {isEditingAnswer ? (
+                                            <>
+                                                <button
+                                                    className="px-10 py-2 border border-gray-700 text-gray-700 rounded-full hover:bg-gray-100 transition"
+                                                    onClick={() => setIsEditingAnswer(false)} // 수정 취소
+                                                >
+                                                    취소
+                                                </button>
+                                                <button
+                                                    className="px-10 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
+                                                    onClick={handleAnswerUpdate} // 수정 저장
+                                                >
+                                                    저장
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <button
+                                                    className="px-10 py-2 border border-gray-700 text-gray-700 rounded-full hover:bg-gray-100 transition"
+                                                    onClick={handleAnswerDelete} // 삭제 요청
+                                                >
+                                                    삭제
+                                                </button>
+                                                <button
+                                                    className="px-10 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
+                                                    onClick={() => {
+                                                        setIsEditingAnswer(true);
+                                                        setEditableAnswer(question.answer);
+                                                    }} // 수정 모드 전환
+                                                >
+                                                    수정
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
+                                )}
+                            </>
                         ) : (
                             // 답변이 없는 경우
                             <>

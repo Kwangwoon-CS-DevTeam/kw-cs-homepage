@@ -33,8 +33,6 @@ router.get('/:id', questionsController.getQuestionById);
 // 2-2. 특정 질문 수정 (Update)
 router.put("/update/:id", questionsController.updateQuestion);
 
-module.exports = router;
-
 router.post('/validate-password', questionsController.validatePassword);
 
 // 3. 질문 답변 작성 (Update)
@@ -42,5 +40,11 @@ router.put('/answer/:id', verifyAuth, updateAnswerValidator, validationMiddlewar
 
 // 4. 질문 삭제 (Delete) - 소프트 삭제
 router.delete('/delete/:id', deleteQuestionValidator, validationMiddleware.handleValidationErrors, questionsController.deleteQuestion);
+
+// 5. 답변 수정
+router.put('/answer/update/:id', verifyAuth, updateAnswerValidator, validationMiddleware.handleValidationErrors, questionsController.updateAnswer);
+
+// 6. 답변 삭제
+router.delete('/answer/delete/:id', verifyAuth, questionsController.deleteAnswer);
 
 module.exports = router;

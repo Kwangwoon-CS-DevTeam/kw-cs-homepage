@@ -8,7 +8,7 @@ export const footer = {
         message: "우리의 이야기는 여기서 시작됩니다",
     },
     right: {
-        contact: "mobile : 010 4907 7802",
+        contact: "mobile : 010-4907-7802",
         logoSrcWhite: "/images/logo.png",
         logoSrcBlack: "/images/logo_blue.png",
         logoAlt: "logo"
