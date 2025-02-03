@@ -74,9 +74,9 @@ const NewNoticePage = () => {
                 },
                 setup: (editor) => {
                     editorRef.current = editor;
+                    // 초기 로딩 시 에디터에 content 설정
                     editor.on("init", () => {
                         setIsEditorInitialized(true);
-                        // 만약 이미 API 요청으로 데이터를 받아 content 상태에 값이 있다면 에디터에 설정합니다.
                         if (content) {
                             editor.setContent(content);
                         }
@@ -130,11 +130,14 @@ const NewNoticePage = () => {
 
     // 에디터가 초기화된 후 content 상태 변경이 있을 때 에디터에 반영하도록 합니다.
     useEffect(() => {
-        if (isEditorInitialized && content) {
+        if (isEditorInitialized) {
             const editor = window.tinymce.get("content-editor");
             if (editor) {
-                // 에디터에 내용 세팅 (이미 내용이 있을 경우 사용자 입력이 덮어씌워질 수 있으니 필요에 따라 조건 추가)
-                editor.setContent(content);
+                const currentEditorContent = editor.getContent();
+                // 에디터 내용과 state의 content가 다를 때만 업데이트
+                if (currentEditorContent !== content) {
+                    editor.setContent(content);
+                }
             }
         }
     }, [isEditorInitialized, content]);
