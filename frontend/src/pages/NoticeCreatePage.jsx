@@ -232,8 +232,14 @@ const NewNoticePage = () => {
                 console.log("프론트엔드에서 에러 발생:", response.data);
             }
         } catch (error) {
-            console.error("Network Error:", error);
-            alert("서버와의 통신에 실패했습니다.");
+            // 서버에서 validation error가 발생하면 error.response.data에 관련 정보가 담겨 있음
+            if (error.response && error.response.data) {
+                const { errors } = error.response.data;
+                alert(errors[0]);
+            } else {
+                console.error("Network Error:", error);
+                alert("서버와의 통신에 실패했습니다. " + error);
+            }
         } finally {
             setSubmitting(false); // 요청 완료 후 제출 상태 해제
         }
