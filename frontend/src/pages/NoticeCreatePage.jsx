@@ -50,7 +50,20 @@ const NewNoticePage = () => {
                       alignleft aligncenter alignright alignjustify lineheight | \
                       bullist numlist outdent indent",
                 script_url: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/tinymce.min.js",
-                content_style: "a { color: #007bff !important; text-decoration: underline;}",
+                content_style: `
+                    body {
+                        font-family: Arial, sans-serif;
+                        line-height: 1.5;
+                    }
+                    p {
+                        margin: 0;
+                        padding: 0;
+                    }
+                    a {
+                        color: #007bff !important;
+                        text-decoration: underline;
+                    }
+                    `,
                 external_plugins: {
                     image: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/image/plugin.min.js",
                     advlist: "https://cdn.tiny.cloud/1/sy6aa0rd1w6jksim904zlqeuan53xj3lr1cjt69gxy1q0387/tinymce/6/plugins/advlist/plugin.min.js",
