@@ -7,8 +7,10 @@ import apiClient from "../api/axiosClient.js";
 const AnswerCreatePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { question } = location.state; // QnaDetailPage에서 전달받은 질문 데이터
-    const [answer, setAnswer] = useState("");
+    // 전달받은 question과 기존 답변(answer)을 가져옴
+    const { question, answer: initialAnswer } = location.state || {};
+    // 전달받은 initialAnswer를 기본값으로 설정 (없으면 빈 문자열)
+    const [answer, setAnswer] = useState(initialAnswer || "");
 
     // 답변 등록 요청
     const handleSubmit = async (e) => {
@@ -24,7 +26,7 @@ const AnswerCreatePage = () => {
                 answer,
             });
             alert("답변이 성공적으로 등록되었습니다.");
-            navigate("/qna");
+            navigate(`/qna/${question.id}`);
         } catch (error) {
             console.error("Error submitting answer:", error);
             alert("답변 등록에 실패했습니다. 다시 시도해주세요.");

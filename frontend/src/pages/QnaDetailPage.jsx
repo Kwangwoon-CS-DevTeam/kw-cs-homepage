@@ -289,12 +289,13 @@ const QnaDetailPage = () => {
                                                 >
                                                     삭제
                                                 </button>
+                                                {/* 선택된 수정 버튼 코드 */}
                                                 <button
                                                     className="px-10 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition"
                                                     onClick={() => {
-                                                        setIsEditingAnswer(true);
-                                                        setEditableAnswer(question.answer);
-                                                    }} // 수정 모드 전환
+                                                        // AnswerCreatePage로 이동하면서 question과 현재 답변(answer)을 함께 전달
+                                                        navigate(`/qna/answer/${question.id}`, { state: { question, answer: question.answer } });
+                                                    }}
                                                 >
                                                     수정
                                                 </button>
