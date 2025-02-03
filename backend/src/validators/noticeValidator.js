@@ -30,20 +30,6 @@ const validateCreateNotice = [
     body('url')
         .optional()
         .isURL().withMessage('URL은 유효한 URL이어야 합니다.'),
-    body('max_participants')
-        .custom((value, { req }) => {
-            if (req.body.url && (value === undefined || value === null)) {
-                throw new Error('URL이 있는 경우 max_participants는 필수입니다.');
-            }
-            if (!req.body.url && value !== undefined) {
-                throw new Error('URL이 없는 경우 max_participants를 제공하면 안 됩니다.');
-            }
-            return true;
-        })
-        .toInt(),
-    body('current_participants')
-        .default(0) // 기본값을 0으로 설정
-        .toInt(),
 ];
 
 module.exports = {
