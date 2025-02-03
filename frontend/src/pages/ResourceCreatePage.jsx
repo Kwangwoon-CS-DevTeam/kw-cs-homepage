@@ -161,7 +161,7 @@ export default function ResourceCreatePage() {
                     {/* 과목 입력 */}
                     <div>
                         <label htmlFor="subject" className="text-sm block mb-2">
-                            과목
+                            관련 과목
                         </label>
                         <input
                             type="text"
@@ -169,7 +169,7 @@ export default function ResourceCreatePage() {
                             name="subject"
                             value={formData.subject}
                             onChange={handleChange}
-                            placeholder="과목명을 입력하세요"
+                            placeholder="관련 과목명을 입력하세요(ex. 대학물리학, 기타)"
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                             required
                         />
@@ -178,7 +178,7 @@ export default function ResourceCreatePage() {
                     {/* 클라우드 주소 입력 */}
                     <div>
                         <label htmlFor="file_url" className="text-sm block mb-2">
-                            클라우드 주소
+                            자료 주소
                         </label>
                         <input
                             type="url"
