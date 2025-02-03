@@ -115,6 +115,8 @@ exports.getResources = async (req, res) => {
             order: [["created_at", "DESC"]], // 최신순 정렬
         });
 
+        console.log(resources[0]);
+
         // 응답 데이터 구성
         res.json({
             total: count,       // 전체 자료 수

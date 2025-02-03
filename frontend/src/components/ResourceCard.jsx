@@ -28,9 +28,9 @@ export default function ResourceCard({id, category, subject, title, content, pro
     };
 
     const categoryBgColor =
-        category === "교양"
-            ? "bg-연보라 text-white"
-            : "bg-밝은파랑 text-white";
+        category === "학업"
+            ? "bg-밝은파랑 text-white"
+            : "bg-연보라 text-white";
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md hover:drop-shadow-lg transition-shadow">
@@ -93,7 +93,7 @@ export default function ResourceCard({id, category, subject, title, content, pro
                 className="mt-4 -ml-0.5 inline-flex items-center bg-blue-900 text-white font-medium px-2.5 py-1.5 text-sm rounded shadow hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 whileHover="hover" // 부모 hover 상태를 "hover"로 지정
             >
-                다운받기
+                자료보기
                 <motion.img
                     src="/images/downloadIconWhite.png"
                     alt="다운로드 아이콘"

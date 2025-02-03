@@ -102,7 +102,7 @@ export default function ResourceBoard() {
 
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
-                                        searchParams.get("category") === "전공"
+                                        searchParams.get("category") === "학업"
                                             ? "bg-밝은파랑 text-white"
                                             : "text-gray-500 hover:bg-연한파랑 hover:text-white hover:opacity-50"
                                     }`}
@@ -110,17 +110,17 @@ export default function ResourceBoard() {
                                         setSearchParams({
                                             page: 1,
                                             size: itemsPerPage,
-                                            category: "전공",
+                                            category: "학업",
                                         });
-                                        navigate(`?page=1&size=${itemsPerPage}&category=전공`);
+                                        navigate(`?page=1&size=${itemsPerPage}&category=학업`);
                                     }}
                                 >
-                                    전공
+                                    학업
                                 </button>
 
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
-                                        searchParams.get("category") === "교양"
+                                        searchParams.get("category") === "기타"
                                             ? "bg-연보라 text-white"
                                             : "text-gray-500 hover:bg-연보라 hover:text-white hover:opacity-50"
                                     }`}
@@ -128,12 +128,12 @@ export default function ResourceBoard() {
                                         setSearchParams({
                                             page: 1,
                                             size: itemsPerPage,
-                                            category: "교양",
+                                            category: "기타",
                                         });
-                                        navigate(`?page=1&size=${itemsPerPage}&category=교양`);
+                                        navigate(`?page=1&size=${itemsPerPage}&category=기타`);
                                     }}
                                 >
-                                    교양
+                                    기타
                                 </button>
                             </div>
 

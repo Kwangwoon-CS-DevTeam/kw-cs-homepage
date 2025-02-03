@@ -9,7 +9,7 @@ export default function ResourceCreatePage() {
     const [formData, setFormData] = useState({
         title: "",
         content: "",
-        category: "전공", // 기본값
+        category: "학업", // 기본값
         provider: "",
         subject: "",
         file_url: "",
@@ -136,8 +136,8 @@ export default function ResourceCreatePage() {
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                             required
                         >
-                            <option value="전공">전공</option>
-                            <option value="교양">교양</option>
+                            <option value="학업">학업</option>
+                            <option value="기타">기타</option>
                         </select>
                     </div>
 
