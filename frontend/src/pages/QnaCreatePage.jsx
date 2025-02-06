@@ -131,7 +131,15 @@ const QnaCreatePage = () => {
                             maxLength="300"
                             required
                         />
-                        <div className="text-sm text-gray-500 mt-1">
+                        <div
+                            className={`text-sm mt-1 ${
+                                question.length > 250
+                                    ? "text-red-500"
+                                    : question.length > 150
+                                        ? "text-yellow-600"
+                                        : "text-gray-500"
+                            }`}
+                        >
                             {`${question.length} / 300`}
                         </div>
                     </div>

@@ -3,6 +3,7 @@ import ResourceCard from "../components/ResourceCard.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
 import NoticeHeader from "../components/NoticeHeader.jsx";
 import LoadingPage from "./LoadingPage.jsx";
+import { animate } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom"; // 추가
 import axios from "axios";
@@ -62,7 +63,14 @@ export default function ResourceBoard() {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
         if (categoryRef.current) {
-            categoryRef.current.scrollIntoView({ behavior: "smooth" });
+            // targetPosition: 해당 요소의 위쪽 위치 (페이지 내 좌표)
+            const targetPosition = categoryRef.current.offsetTop;
+
+            // 현재 스크롤 위치에서 targetPosition까지 애니메이션 적용
+            animate(window.scrollY, targetPosition, {
+                duration: 0.2,
+                onUpdate: (latest) => window.scrollTo(0, latest),
+            });
         }
     };
 
