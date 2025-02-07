@@ -82,7 +82,7 @@ const QnAPage = () => {
                         </div>
 
                         {/* 글쓰기 버튼 */}
-                        <div className="container mx-auto px-4 py-4 mb-12 mt-12">
+                        <div className="container mx-auto px-4 py-4 mb-12 mt-12 flex">
                             <motion.button
                                 className="px-4 py-2 bg-blue-900 text-white rounded-lg shadow-lg hover:bg-blue-800"
                                 onClick={handleNewQuestionClick}
