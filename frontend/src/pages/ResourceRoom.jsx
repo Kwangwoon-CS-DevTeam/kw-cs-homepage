@@ -3,31 +3,37 @@ import ResourceCard from "../components/ResourceCard.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
 import NoticeHeader from "../components/NoticeHeader.jsx";
 import LoadingPage from "./LoadingPage.jsx";
-import { animate } from "framer-motion";
+import { animate, motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom"; // 추가
+import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FaSearch } from "react-icons/fa";
 
 export default function ResourceBoard() {
-    const [resources, setResources] = useState([]); // 서버에서 가져온 데이터를 저장할 상태
+    const [resources, setResources] = useState([]); // 서버에서 가져온 데이터를 저장
     const [selectedCategory, setSelectedCategory] = useState("latest");
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태
     const [searchParams, setSearchParams] = useSearchParams(); // 쿼리 매개변수 상태
-    const navigate = useNavigate(); // URL 이동을 위한 함수
+    const navigate = useNavigate(); // URL 이동 함수
     const categoryRef = useRef(null);
-
     const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
     const itemsPerPage = 5;
 
+    const [showSearchInput, setShowSearchInput] = useState(false);
+    const [searchKeyword, setSearchKeyword] = useState("");
+    const searchContainerRef = useRef(null);
+    const searchInputRef = useRef(null);
+    const searchButtonRef = useRef(null);
+
     // 로그인 상태 확인
     useEffect(() => {
-        const token = localStorage.getItem("jwt"); // 토큰 확인
-        setIsLoggedIn(!!token); // 토큰이 있으면 true, 없으면 false
+        const token = localStorage.getItem("jwt");
+        setIsLoggedIn(!!token);
     }, []);
 
-    // category, page 정보를 URL(쿼리 파라미터)로부터 가져와서 state에 반영
+    // URL(쿼리 파라미터)로부터 카테고리와 페이지 정보 설정
     useEffect(() => {
         const catFromUrl = searchParams.get("category") || "latest";
         setSelectedCategory(catFromUrl);
@@ -36,21 +42,24 @@ export default function ResourceBoard() {
         setCurrentPage(pageFromUrl);
     }, [searchParams]);
 
-    // 서버에서 데이터 가져오기
+    // 서버에서 자료 가져오기
     useEffect(() => {
         const fetchResources = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/resources`, {
-                    params: {
-                        page: currentPage,
-                        size: itemsPerPage,
-                        category: selectedCategory === "latest" ? undefined : selectedCategory,
-                    },
-                });
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/resources`,
+                    {
+                        params: {
+                            page: currentPage,
+                            size: itemsPerPage,
+                            category: selectedCategory === "latest" ? undefined : selectedCategory,
+                            keyword: searchParams.get("keyword") || undefined
+                        },
+                    }
+                );
 
-                // 서버 응답 처리
-                setResources(response.data.resources); // 현재 페이지 데이터 설정
-                setTotalPages(Math.ceil(response.data.total / itemsPerPage)); // 총 페이지 수 계산
+                setResources(response.data.resources);
+                setTotalPages(Math.ceil(response.data.total / itemsPerPage));
                 setIsLoading(false);
             } catch (error) {
                 console.error("데이터를 가져오는 중 오류 발생:", error);
@@ -58,16 +67,37 @@ export default function ResourceBoard() {
         };
 
         fetchResources();
-    }, [currentPage, selectedCategory]); // 페이지나 카테고리가 변경될 때마다 데이터 요청
+    }, [currentPage, selectedCategory, searchParams]);
 
+    useEffect(() => {
+        if (showSearchInput && searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    }, [showSearchInput]);
+
+    // 검색 실행 함수: 쿼리 파라미터에 keyword 추가
+    const handleSearch = () => {
+        // 기존의 쿼리 파라미터를 객체로 변환
+        const params = Object.fromEntries(searchParams.entries());
+        // 입력값이 있으면 keyword 추가, 없으면 keyword 속성 제거
+        if (searchKeyword && searchKeyword.trim() !== "") {
+            params.keyword = searchKeyword;
+        } else {
+            delete params.keyword;
+        }
+        params.page = 1;
+        setSearchParams(params);
+        if(!searchKeyword){
+            setShowSearchInput(false);
+        }
+    };
+
+    // 페이지 변경 시 스크롤 애니메이션 적용
     const handlePageChange = (pageNumber) => {
         setIsLoading(true);
         setCurrentPage(pageNumber);
         if (categoryRef.current) {
-            // targetPosition: 해당 요소의 위쪽 위치 (페이지 내 좌표)
             const targetPosition = categoryRef.current.offsetTop;
-
-            // 현재 스크롤 위치에서 targetPosition까지 애니메이션 적용
             animate(window.scrollY, targetPosition, {
                 duration: 0.2,
                 onUpdate: (latest) => window.scrollTo(0, latest),
@@ -78,23 +108,21 @@ export default function ResourceBoard() {
     return (
         <>
             {isLoading ? (
-                <LoadingPage /> // 로딩 상태일 때 로딩 페이지 표시
+                <LoadingPage />
             ) : (
                 <div className="relative bg-white min-h-screen">
-                    <NavbarBlack/>
-                    <NoticeHeader title={"자료실"} sub={"학과의 소중한 자료를 공유하고 활용하세요."}/>
+                    <NavbarBlack />
+                    <NoticeHeader title={"자료실"} sub={"학과의 소중한 자료를 공유하고 활용하세요."} />
 
-                    {/* 카테고리 버튼 */}
+                    {/* 카테고리 및 버튼 영역 */}
                     <div
                         ref={categoryRef}
-                        className="container ml-3 md:px-10 lg:px-4 pt-8 sm:pt-12 lg:pt-8 lg:ml-8 pb-4 sm:pb-8 lg:pb-16 overflow-x-auto"
+                        className="container mx-auto px-4 lg:px-16 pt-8 sm:pt-12 lg:pt-8 pb-4 sm:pb-8 lg:pb-16 overflow-x-auto"
                     >
-                        <div
-                            className="flex justify-between items-center space-x-2 flex-nowrap"
-                        >
+                        <div className="flex justify-between items-center flex-nowrap">
+                            {/* 카테고리 버튼들 */}
                             <div
-                                className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2 flex-nowrap"
-                            >
+                                className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2 flex-nowrap">
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                         !searchParams.get("category")
@@ -108,7 +136,6 @@ export default function ResourceBoard() {
                                 >
                                     전체
                                 </button>
-
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                         searchParams.get("category") === "학업"
@@ -126,7 +153,6 @@ export default function ResourceBoard() {
                                 >
                                     학업
                                 </button>
-
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                         searchParams.get("category") === "기타"
@@ -146,26 +172,73 @@ export default function ResourceBoard() {
                                 </button>
                             </div>
 
-                            {isLoggedIn && (
-                                <button
-                                    className="ml-auto px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
-                                    onClick={() => navigate("/resources/new-resource")}
-                                >
-                                    글 작성
-                                </button>
-                            )}
+                            <div className="flex items-center" ref={searchContainerRef}>
+                                {/* 검색 input과 아이콘 그룹 (간격 좁게) */}
+                                <div className="flex flex-rowitems-centerspace-x-1">
+                                    <AnimatePresence>
+                                        {showSearchInput && (
+                                            <motion.input
+                                                ref={searchInputRef}
+                                                key="searchInput"
+                                                initial={{opacity: 0, x: 0}}
+                                                animate={{opacity: 1, x: 0}}
+                                                exit={{opacity: 0, x: 0}}
+                                                transition={{duration: 0.1}}
+                                                type="text"
+                                                placeholder="검색"
+                                                value={searchKeyword}
+                                                onChange={(e) => setSearchKeyword(e.target.value)}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === "Enter") {
+                                                        handleSearch();
+                                                    }
+                                                }}
+                                                className="border-b border-gray-400 outline-none px-2 py-1 w-28 sm:w-48 z-10"
+                                            />
+                                        )}
+                                    </AnimatePresence>
+                                    <button
+                                        ref={searchButtonRef}
+                                        className="p-2 rounded-full text-blue-900 hover:bg-blue-100 transition"
+                                        onClick={() => {
+                                            if (showSearchInput) {
+                                                // input 창이 보일 때는 검색 실행
+                                                handleSearch();
+                                            } else {
+                                                // input 창이 안 보이면 나타나도록 함
+                                                setShowSearchInput(true);
+                                            }
+                                        }}
+                                    >
+                                        <FaSearch className="text-lg"/>
+                                    </button>
+                                </div>
+
+                                {/* 글쓰기 버튼과의 간격을 위한 별도 마진 */}
+                                {isLoggedIn && (
+                                    <button
+                                        className="ml-4 px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium bg-white border border-blue-900 text-blue-900 hover:bg-blue-100 transition"
+                                        onClick={() => navigate("/resources/new-resource")}
+                                    >
+                                        글 작성
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
 
+                    {/* 자료 목록 영역 */}
                     <div className="container mx-auto px-3 lg:px-16 py-8 grid gap-6">
-                        {resources.length > 0 ?
+                        {resources.length > 0 ? (
                             resources.map((resource) => (
                                 <ResourceCard key={resource.id} {...resource} />
-                            )) : (
-                                <p className="text-center text-gray-500">자료가 없습니다.</p>
-                            )}
+                            ))
+                        ) : (
+                            <p className="text-center text-gray-500">자료가 없습니다.</p>
+                        )}
                     </div>
 
+                    {/* 페이지네이션 */}
                     <div className="container mx-auto px-4 py-4 pb-16 flex justify-center">
                         {Array.from({length: totalPages}, (_, index) => (
                             <button

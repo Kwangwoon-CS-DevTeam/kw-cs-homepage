@@ -1,5 +1,6 @@
 const axios = require("axios");
 const Resources = require("../models/Resources"); // Sequelize 모델
+const { Op } = require("sequelize");
 
 /**
  * @swagger
@@ -97,7 +98,7 @@ exports.createResource = async (req, res) => {
  *         description: Error fetching resources
  */
 exports.getResources = async (req, res) => {
-    const { page = 1, limit = 5, category } = req.query; // 페이지, 항목 수, 카테고리 필터
+    const { page = 1, limit = 5, category, keyword } = req.query; // 페이지, 항목 수, 카테고리 필터
     const offset = (page - 1) * limit;
 
     try {
@@ -105,6 +106,12 @@ exports.getResources = async (req, res) => {
         const whereClause = { isDeleted: 0 };
         if (category) {
             whereClause.category = category;
+        }
+        // 키워드가 있을 경우 제목에 해당 키워드가 포함되어 있는 자료를 필터링
+        if (keyword) {
+            whereClause.title = {
+                [Op.like]: `%${keyword}%`
+            };
         }
 
         // 데이터 및 총 개수 조회

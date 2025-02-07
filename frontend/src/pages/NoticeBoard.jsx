@@ -26,7 +26,7 @@ export default function NoticeBoard() {
         setIsLoggedIn(!!token); // 토큰이 있으면 true, 없으면 false
     }, []);
 
-    // Fetch Notices 부분
+    // 공지사항 데이터를 가져오는 함수
     const fetchNotices = async () => {
         const category = searchParams.get("category");
         // 카테고리 쿼리 생성 (null일 경우 제외)
@@ -71,28 +71,25 @@ export default function NoticeBoard() {
             ) : (
                 <div className="relative bg-white min-h-screen">
                     {/* 네비게이션 바 */}
-                    <NavbarBlack/>
+                    <NavbarBlack />
 
-                    <NoticeHeader title={"공지사항"} sub={"학과의 중요한 소식과 공지사항을 확인하세요."}/>
+                    <NoticeHeader title={"공지사항"} sub={"학과의 중요한 소식과 공지사항을 확인하세요."} />
 
+                    {/* 카테고리 및 버튼 영역 - 콘텐츠와 동일한 좌우 여백 */}
                     <div
                         ref={categoryRef}
-                        className="container ml-3 md:px-10 lg:px-4 pt-8 sm:pt-12 lg:pt-8 lg:ml-8 pb-4 sm:pb-8 lg:pb-16 overflow-x-auto"
+                        className="container mx-auto px-4 lg:px-16 pt-8 sm:pt-12 pb-4 sm:pb-8 lg:pb-16 overflow-x-auto"
                     >
-                        <div
-                            className="flex justify-between items-center space-x-2 flex-nowrap"
-                        >
-                            <div
-                                className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2 flex-nowrap"
-                            >
+                        <div className="flex justify-between items-center space-x-2 flex-nowrap">
+                            <div className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2 flex-nowrap">
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                         !searchParams.get("category")
-                                            ? `bg-blue-900 text-white`
-                                            : `text-gray-500 hover:bg-blue-100`
+                                            ? "bg-blue-900 text-white"
+                                            : "text-gray-500 hover:bg-blue-100"
                                     }`}
                                     onClick={() => {
-                                        setSearchParams({page: 1, size: itemsPerPage});
+                                        setSearchParams({ page: 1, size: itemsPerPage });
                                         navigate(`?page=1&size=${itemsPerPage}`);
                                     }}
                                 >
@@ -102,8 +99,8 @@ export default function NoticeBoard() {
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                         searchParams.get("category") === "학과"
-                                            ? `bg-밝은파랑 text-white`
-                                            : `text-gray-500 hover:bg-연한파랑 hover:text-white hover:opacity-50`
+                                            ? "bg-밝은파랑 text-white"
+                                            : "text-gray-500 hover:bg-연한파랑 hover:text-white hover:opacity-50"
                                     }`}
                                     onClick={() => {
                                         setSearchParams({
@@ -120,8 +117,8 @@ export default function NoticeBoard() {
                                 <button
                                     className={`px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium flex-shrink-0 ${
                                         searchParams.get("category") === "총학"
-                                            ? `bg-연보라 text-white`
-                                            : `text-gray-500 hover:bg-연보라 hover:text-white hover:opacity-50`
+                                            ? "bg-연보라 text-white"
+                                            : "text-gray-500 hover:bg-연보라 hover:text-white hover:opacity-50"
                                     }`}
                                     onClick={() => {
                                         setSearchParams({
@@ -138,7 +135,7 @@ export default function NoticeBoard() {
 
                             {isLoggedIn && (
                                 <button
-                                    className="ml-auto px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
+                                    className="px-4 py-1 text-sm lg:px-6 lg:py-2 lg:text-base rounded-md font-medium bg-white border-[1px] text-blue-900 hover:bg-blue-100 transition"
                                     onClick={() => navigate("/notices/new-notice")}
                                 >
                                     글 작성
@@ -163,7 +160,7 @@ export default function NoticeBoard() {
 
                     {/* 페이지네이션 */}
                     <div className="container mx-auto px-4 py-4 pb-16 flex justify-center">
-                        {Array.from({length: totalPages}, (_, index) => (
+                        {Array.from({ length: totalPages }, (_, index) => (
                             <button
                                 key={index + 1}
                                 className={`mx-1 px-3 py-1 rounded-lg ${
@@ -179,10 +176,9 @@ export default function NoticeBoard() {
                     </div>
 
                     {/* Footer */}
-                    <FooterBlack/>
+                    <FooterBlack />
                 </div>
             )}
         </>
-
     );
 }
