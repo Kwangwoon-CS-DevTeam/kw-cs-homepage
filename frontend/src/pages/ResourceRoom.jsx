@@ -45,6 +45,7 @@ export default function ResourceBoard() {
     // 서버에서 자료 가져오기
     useEffect(() => {
         const fetchResources = async () => {
+            setIsLoading(true);
             try {
                 const response = await axios.get(
                     `${import.meta.env.VITE_API_URL}/resources`,
