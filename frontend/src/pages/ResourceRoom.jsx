@@ -61,6 +61,7 @@ export default function ResourceBoard() {
     }, [currentPage, selectedCategory]); // 페이지나 카테고리가 변경될 때마다 데이터 요청
 
     const handlePageChange = (pageNumber) => {
+        setIsLoading(true);
         setCurrentPage(pageNumber);
         if (categoryRef.current) {
             // targetPosition: 해당 요소의 위쪽 위치 (페이지 내 좌표)
