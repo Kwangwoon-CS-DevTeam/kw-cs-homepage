@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 
 function Home() {
     const [text, setText] = useState(""); // 출력할 텍스트
-    const fullText = "KWU x Computer Science"; // 전체 텍스트
+    const fullText = "Computer Engineering"; // 전체 텍스트
     const typingSpeed = 100; // 타이핑 속도(ms)
     const textRef = useRef(""); // 현재 텍스트 상태를 저장
 
@@ -46,11 +46,11 @@ function Home() {
                 {/* 메인 콘텐츠 */}
                 <div className="flex flex-col items-center justify-center min-h-screen -mt-24 text-white">
                     {/* -mt-24로 네비게이션 높이 보정 */}
-                    <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold flex items-center bg-gradient-to-top bg-clip-text text-transparent">
+                    <h1 className="text-3xl sm:text-3xl md:text-4xl lg:leading-relaxed lg:text-5xl font-bold flex items-center bg-gradient-to-top bg-clip-text text-transparent">
                         {text}
                         <h1
                             className= "animate-blink delay-[2000ms] ml-1 bg-gradient-to-top bg-clip-text text-transparent"
-                            style={{ animationDelay: "2.5s" }}
+                            style={{ animationDelay: "2.3s" }}
                         >|</h1> {/* 커서 애니메이션 */}
                     </h1>
 
