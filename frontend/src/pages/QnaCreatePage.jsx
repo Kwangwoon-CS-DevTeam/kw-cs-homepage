@@ -125,7 +125,7 @@ const QnaCreatePage = () => {
                         <textarea
                             value={question}
                             onChange={(e) => setQuestion(e.target.value)}
-                            placeholder="실명 혹은 누구인지 특정 지을 수 있는 정보는 포함시키지 마세요."
+                            placeholder="질문 내용을 작성해주세요."
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 h-64"
                             rows="7"
                             maxLength="300"
