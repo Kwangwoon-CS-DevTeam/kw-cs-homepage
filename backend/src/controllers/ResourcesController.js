@@ -110,7 +110,7 @@ exports.getResources = async (req, res) => {
         // 키워드가 있을 경우 제목에 해당 키워드가 포함되어 있는 자료를 필터링
         if (keyword) {
             whereClause.title = {
-                [Op.like]: `%${keyword}%`
+                [Op.iLike]: `%${keyword}%`
             };
         }
 
