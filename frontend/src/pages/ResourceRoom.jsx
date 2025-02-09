@@ -194,7 +194,7 @@ export default function ResourceBoard() {
                                                         handleSearch();
                                                     }
                                                 }}
-                                                className="border-b border-gray-400 outline-none px-2 py-1 w-28 sm:w-48 z-10"
+                                                className="border-b border-gray-400 outline-none px-2 py-1 w-24 sm:w-48 z-10"
                                             />
                                         )}
                                     </AnimatePresence>
