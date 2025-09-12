@@ -42,6 +42,13 @@ jobs:
         run: |
           npm install
           npm run build
+          
+      - name: Display fly.toml for debugging
+        working-directory: ./backend
+        run: |
+          echo "--- fly.toml content ---"
+          cat fly.toml
+          echo "------------------------"
 
       # 6. Fly.io로 배포
       - name: Deploy to Fly.io
