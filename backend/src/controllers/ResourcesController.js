@@ -124,10 +124,10 @@ exports.getResources = async (req, res) => {
 
         // 응답 데이터 구성
         res.json({
-            total: count,       // 전체 자료 수
-            page: page, // 현재 페이지
-            size: limit, // 페이지당 항목 수
-            resources,          // 데이터 배열
+            total: count,  // 전체 자료 수
+            page: page,  // 현재 페이지
+            size: limit,  // 페이지당 항목 수
+            resources,  // 데이터 배열
         });
     } catch (error) {
         res.status(500).json({ error: error.message }); // 오류 처리
