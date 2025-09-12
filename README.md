@@ -11,6 +11,26 @@
 | Database | Supabase |
 | Front-end | React |
 
+
+## 👥 팀원
+- 조성찬: BE Developer
+- 강준우: BE Developer
+- 이용진: BE Developer
+- 권관호: BE Developer
+- 오지빈: FE Developer
+
+## 👀 역할
+**조성찬**:
+1. 웹 디자인
+2. 프로트엔드 웹 설계 및 구현
+3. 세부전공 도메인
+4. 공지사항 도메인
+5. 인증 및 인가
+
+**이용진**:
+1. 자료실 도메인
+2. QnA 도메인
+
 ## ✏️ 작업 프로세스
 
 1. **레포지토리 복제**
@@ -80,9 +100,3 @@
       ```
 
 
-## 👥 팀원
-- 조성찬: BE Developer
-- 강준우: BE Developer
-- 이용진: BE Developer
-- 권관호: BE Developer
-- 오지빈: FE Developer
