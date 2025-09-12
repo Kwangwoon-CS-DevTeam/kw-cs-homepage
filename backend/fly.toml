@@ -6,8 +6,7 @@ primary_region = 'sin'
 
 # 이 부분이 추가되었습니다!
 [build]
-builder = "paketo/buildpacks-builder-base"
-buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
+builder = "paketobuildpacks/builder:base"
 
 [http_service]
 internal_port = 3000
