@@ -14,6 +14,7 @@ import ResourceCreatePage from "./pages/ResourceCreatePage.jsx";
 import QnaCreatePage from "./pages/QnaCreatePage.jsx";
 import QnaDetailPage from "./pages/QnaDetailPage.jsx";
 import AnswerCreatePage from "./pages/AnswerCreatePage.jsx";
+import StudentVerify from "./pages/StudentVerify.jsx";
 
 function App() {
   return (
@@ -71,8 +72,11 @@ function App() {
                 {/* 로그인 페이지 */}
                 <Route path="/login" element={<Login />} />
 
+                <Route path="/verify-student" element={<StudentVerify />} />
+
                 {/* 404 페이지 */}
                 <Route path="*" element={<NotFoundPage />} />
+
             </Routes>
       </Router>
   );
