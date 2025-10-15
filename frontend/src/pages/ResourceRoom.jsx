@@ -52,12 +52,13 @@ export default function ResourceBoard() {
                     {
                         params: {
                             page: currentPage,
-                            size: itemsPerPage,
+                            limit: itemsPerPage,
                             category: selectedCategory === "latest" ? undefined : selectedCategory,
                             keyword: searchParams.get("keyword") || undefined
                         },
                     }
                 );
+
 
                 setResources(response.data.resources);
                 setTotalPages(Math.ceil(response.data.total / itemsPerPage));
