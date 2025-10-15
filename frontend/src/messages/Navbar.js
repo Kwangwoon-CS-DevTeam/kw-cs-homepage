@@ -19,6 +19,10 @@ const menus = {
         title: "Log in",
         url: "/login"
     },
+    sixth: {
+        title: "납부확인",
+        url: "/verify-student"
+    }
 };
 
 export default menus;

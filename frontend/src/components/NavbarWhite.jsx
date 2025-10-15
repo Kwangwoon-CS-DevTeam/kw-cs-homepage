@@ -140,6 +140,12 @@ export default function NavbarWhite() {
                     >
                         {NAVBAR.forth.title}
                     </a>
+                    <a
+                        href={NAVBAR.sixth.url}
+                        className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
+                    >
+                        {NAVBAR.sixth.title}
+                    </a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     {isLoggedIn ? (
@@ -204,6 +210,14 @@ export default function NavbarWhite() {
                                     className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.forth.url)}`}
                                 >
                                     {NAVBAR.forth.title}
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href={NAVBAR.sixth.url}
+                                    className={`block text-sm font-base text-gray-900 rounded-lg px-4 py-2 ${getNavLinkClass(NAVBAR.forth.url)}`}
+                                >
+                                    {NAVBAR.sixth.title}
                                 </a>
                             </li>
                         </ul>
