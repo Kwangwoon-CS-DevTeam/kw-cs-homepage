@@ -123,7 +123,7 @@ export default function ResourceBoard() {
                         ref={categoryRef}
                         className="container mx-auto px-4 lg:px-16 pt-8 sm:pt-12 lg:pt-8 pb-4 sm:pb-8 lg:pb-16 overflow-x-auto"
                     >
-                        <div className="flex justify-between items-center flex-nowrap">
+                        <div className="flex items-center flex-nowrap gap-y-4">
                             {/* 카테고리 버튼들 */}
                             <div
                                 className="flex flex-wrap justify-center lg:justify-start space-x-1 sm:space-x-2 lg:space-x-2 flex-nowrap">
@@ -176,7 +176,7 @@ export default function ResourceBoard() {
                                 </button>
                             </div>
 
-                            <div className="flex items-center" ref={searchContainerRef}>
+                            <div className="flex items-center ml-auto" ref={searchContainerRef}>
                                 {/* 검색 input과 아이콘 그룹 (간격 좁게) */}
                                  <SearchInput
                                    open={showSearchInput}
