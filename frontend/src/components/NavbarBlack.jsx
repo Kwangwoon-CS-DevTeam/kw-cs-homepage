@@ -139,7 +139,7 @@ export default function NavbarBlack() {
                     </a>
                     <a
                         href={NAVBAR.sixth.url}
-                        className="relative text-base text-white font-base px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-15"
+                        className={`relative text-base text-black font-base px-4 py-2 rounded-lg ${getNavLinkClass(NAVBAR.sixth.url)}`}
                     >
                         {NAVBAR.sixth.title}
                     </a>
