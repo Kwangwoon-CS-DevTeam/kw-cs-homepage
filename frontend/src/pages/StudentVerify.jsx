@@ -208,16 +208,10 @@ export default function StudentVerify() {
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                placeholder=" "
-                                className="peer w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-4 text-white placeholder-transparent outline-none backdrop-blur-sm transition focus:border-indigo-300/70 focus:ring-2 focus:ring-indigo-300/40 hover:border-white/30"
+                                placeholder="이름 (예: 홍길동)"
+                                className="peer w-full placeholder-white/70  rounded-2xl border border-white/20 bg-white/10 px-4 py-4 text-white  outline-none backdrop-blur-sm transition focus:border-indigo-300/70 focus:ring-2 focus:ring-indigo-300/40 hover:border-white/30"
                                 autoComplete="off"
                             />
-                            <label
-                                htmlFor="name"
-                                className="pointer-events-none absolute left-4 top-4 text-white/70 transition-all peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs peer-focus:text-indigo-200 peer-[:not(:placeholder-shown)]:top-1 peer-[:not(:placeholder-shown)]:text-xs"
-                            >
-                                이름 (예: 홍길동)
-                            </label>
                         </div>
 
                         {/* 버튼 */}
