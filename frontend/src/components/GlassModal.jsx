@@ -1,8 +1,25 @@
 // src/components/GlassModal.jsx
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 // eslint-disable-next-line react/prop-types
-export default function GlassModal({ open, title, message, status = "info", onClose }) {
+export default function GlassModal({ open, title, message, onClose }) {
+      const okRef = useRef(null);
+
+          // 모달 열릴 때: Enter 키 누르면 확인(닫기)
+              useEffect(() => {
+                    if (!open) return;
+                    const onKey = (e) => {
+                          if (e.key === "Enter") {
+                                e.preventDefault();
+                                onClose?.();
+                              }
+                        };
+                    window.addEventListener("keydown", onKey);
+                    // 열리자마자 확인 버튼에 포커스
+                        okRef.current?.focus?.();
+                    return () => window.removeEventListener("keydown", onKey);
+                  }, [open, onClose]);
 
     return (
         <AnimatePresence>
@@ -25,7 +42,7 @@ export default function GlassModal({ open, title, message, status = "info", onCl
                          onClick={(e) => e.stopPropagation()}
                        >
 
-                        <h3 className="text-xl font-semibold text-white/95">{title}</h3>
+                        <h3 className="text-xl font-semibold text-green-300">{title}</h3>
                         {message && <p className="mt-2 text-sm text-white/85">{message}</p>}
 
                         <div className="mt-6 flex justify-end">

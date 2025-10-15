@@ -66,22 +66,17 @@ export default function StudentVerify() {
             console.log(data);
 
                  if (data?.success === true) {
-                       openModal("확인 완료", "해당 학생 정보가 존재합니다. (납부 확인 가능)", "success");
+                       openModal("납부확인", "학생회비를 납부한 학생입니다.");
+                        setName("");
                      } else if (data?.success === false) {
-                       openModal("미등록", `${name} 학생 정보가 존재하지 않습니다.`, "warning");
+                       toast.warning(`${name} 님의 정보가 존재하지 않습니다.`);
                      } else {
                        openModal("처리 불가", "응답 형식이 올바르지 않습니다.", "error");
                      }
         } catch (err) {
             const status = err?.response?.status;
-            if (status === 404) {
-                openModal("미등록", "해당 학생 정보가 없습니다.", "warning");
-            } else if (status === 400) {
-                const msg = err?.response?.data?.message || "요청 형식이 올바르지 않습니다.";
-                openModal("요청 오류", msg, "error");
-            } else {
-                openModal("서버 오류", "서버 요청 중 문제가 발생했습니다. 잠시 후 다시 시도하세요.", "error");
-            }
+            console.log(status);
+            openModal("서버 오류", "서버 요청 중 문제가 발생했습니다. 잠시 후 다시 시도하세요.", "error");
         } finally {
             setLoading(false);
         }
