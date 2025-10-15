@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import CategorySelector from "../components/button/CategorySelector.jsx";
 import apiClient from "../api/axiosClient.js";
 import { useCheckAuth } from "../api/auth";
+import { TextInput, TextAreaWithCount } from "../components/ui/InputKit";
 
 const NewNoticePage = () => {
     const { id } = useParams(); // URL에서 공지사항 ID 가져오기
@@ -251,21 +252,26 @@ const NewNoticePage = () => {
             <div className="flex flex-col flex-grow px-48 py-12 border-t">
                 <form className="flex flex-col flex-grow" onSubmit={handleSubmit}>
                     {/* 제목 입력 */}
-                    <input
-                        type="text"
-                        placeholder="제목을 입력하세요."
-                        className="w-full px-4 py-2 mb-6 border-b rounded-lg text-2xl focus:outline-none"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
+                     <TextInput
+                       id="title"
+                       label="제목"
+                       required
+                       placeholder="제목을 입력하세요."
+                       className="mb-6 text-2xl"
+                       value={title ?? ""}
+                       onChange={(e) => setTitle(e.target.value)}
+                     />
                     {/* URL 입력 */}
-                    <input
-                        type="text"
-                        placeholder="구글 폼 URL을 입력하세요.(선택)"
-                        className="w-full px-4 py-2 mb-6 border rounded-lg focus:outline-none"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                    />
+                     <TextInput
+                       id="url"
+                       type="url"
+                       label="구글 폼 URL (선택)"
+                       placeholder="https://..."
+                       className="mb-6"
+                       value={url ?? ""}
+                       onChange={(e) => setUrl(e.target.value)}
+                       hint="미입력 시 자동으로 제외됩니다."
+                     />
                     {/*/!* 최대 인원 *!/*/}
                     {/*<input*/}
                     {/*    type="number"*/}

@@ -8,6 +8,8 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
+import SearchInput from "../components/ui/SearchInput.jsx";
+
 
 export default function ResourceBoard() {
     const [resources, setResources] = useState([]); // 서버에서 가져온 데이터를 저장
@@ -176,45 +178,14 @@ export default function ResourceBoard() {
 
                             <div className="flex items-center" ref={searchContainerRef}>
                                 {/* 검색 input과 아이콘 그룹 (간격 좁게) */}
-                                <div className="flex flex-rowitems-centerspace-x-1">
-                                    <AnimatePresence>
-                                        {showSearchInput && (
-                                            <motion.input
-                                                ref={searchInputRef}
-                                                key="searchInput"
-                                                initial={{opacity: 0, x: 0}}
-                                                animate={{opacity: 1, x: 0}}
-                                                exit={{opacity: 0, x: 0}}
-                                                transition={{duration: 0.1}}
-                                                type="text"
-                                                placeholder="검색"
-                                                value={searchKeyword}
-                                                onChange={(e) => setSearchKeyword(e.target.value)}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === "Enter") {
-                                                        handleSearch();
-                                                    }
-                                                }}
-                                                className="border-b border-gray-400 outline-none px-2 py-1 w-24 sm:w-48 z-10"
-                                            />
-                                        )}
-                                    </AnimatePresence>
-                                    <button
-                                        ref={searchButtonRef}
-                                        className="p-2 rounded-full text-blue-900 hover:bg-blue-100 transition"
-                                        onClick={() => {
-                                            if (showSearchInput) {
-                                                // input 창이 보일 때는 검색 실행
-                                                handleSearch();
-                                            } else {
-                                                // input 창이 안 보이면 나타나도록 함
-                                                setShowSearchInput(true);
-                                            }
-                                        }}
-                                    >
-                                        <FaSearch className="text-lg"/>
-                                    </button>
-                                </div>
+                                 <SearchInput
+                                   open={showSearchInput}
+                                   setOpen={setShowSearchInput}
+                                   value={searchKeyword}
+                                   onChange={(e) => setSearchKeyword(e.target.value)}
+                                   onSubmit={handleSearch}
+                                   placeholder="검색"
+                                 />
 
                                 {/* 글쓰기 버튼과의 간격을 위한 별도 마진 */}
                                 {isLoggedIn && (

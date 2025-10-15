@@ -4,6 +4,7 @@ import NavbarBlack from "../components/NavbarBlack.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
 import apiClient from "../api/axiosClient.js";
 import { useCheckAuth } from "../api/auth.js";
+import { TextInput, TextAreaWithCount } from "../components/ui/InputKit";
 
 export default function ResourceCreatePage() {
     const [formData, setFormData] = useState({
@@ -90,38 +91,28 @@ export default function ResourceCreatePage() {
                 </h1>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* 제목 입력 */}
-                    <div>
-                        <label htmlFor="title" className="text-sm block mb-2">
-                            제목
-                        </label>
-                        <input
-                            type="text"
-                            id="title"
-                            name="title"
-                            value={formData.title}
-                            onChange={handleChange}
-                            placeholder="제목을 입력하세요"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                            required
-                        />
-                    </div>
+                     <TextInput
+                       id="title"
+                       label="제목"
+                       required
+                       name="title"
+                       value={formData.title}
+                       onChange={handleChange}
+                       placeholder="제목을 입력하세요"
+                     />
 
                     {/* 내용 입력 */}
-                    <div>
-                        <label htmlFor="content" className="text-sm block mb-2">
-                            내용
-                        </label>
-                        <textarea
-                            id="content"
-                            name="content"
-                            value={formData.content}
-                            onChange={handleChange}
-                            placeholder="내용을 입력하세요"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                            rows="5"
-                            required
-                        ></textarea>
-                    </div>
+                     <TextAreaWithCount
+                       id="content"
+                       label="내용"
+                       required
+                       name="content"
+                       value={formData.content}
+                       onChange={handleChange}
+                       placeholder="내용을 입력하세요"
+                       rows={7}
+                       maxLength={1000}
+                     />
 
                     {/* 카테고리 선택 */}
                     <div>
@@ -142,55 +133,38 @@ export default function ResourceCreatePage() {
                     </div>
 
                     {/* 제공자 입력 */}
-                    <div>
-                        <label htmlFor="provider" className="text-sm block mb-2">
-                            제공자
-                        </label>
-                        <input
-                            type="text"
-                            id="provider"
-                            name="provider"
-                            value={formData.provider}
-                            onChange={handleChange}
-                            placeholder="제공자를 입력하세요"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                            required
-                        />
-                    </div>
+                     <TextInput
+                       id="provider"
+                       label="제공자"
+                       required
+                       name="provider"
+                       value={formData.provider}
+                       onChange={handleChange}
+                       placeholder="제공자를 입력하세요"
+                     />
 
                     {/* 과목 입력 */}
-                    <div>
-                        <label htmlFor="subject" className="text-sm block mb-2">
-                            관련 과목
-                        </label>
-                        <input
-                            type="text"
-                            id="subject"
-                            name="subject"
-                            value={formData.subject}
-                            onChange={handleChange}
-                            placeholder="관련 과목명을 입력하세요(ex. 대학물리학, 기타)"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                            required
-                        />
-                    </div>
+                     <TextInput
+                       id="subject"
+                       label="관련 과목"
+                       required
+                       name="subject"
+                       value={formData.subject}
+                       onChange={handleChange}
+                       placeholder="관련 과목명을 입력하세요(ex. 대학물리학, 기타)"
+                     />
 
                     {/* 클라우드 주소 입력 */}
-                    <div>
-                        <label htmlFor="file_url" className="text-sm block mb-2">
-                            자료 주소
-                        </label>
-                        <input
-                            type="url"
-                            id="file_url"
-                            name="file_url"
-                            value={formData.file_url}
-                            onChange={handleChange}
-                            placeholder="http://example.com/resource.pdf"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                            required
-                        />
-                    </div>
+                     <TextInput
+                       id="file_url"
+                       label="자료 주소"
+                       required
+                       type="url"
+                       name="file_url"
+                       value={formData.file_url}
+                       onChange={handleChange}
+                       placeholder="http://example.com/resource.pdf"
+                     />
 
                     {/* 제출 버튼 */}
                     <div>

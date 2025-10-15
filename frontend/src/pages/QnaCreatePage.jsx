@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavbarBlack from "../components/NavbarBlack.jsx";
 import FooterBlack from "../components/FooterBlack.jsx";
+import { TextInput, PasswordInput, TextAreaWithCount } from "../components/ui/InputKit";
 
 const QnaCreatePage = () => {
     const [title, setTitle] = useState("");
@@ -80,68 +81,43 @@ const QnaCreatePage = () => {
                     <div className="border-t border-black border-[1px] mb-6"></div>
 
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm mb-2">
-                            제목
-                        </label>
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            placeholder="제목을 입력하세요."
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-                            required
-                        />
+
+                         <TextInput
+                           label="제목"
+                           required
+                           placeholder="제목을 입력하세요"
+                           value={title}
+                           onChange={(e) => setTitle(e.target.value)}
+                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm mb-2">
-                            작성자
-                        </label>
-                        <input
-                            type="text"
-                            value={nickname}
-                            onChange={(e) => setNickname(e.target.value)}
-                            placeholder="에: 다니엘"
-                            className="w-24 sm:w-1/4 px-2 py-2 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-500"
-                            required
-                        />
+                         <TextInput
+                           label="작성자"
+                           required
+                           placeholder="예: 다니엘"
+                           value={nickname}
+                           onChange={(e) => setNickname(e.target.value)}
+                           className="max-w-xs"
+                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm mb-2">
-                            비밀번호 (수정용)
-                        </label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="예: 1234"
-                            className="w-24 sm:w-1/4 px-2 py-2 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-500"
-                            required
-                        />
+                         <PasswordInput
+                           label="비밀번호 (수정용)"
+                           required
+                           placeholder="예: 1234"
+                           value={password}
+                           onChange={(e) => setPassword(e.target.value)}
+                         />
                     </div>
                     <div className="mb-6">
-                        <label className="block text-gray-700 text-sm mb-2">
-                            질문 내용
-                        </label>
-                        <textarea
-                            value={question}
-                            onChange={(e) => setQuestion(e.target.value)}
-                            placeholder="질문 내용을 작성해주세요."
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 h-64"
-                            rows="7"
-                            maxLength="300"
-                            required
-                        />
-                        <div
-                            className={`text-sm mt-1 ${
-                                question.length > 250
-                                    ? "text-red-500"
-                                    : question.length > 150
-                                        ? "text-yellow-600"
-                                        : "text-gray-500"
-                            }`}
-                        >
-                            {`${question.length} / 300`}
-                        </div>
+                         <TextAreaWithCount
+                           label="질문 내용"
+                           required
+                           placeholder="질문 내용을 작성해 주세요"
+                           maxLength={300}
+                           value={question}
+                           onChange={(e) => setQuestion(e.target.value)}
+                         />
                     </div>
                     <div className="flex justify-center space-x-4 mt-20">
                         <button
