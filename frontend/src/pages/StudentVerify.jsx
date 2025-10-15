@@ -1,16 +1,22 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Toaster, toast } from "sonner";
+import GlassModal from "../components/GlassModal";
+
 import cieClient from "../api/cieClient";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
-const VERIFY_PATH = import.meta.env.VITE_CIE_VERIFY_PATH || "/students/exists";
+const VERIFY_PATH = import.meta.env.VITE_CIE_VERIFY_PATH || "/students";
 
 export default function StudentVerify() {
     const [entryYear, setEntryYear] = useState("");
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
+    const [modal, setModal] = useState({ open: false, title: "", message: "", status: "info" });
+    const openModal = (title, message, status="info") => setModal({ open: true, title, message, status });
+    const closeModal = () => setModal((m) => ({ ...m, open: false }));
+
 
     const years = ["25", "24", "23", "22", "21", "20", "19"];
 
@@ -18,39 +24,63 @@ export default function StudentVerify() {
         e.preventDefault();
 
         // 입력 값 검증
+        // 이름: 한글/공백/·/ㆍ만 허용, 2자 이상
+             const nameTrimmed = name.trim();
+         const koreanNameOk = /^[가-힣\s·ㆍ]{2,}$/.test(nameTrimmed);
+
         if (!entryYear) {
             toast.error("입학년도를 선택하세요. (19~25)");
             return;
         }
-        if (!name) {
-            toast.error("이름을 입력하세요.");
-            return;
-        }
-        if (name.length < 2) {
-            toast.error("이름은 최소 2자 이상 입력하세요.");
-            return;
-        }
+         if (!nameTrimmed) {
+               toast.error("이름을 입력하세요.");
+               return;
+             }
+         if (!koreanNameOk) {
+               toast.error("이름은 한글만 입력 가능합니다. (2자 이상)");
+               return;
+             }
+         if(name.length < 2) {
+             toast.error("이름은 최소 2자 이상 입력하세요.");
+             return;
+         }
+         if(!name) {
+             toast.error("이름을 입력하세요.");
+             return;
+         }
+
+
         if (loading) return;
 
         setLoading(true);
 
         try {
-            const { data } = await cieClient.post(VERIFY_PATH, {
-                entryYear: Number(entryYear),
-                name: name.trim(),
+            const { data } = await cieClient.get(VERIFY_PATH, {
+
+                params: {
+                    yearOfEntry: Number(entryYear),
+                    name: name.trim(),
+                },
             });
 
-            const message = data?.message || "해당 학생 정보가 존재합니다.";
-            toast.success(message);
+            console.log(data);
+
+                 if (data?.success === true) {
+                       openModal("확인 완료", "해당 학생 정보가 존재합니다. (납부 확인 가능)", "success");
+                     } else if (data?.success === false) {
+                       openModal("미등록", `${name} 학생 정보가 존재하지 않습니다.`, "warning");
+                     } else {
+                       openModal("처리 불가", "응답 형식이 올바르지 않습니다.", "error");
+                     }
         } catch (err) {
             const status = err?.response?.status;
             if (status === 404) {
-                toast.warning("해당 학생 정보가 없습니다.");
+                openModal("미등록", "해당 학생 정보가 없습니다.", "warning");
             } else if (status === 400) {
                 const msg = err?.response?.data?.message || "요청 형식이 올바르지 않습니다.";
-                toast.error(msg);
+                openModal("요청 오류", msg, "error");
             } else {
-                toast.error("서버 요청 중 문제가 발생했습니다. 잠시 후 다시 시도하세요.");
+                openModal("서버 오류", "서버 요청 중 문제가 발생했습니다. 잠시 후 다시 시도하세요.", "error");
             }
         } finally {
             setLoading(false);
@@ -59,7 +89,6 @@ export default function StudentVerify() {
 
     return (
         <div className="relative min-h-screen w-full overflow-hidden">
-            <Toaster richColors position="top-center" />
 
             {/* 배경 요소들은 그대로 유지 */}
             <div
@@ -121,7 +150,7 @@ export default function StudentVerify() {
                                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                             <span
                                                 aria-hidden
-                                                className="absolute right-2 h-7 w-7 rounded-xl bg-gradient-to-br from-indigo-400/25 via-fuchsia-400/20 to-pink-400/15 blur-[6px] opacity-0 group-hover:opacity-70 group-focus:opacity-90 transition"
+                                                className="absolute right-2 h-7 w-7 rounded-xl bg-gradient-to-br from-white/25 via-white/20 to-white/15 blur-[6px] opacity-0 group-hover:opacity-70 group-focus:opacity-90 transition"
                                             />
                                             <ChevronUpDownIcon className="relative h-5 w-5 text-white/85 drop-shadow-[0_1px_4px_rgba(0,0,0,.35)] transition-transform duration-300 group-data-[headlessui-state='open']:rotate-180" />
                                         </span>
@@ -143,7 +172,7 @@ export default function StudentVerify() {
                                                     key={y}
                                                     value={y}
                                                     className={({ active, selected }) =>
-                                                        `relative cursor-pointer select-none rounded-xl px-3 py-2.5 ${active ? "bg-gradient-to-r from-indigo-500/25 via-fuchsia-500/20 to-pink-500/15 ring-1 ring-white/20" : ""} ${selected ? "bg-white/15" : ""}`
+                                                        `relative cursor-pointer select-none rounded-xl px-3 py-2.5 ${active ? "bg-gradient-to-r from-blue-500/25 via-blue-600/20 to-blue-700/15 ring-1 ring-white/20" : ""} ${selected ? "bg-white/15" : ""}`
                                                     }
                                                 >
                                                     {({ selected }) => (
@@ -168,7 +197,7 @@ export default function StudentVerify() {
                             />
                             <span
                                 aria-hidden
-                                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 rounded-xl bg-gradient-to-br from-indigo-400/25 via-fuchsia-400/20 to-pink-400/15 blur-[6px] opacity-0 group-hover:opacity-70 group-focus-within:opacity-90 transition"
+                                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 rounded-xl bg-gradient-to-br from-indigo-400/25 via-white/20 to-white/15 blur-[6px] opacity-0 group-hover:opacity-70 group-focus-within:opacity-90 transition"
                             />
                         </div>
 
@@ -193,22 +222,43 @@ export default function StudentVerify() {
 
                         {/* 버튼 */}
                         <motion.button
-                            whileHover={{ scale: !loading ? 1.02 : 1 }}
-                            whileTap={{ scale: !loading ? 0.98 : 1 }}
+                            whileHover={{ scale: !loading ? 1.01 : 1 }}
+                            whileTap={{ scale: !loading ? 0.99 : 1 }}
                             type="submit"
                             disabled={loading}
-                            className={`group relative w-full overflow-hidden rounded-2xl px-5 py-3.5 font-medium text-white shadow-2xl transition ${
-                                !loading
-                                    ? "bg-gradient-to-r from-indigo-400 via-fuchsia-500 to-pink-500"
-                                    : "bg-white/20 cursor-not-allowed"
-                            }`}
+                            className={`
+    group relative w-full overflow-hidden rounded-2xl px-5 py-3.5
+    font-medium shadow-2xl transition
+    ${!loading
+                                ? "text-white/95 bg-blue-700/35 border border-white/25 backdrop-blur-md hover:bg-blue-800/55 hover:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/35"
+                                : "text-white/70 bg-white-950/10 border border-white/20 cursor-not-allowed opacity-70"}
+  `}
                         >
                             <span className="relative z-10">{loading ? "확인 중…" : "납부여부 확인"}</span>
-                            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent blur-sm transition-transform duration-700 group-hover:translate-x-full" />
+
+                            {/* 은은한 하이라이트 스윕 (강도 ↓) */}
+                            <span
+                                aria-hidden
+                                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r
+               from-transparent via-white/20 to-transparent blur-[2px]
+               transition-transform duration-900 group-hover:translate-x-full"
+                            />
                         </motion.button>
+
                     </form>
                 </motion.div>
             </div>
+
+             <Toaster richColors position="top-center" expand={true} />
+
+                     {/* 결과 모달 */}
+                     <GlassModal
+                       open={modal.open}
+                       title={modal.title}
+                       message={modal.message}
+                       status={modal.status}
+                       onClose={closeModal}
+                     />
 
             <style>{`
                 @keyframes pulse-slow { 0%, 100% { opacity: .5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.15); } }
