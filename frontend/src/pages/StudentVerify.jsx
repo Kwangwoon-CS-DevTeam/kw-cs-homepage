@@ -99,7 +99,7 @@ export default function StudentVerify() {
                         "radial-gradient(60% 60% at 50% 20%, rgba(99,102,241,0.35) 0%, rgba(168,85,247,0.22) 35%, rgba(236,72,153,0.12) 60%, rgba(0,0,0,0.0) 100%)",
                 }}
             />
-            <div className="absolute inset-0 -z-10 bg-black/35 backdrop-blur-[2px]" />
+            <div className="absolute inset-0 -z-10 bg-black/35" />
             <div className="pointer-events-none absolute inset-0 -z-10 shadow-[inset_0_0_120px_60px_rgba(0,0,0,0.45)]" />
             <div className="absolute inset-0 -z-10">
                 <div className="absolute left-1/4 top-1/3 size-2 rounded-full bg-white/70 animate-pulse-slow" />
